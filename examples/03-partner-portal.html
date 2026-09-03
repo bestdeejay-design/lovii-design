@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#f64a8a">
+<title>LOVII · Пример: партнёрская программа (роль «Партнёр»)</title>
+<script>
+(function(){try{var t=localStorage.getItem('lovii_theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--lv-font); background:var(--lv-bg); color:var(--lv-ink); -webkit-font-smoothing:antialiased; }
+img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; }
+html[data-theme="light"] img.logo-dark-img { display:none; }
+html[data-theme="dark"] img.logo-light-img { display:none; }
+
+.app-header {
+  position:sticky; top:0; z-index:40; height:var(--lv-header-h);
+  display:flex; align-items:center; gap:12px; padding:0 var(--lv-pad-x);
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.role-pill { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--lv-dim); }
+.theme-btn { margin-left:auto; width:36px; height:36px; border-radius:999px; background:var(--lv-surface);
+  display:flex; align-items:center; justify-content:center; font-size:16px; border:0; cursor:pointer; transition:transform .15s ease; }
+.theme-btn:active { transform:scale(.95); }
+
+/* Линейные экраны: капсула 480px → narrow 760px */
+.view { max-width:var(--lv-container); margin:0 auto; padding:0 var(--lv-pad-x) 48px; }
+@media (min-width:640px){ .view { max-width:var(--lv-container-narrow); } }
+
+.section { margin-top:20px; }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-.02em; margin-bottom:12px; }
+
+/* Карточка статуса: чернильный градиент 150deg, текст on-brand */
+.status-card {
+  margin-top:16px; padding:24px 20px; border-radius:16px; position:relative; overflow:hidden;
+  background-image:var(--lv-gradient-ink); color:var(--lv-on-brand); box-shadow:var(--lv-shadow-lift);
+}
+.status-card .tier { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--lv-sand); }
+.status-card h1 { margin-top:6px; font-size:26px; font-weight:800; letter-spacing:-.02em; }
+.status-card p { margin-top:6px; font-size:14px; color:rgba(255,255,255,.7); line-height:1.6; }
+.tier-badge {
+  position:absolute; top:20px; right:20px; padding:6px 14px; border-radius:999px;
+  background:rgba(212,168,84,.18); color:var(--lv-sand); font-size:12px; font-weight:700;
+}
+
+/* Прогресс до следующего уровня */
+.progress-wrap { margin-top:16px; }
+.progress-line { height:8px; border-radius:999px; background:rgba(255,255,255,.14); overflow:hidden; }
+.progress-fill { height:100%; width:68%; border-radius:999px; background-image:var(--lv-gradient-brand); }
+.progress-note { margin-top:8px; display:flex; justify-content:space-between; font-size:11px; color:rgba(255,255,255,.7); }
+
+/* KPI-тройка */
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.stat { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; padding:16px 14px; box-shadow:var(--lv-shadow-soft); }
+.stat .v { font-size:20px; font-weight:800; letter-spacing:-.02em; }
+.stat .l { margin-top:4px; font-size:11px; color:var(--lv-dim); line-height:1.4; }
+
+/* Реферальная ссылка */
+.link-card { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); padding:16px; }
+.link-row { display:flex; gap:8px; }
+.link-input {
+  flex:1; min-width:0; height:44px; padding:0 14px; border-radius:999px; border:1px solid var(--lv-line);
+  background:var(--lv-surface); color:var(--lv-ink); font-size:13px; font-family:inherit;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.link-input:focus { outline:none; box-shadow:var(--lv-ring-field); border-color:transparent; }
+.copy-btn { height:44px; padding:0 18px; border:0; border-radius:999px; cursor:pointer; flex:none;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); font-size:13px; font-weight:700; font-family:inherit;
+  transition:transform .15s ease, box-shadow .2s ease; }
+.copy-btn:hover { box-shadow:var(--lv-shadow-lift); } .copy-btn:active { transform:scale(.95); }
+.link-hint { margin-top:10px; font-size:12px; color:var(--lv-dim); line-height:1.6; }
+.link-hint b { color:var(--lv-pink); font-weight:600; }
+
+/* Условия и выплаты: строки карточки */
+.list-card { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); overflow:hidden; }
+.row { display:flex; align-items:center; gap:12px; padding:14px 16px; border-top:1px solid var(--lv-line-2); }
+.row:first-child { border-top:0; }
+.row-icon { width:36px; height:36px; border-radius:999px; flex:none; display:flex; align-items:center; justify-content:center; font-size:15px; }
+.ri-pink { background:var(--lv-soft-pink); } .ri-tiff { background:var(--lv-soft-tiffany); } .ri-gold { background:var(--lv-soft-gold); } .ri-grey { background:var(--lv-grey-soft); }
+.row-main { flex:1; min-width:0; }
+.row-title { font-size:14px; font-weight:600; }
+.row-sub { font-size:11px; color:var(--lv-dim); margin-top:1px; }
+.row-sum { font-size:14px; font-weight:700; white-space:nowrap; }
+
+.pill { padding:5px 11px; border-radius:999px; font-size:11px; font-weight:600; white-space:nowrap; }
+.p-done { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.p-wait { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
+.p-fail { background:var(--lv-grey-soft); color:#999; }
+
+/* CTA */
+.cta { margin-top:24px; display:flex; flex-direction:column; gap:10px; }
+.btn { height:48px; border:0; cursor:pointer; border-radius:999px; font-family:inherit; font-size:15px; font-weight:700;
+  display:flex; align-items:center; justify-content:center; gap:8px; transition:transform .15s ease, box-shadow .2s ease; }
+.btn:active { transform:scale(.96); }
+.btn-primary { background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); box-shadow:var(--lv-shadow-lift); }
+.btn-primary:hover { box-shadow:var(--lv-shadow-toast); }
+.btn-ghost { background:var(--lv-surface); color:var(--lv-ink); }
+
+/* Toast */
+.toast {
+  position:fixed; left:50%; bottom:24px; z-index:60; transform:translateX(-50%) translateY(16px);
+  opacity:0; pointer-events:none; padding:12px 18px; border-radius:999px;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  box-shadow:var(--lv-shadow-toast); font-size:14px; font-weight:600;
+  transition:opacity .25s ease, transform .25s cubic-bezier(.32,.72,0,1);
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="Лови">
+  <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="Лови">
+  <span class="role-pill">Партнёр</span>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+</header>
+
+<main class="view">
+  <!-- Статус на чернильном градиенте; золото — только sand/gold-пара -->
+  <section class="status-card lv-enter">
+    <span class="tier">Партнёрская программа</span>
+    <h1>Магазин «Уют»</h1>
+    <p>Уровень Gold: комиссия 8% с каждого заказа по вашей ссылке.</p>
+    <span class="tier-badge">Gold</span>
+    <div class="progress-wrap">
+      <div class="progress-line"><div class="progress-fill"></div></div>
+      <div class="progress-note"><span>68% до уровня Platinum</span><span>42 / 60 заказов</span></div>
+    </div>
+  </section>
+
+  <!-- Статистика -->
+  <section class="section">
+    <h2 class="section-title">Статистика за месяц</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">1 284</div><div class="l">перехода по ссылке</div></div>
+      <div class="stat"><div class="v">42</div><div class="l">заказа</div></div>
+      <div class="stat"><div class="v">18 340 ₽</div><div class="l">заработано</div></div>
+    </div>
+  </section>
+
+  <!-- Реферальная ссылка -->
+  <section class="section">
+    <h2 class="section-title">Ваша ссылка</h2>
+    <div class="link-card">
+      <div class="link-row">
+        <input class="link-input" id="refLink" readonly value="https://lovii.mobiap.com/?ref=uyt-shop" aria-label="Реферальная ссылка">
+        <button class="copy-btn" id="copyBtn">Копировать</button>
+      </div>
+      <p class="link-hint">Покупатель должен оформить заказ в течение <b>14 дней</b> после перехода — тогда партнёрская комиссия будет начислена автоматически.</p>
+    </div>
+  </section>
+
+  <!-- Выплаты -->
+  <section class="section">
+    <h2 class="section-title">Выплаты</h2>
+    <div class="list-card">
+      <div class="row">
+        <span class="row-icon ri-tiff">✓</span>
+        <div class="row-main">
+          <div class="row-title">12 400 ₽ → СБП</div>
+          <div class="row-sub">25 августа · удержано: 0 ₽</div>
+        </div>
+        <span class="pill p-done">Выплачено</span>
+      </div>
+      <div class="row">
+        <span class="row-icon ri-gold">⏳</span>
+        <div class="row-main">
+          <div class="row-title">5 940 ₽ → СБП</div>
+          <div class="row-sub">5 сентября · ожидает выплаты</div>
+        </div>
+        <span class="pill p-wait">В ожидании</span>
+      </div>
+      <div class="row">
+        <span class="row-icon ri-grey">✗</span>
+        <div class="row-main">
+          <div class="row-title">880 ₽ → карта •• 4218</div>
+          <div class="row-sub">12 августа · реквизиты недействительны</div>
+        </div>
+        <span class="pill p-fail">Ошибка</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Условия уровней -->
+  <section class="section">
+    <h2 class="section-title">Уровни программы</h2>
+    <div class="list-card">
+      <div class="row">
+        <span class="row-icon ri-grey">🥉</span>
+        <div class="row-main"><div class="row-title">Bronze — комиссия 5%</div><div class="row-sub">от 0 заказов в месяц</div></div>
+      </div>
+      <div class="row">
+        <span class="row-icon ri-tiff">🥈</span>
+        <div class="row-main"><div class="row-title">Silver — комиссия 6%</div><div class="row-sub">от 20 заказов в месяц</div></div>
+      </div>
+      <div class="row">
+        <span class="row-icon ri-gold">🥇</span>
+        <div class="row-main"><div class="row-title">Gold — комиссия 8%</div><div class="row-sub">от 40 заказов в месяц</div></div>
+      </div>
+      <div class="row">
+        <span class="row-icon ri-pink">💎</span>
+        <div class="row-main"><div class="row-title">Platinum — комиссия 10%</div><div class="row-sub">от 60 заказов в месяц</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <button class="btn btn-primary">Вывести средства</button>
+    <button class="btn btn-ghost">Материалы для продвижения</button>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('lovii_theme', t); }catch(e){}
+  var m = document.getElementById('metaTheme');
+  if(m) m.content = t === 'dark' ? '#171219' : '#f64a8a';
+}
+document.getElementById('themeBtn').addEventListener('click', function(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+var toastEl = document.getElementById('toast'), toastTimer;
+function showToast(text){
+  toastEl.textContent = text;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
+}
+document.getElementById('copyBtn').addEventListener('click', function(){
+  var input = document.getElementById('refLink');
+  var done = function(){ showToast('✓ Ссылка скопирована'); };
+  if (navigator.clipboard) { navigator.clipboard.writeText(input.value).then(done, done); }
+  else { input.select(); try{ document.execCommand('copy'); }catch(e){} done(); }
+});
+</script>
+</body>
+</html>

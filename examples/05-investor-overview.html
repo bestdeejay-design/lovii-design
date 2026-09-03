@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#f64a8a">
+<title>LOVII · Пример: обзор для инвесторов (роль «Инвестор»)</title>
+<script>
+(function(){try{var t=localStorage.getItem('lovii_theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--lv-font); background:var(--lv-bg); color:var(--lv-ink); -webkit-font-smoothing:antialiased; }
+img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; }
+html[data-theme="light"] img.logo-dark-img { display:none; }
+html[data-theme="dark"] img.logo-light-img { display:none; }
+
+.app-header {
+  position:sticky; top:0; z-index:40; height:var(--lv-header-h);
+  display:flex; align-items:center; gap:12px; padding:0 var(--lv-pad-x);
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.role-pill { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--lv-dim); }
+.theme-btn { margin-left:auto; width:36px; height:36px; border-radius:999px; background:var(--lv-surface);
+  display:flex; align-items:center; justify-content:center; font-size:16px; border:0; cursor:pointer; transition:transform .15s ease; }
+.theme-btn:active { transform:scale(.95); }
+
+/* Документный экран: узкая колонка 760px */
+.view { max-width:var(--lv-container); margin:0 auto; padding:0 var(--lv-pad-x) 48px; }
+@media (min-width:640px){ .view { max-width:var(--lv-container-narrow); } }
+
+.section { margin-top:24px; }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-.02em; margin-bottom:12px; }
+.section-lead { font-size:14px; color:var(--lv-dim); line-height:1.6; margin-top:-4px; margin-bottom:16px; }
+
+/* Герой: чернильный градиент 150deg, тёплый белый текст */
+.hero { margin-top:16px; padding:32px 24px; border-radius:16px;
+  background-image:var(--lv-gradient-ink); color:var(--lv-on-brand); box-shadow:var(--lv-shadow-lift); }
+.hero .kicker { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--lv-sand); }
+.hero h1 { margin-top:8px; font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1.15; }
+.hero p { margin-top:8px; font-size:14px; line-height:1.6; color:rgba(255,255,255,.7); max-width:44ch; }
+
+/* Метрики: 2×2 */
+.metrics { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+@media (min-width:640px){ .metrics { grid-template-columns:repeat(4,1fr); } }
+.metric { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; padding:18px 16px; box-shadow:var(--lv-shadow-soft); }
+.metric .v { font-size:26px; font-weight:800; letter-spacing:-.02em; }
+.metric .v span { font-size:14px; font-weight:700; color:var(--lv-pink); }
+.metric .l { margin-top:6px; font-size:12px; font-weight:600; color:var(--lv-dim); }
+.metric .d { margin-top:8px; font-size:11px; font-weight:600; color:var(--lv-tiffany-text); }
+
+/* Роадмап: таймлайн на хайрлайнах, точки пульсируют */
+.timeline { position:relative; padding-left:28px; }
+.timeline::before { content:''; position:absolute; left:8px; top:6px; bottom:6px; width:2px; background:var(--lv-hairline); border-radius:999px; }
+.milestone { position:relative; padding:0 0 20px 8px; }
+.milestone:last-child { padding-bottom:0; }
+.milestone .dot { position:absolute; left:-28px; top:4px; width:14px; height:14px; border-radius:999px; background:var(--lv-card); border:2px solid var(--lv-pink); display:flex; align-items:center; justify-content:center; }
+.milestone .dot::after { content:''; width:6px; height:6px; border-radius:999px; background:var(--lv-pink); }
+.milestone.future .dot { border-color:var(--lv-line); } .milestone.future .dot::after { background:var(--lv-dim); animation:none; opacity:.6; }
+.milestone .q { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--lv-dim); }
+.milestone h3 { margin-top:2px; font-size:16px; font-weight:700; }
+.milestone p { margin-top:4px; font-size:13px; color:var(--lv-dim); line-height:1.6; max-width:52ch; }
+.milestone .now { margin-left:8px; padding:3px 10px; border-radius:999px; background:var(--lv-soft-pink); color:var(--lv-pink-dark); font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; vertical-align:2px; }
+
+/* Команда */
+.team { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+@media (min-width:640px){ .team { grid-template-columns:repeat(4,1fr); } }
+.member { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; padding:20px 14px; text-align:center; box-shadow:var(--lv-shadow-soft); }
+.member .ph { width:56px; height:56px; margin:0 auto; border-radius:999px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; }
+.mp-pink { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
+.mp-tiff { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.mp-gold { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
+.mp-grey { background:var(--lv-grey-soft); color:#999; }
+.member .n { margin-top:10px; font-size:14px; font-weight:700; }
+.member .r { margin-top:2px; font-size:11px; color:var(--lv-dim); }
+
+/* Контакты: строки */
+.facts { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); overflow:hidden; }
+.fact { display:flex; align-items:center; gap:12px; padding:14px 16px; border-top:1px solid var(--lv-line-2); }
+.fact:first-child { border-top:0; }
+.fact .k { flex:1; font-size:13px; color:var(--lv-dim); }
+.fact .v { font-size:14px; font-weight:600; text-align:right; }
+.fact .v a { color:var(--lv-pink); text-decoration:none; }
+
+/* CTA */
+.cta { margin-top:24px; padding:24px 20px; border-radius:16px; text-align:center;
+  background:var(--lv-kpi-soft); border:1px solid transparent; }
+.cta h2 { font-size:20px; font-weight:800; letter-spacing:-.02em; }
+.cta p { margin:6px auto 16px; font-size:13px; color:var(--lv-dim); line-height:1.6; max-width:40ch; }
+.btn { height:48px; padding:0 32px; border:0; cursor:pointer; border-radius:999px; font-family:inherit;
+  font-size:15px; font-weight:700; display:inline-flex; align-items:center; justify-content:center;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); box-shadow:var(--lv-shadow-lift);
+  transition:transform .15s ease, box-shadow .2s ease; text-decoration:none; }
+.btn:hover { box-shadow:var(--lv-shadow-toast); } .btn:active { transform:scale(.96); }
+
+footer { margin-top:32px; padding-top:16px; border-top:1px solid var(--lv-hairline);
+  font-size:11px; color:var(--lv-dim); line-height:1.7; text-align:center; }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="Лови">
+  <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="Лови">
+  <span class="role-pill">Инвесторам</span>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+</header>
+
+<main class="view">
+  <section class="hero lv-enter">
+    <span class="kicker">LOVII · Обзор для инвесторов</span>
+    <h1>Маркетплейс подарков о любви</h1>
+    <p>Мобильная витрина, партнёрская программа и амбассадорская сеть в одном приложении. Работаем на эмоциональной нише с высокой маржинальностью.</p>
+  </section>
+
+  <!-- Метрики -->
+  <section class="section">
+    <h2 class="section-title">Показатели</h2>
+    <div class="metrics">
+      <div class="metric">
+        <div class="v">48<span>K</span></div>
+        <div class="l">MAU</div>
+        <div class="d">+21% кв/кв</div>
+      </div>
+      <div class="metric">
+        <div class="v">3,2<span>М ₽</span></div>
+        <div class="l">GMV / мес</div>
+        <div class="d">+34% кв/кв</div>
+      </div>
+      <div class="metric">
+        <div class="v">64</div>
+        <div class="l">NPS</div>
+        <div class="d">+6 за квартал</div>
+      </div>
+      <div class="metric">
+        <div class="v">210</div>
+        <div class="l">партнёров</div>
+        <div class="d">+58 за квартал</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Роадмап -->
+  <section class="section">
+    <h2 class="section-title">Дорожная карта</h2>
+    <p class="section-lead">Приоритет — удержание: подписка «Свидания» и реферальная механика уже в разработке.</p>
+    <div class="timeline">
+      <div class="milestone">
+        <span class="dot"></span>
+        <div class="q">Q3 2026 · сделано</div>
+        <h3>PWA-витрина <span class="now">в проде</span></h3>
+        <p>Тёмная тема, оффлайн-кэш, установка на домашний экран. Канон дизайна зафиксирован в дизайн-системе v1.</p>
+      </div>
+      <div class="milestone">
+        <span class="dot"></span>
+        <div class="q">Q4 2026 · в работе</div>
+        <h3>Подписка «Свидания»</h3>
+        <p>Ежемесячные наборы подарков, оплата на App Store / Google Play и через СБП.</p>
+      </div>
+      <div class="milestone future">
+        <span class="dot"></span>
+        <div class="q">Q1 2027</div>
+        <h3>Партнёрский кабинет v2</h3>
+        <p>Автовыплаты, аналитика по ссылкам, маркетплейс предложений партнёров.</p>
+      </div>
+      <div class="milestone future">
+        <span class="dot"></span>
+        <div class="q">Q2 2027</div>
+        <h3>lovii.ru и масштабирование</h3>
+        <p>Посадочная на своём домене, SEO-трафик, запуск в 3 новых городах.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Команда -->
+  <section class="section">
+    <h2 class="section-title">Команда</h2>
+    <div class="team">
+      <div class="member">
+        <div class="ph mp-pink">СД</div>
+        <div class="n">Sergey D.</div>
+        <div class="r">Основатель · продукт</div>
+      </div>
+      <div class="member">
+        <div class="ph mp-tiff">МА</div>
+        <div class="n">Мария А.</div>
+        <div class="r">Операционный директор</div>
+      </div>
+      <div class="member">
+        <div class="ph mp-gold">ИК</div>
+        <div class="n">Игорь К.</div>
+        <div class="r">Партнёрская сеть</div>
+      </div>
+      <div class="member">
+        <div class="ph mp-grey">ЛВ</div>
+        <div class="n">Лена В.</div>
+        <div class="r">Маркетинг</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Факты -->
+  <section class="section">
+    <h2 class="section-title">Документы и контакты</h2>
+    <div class="facts">
+      <div class="fact">
+        <span class="k">Юридическое лицо</span>
+        <span class="v">ООО «Лови»</span>
+      </div>
+      <div class="fact">
+        <span class="k">Раунд</span>
+        <span class="v">Seed · 25 млн ₽</span>
+      </div>
+      <div class="fact">
+        <span class="k">Презентация</span>
+        <span class="v"><a href="#">Скачать PDF</a></span>
+      </div>
+      <div class="fact">
+        <span class="k">Почта для инвесторов</span>
+        <span class="v"><a href="mailto:invest@lovii.ru">invest@lovii.ru</a></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Запросить материалы раунда</h2>
+    <p>Финмодель, метрики когорт и демо приложения — по запросу после NDA.</p>
+    <a class="btn" href="mailto:invest@lovii.ru">Написать нам</a>
+  </section>
+
+  <footer>
+    © 2026 ООО «Лови». Информация не является публичной офертой или индивидуальной инвестиционной рекомендацией.
+  </footer>
+</main>
+
+<script>
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('lovii_theme', t); }catch(e){}
+  var m = document.getElementById('metaTheme');
+  if(m) m.content = t === 'dark' ? '#171219' : '#f64a8a';
+}
+document.getElementById('themeBtn').addEventListener('click', function(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+</script>
+</body>
+</html>

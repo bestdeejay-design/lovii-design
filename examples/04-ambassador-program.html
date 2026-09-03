@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#f64a8a">
+<title>LOVII · Пример: амбассадоры (роль «Амбассадор»)</title>
+<script>
+(function(){try{var t=localStorage.getItem('lovii_theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--lv-font); background:var(--lv-bg); color:var(--lv-ink); -webkit-font-smoothing:antialiased; }
+img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; }
+html[data-theme="light"] img.logo-dark-img { display:none; }
+html[data-theme="dark"] img.logo-light-img { display:none; }
+
+.app-header {
+  position:sticky; top:0; z-index:40; height:var(--lv-header-h);
+  display:flex; align-items:center; gap:12px; padding:0 var(--lv-pad-x);
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.role-pill { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--lv-dim); }
+.theme-btn { margin-left:auto; width:36px; height:36px; border-radius:999px; background:var(--lv-surface);
+  display:flex; align-items:center; justify-content:center; font-size:16px; border:0; cursor:pointer; transition:transform .15s ease; }
+.theme-btn:active { transform:scale(.95); }
+
+.view { max-width:var(--lv-container); margin:0 auto; padding:0 var(--lv-pad-x) 48px; }
+@media (min-width:640px){ .view { max-width:var(--lv-container-narrow); } }
+
+.section { margin-top:20px; }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-.02em; margin-bottom:12px; }
+.section-sub { font-size:13px; color:var(--lv-dim); line-height:1.6; margin-top:-6px; margin-bottom:14px; }
+
+/* Hero: мягкий, на hero-top → card (не брендовый градиент!) */
+.hero { margin-top:16px; padding:24px 20px; border-radius:16px;
+  background:linear-gradient(180deg, var(--lv-hero-top), var(--lv-card));
+  border:1px solid var(--lv-line); box-shadow:var(--lv-shadow-soft); text-align:center; }
+.hero .emoji { font-size:40px; animation:lv-float 5s ease-in-out infinite; display:inline-block; }
+.hero h1 { margin-top:10px; font-size:26px; font-weight:800; letter-spacing:-.02em; }
+.hero p { margin-top:6px; font-size:14px; color:var(--lv-dim); line-height:1.6; max-width:36ch; margin-left:auto; margin-right:auto; }
+
+/* Промокод: пунктирный бордер, моноширинный код */
+.promo-card { margin-top:16px; padding:20px; border-radius:16px; text-align:center;
+  background:var(--lv-card); border:1px dashed var(--lv-pink); box-shadow:var(--lv-shadow-soft); }
+.promo-label { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--lv-dim); }
+.promo-code { margin-top:8px; font-size:26px; font-weight:800; letter-spacing:.12em;
+  background-image:var(--lv-gradient-brand); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.promo-note { margin-top:6px; font-size:12px; color:var(--lv-dim); }
+.promo-actions { margin-top:14px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
+
+/* Кнопки */
+.btn { height:44px; padding:0 22px; border:0; cursor:pointer; border-radius:999px; font-family:inherit;
+  font-size:14px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  transition:transform .15s ease, box-shadow .2s ease; }
+.btn:active { transform:scale(.96); }
+.btn-primary { background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); box-shadow:var(--lv-shadow-lift); }
+.btn-primary:hover { box-shadow:var(--lv-shadow-toast); }
+.btn-ghost { background:var(--lv-surface); color:var(--lv-ink); }
+
+/* Статистика приглашений */
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.stat { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; padding:16px 12px; text-align:center; box-shadow:var(--lv-shadow-soft); }
+.stat .v { font-size:20px; font-weight:800; letter-spacing:-.02em; }
+.stat .l { margin-top:4px; font-size:11px; color:var(--lv-dim); }
+
+/* Уровни: карточки с плиточными подложками (плитки фиксированно светлые — текст только on-tile) */
+.levels { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.level { border-radius:16px; padding:18px 12px 16px; text-align:center; border:1px solid transparent; transition:transform .15s ease, box-shadow .2s ease; }
+.level:hover { box-shadow:var(--lv-shadow-lift); }
+.level .medal { font-size:26px; }
+.level .name { margin-top:8px; font-size:14px; font-weight:800; color:var(--lv-on-tile); }
+.level .cond { margin-top:4px; font-size:11px; line-height:1.5; color:var(--lv-on-tile-dim); }
+.level .reward { margin-top:10px; display:inline-block; padding:4px 10px; border-radius:999px; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; background:var(--lv-tile-chip); color:var(--lv-on-tile-dim); }
+.lv-bronze { background-image:var(--lv-tile-ink); }
+.lv-silver { background-image:var(--lv-tile-tiffany); }
+.lv-gold { background-image:var(--lv-tile-gold); }
+.level.current { border-color:var(--lv-pink); box-shadow:var(--lv-shadow-lift); }
+
+/* Задания: чек-лист */
+.tasks { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); overflow:hidden; }
+.task { display:flex; align-items:center; gap:12px; padding:14px 16px; border-top:1px solid var(--lv-line-2); }
+.task:first-child { border-top:0; }
+.checkbox { width:22px; height:22px; border-radius:999px; flex:none; display:flex; align-items:center; justify-content:center;
+  font-size:12px; border:2px solid var(--lv-line); color:transparent; transition:all .2s ease; }
+.task.done .checkbox { background-image:var(--lv-gradient-brand); border-color:transparent; color:var(--lv-on-brand); }
+.task-main { flex:1; min-width:0; }
+.task-title { font-size:14px; font-weight:600; }
+.task-sub { font-size:11px; color:var(--lv-dim); margin-top:1px; }
+.task-xp { font-size:12px; font-weight:700; color:var(--lv-gold-text); white-space:nowrap; }
+.task.done .task-title { color:var(--lv-dim); text-decoration:line-through; }
+
+.pill { padding:5px 11px; border-radius:999px; font-size:11px; font-weight:600; white-space:nowrap; }
+.p-gold { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
+.p-pink { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
+
+/* Toast */
+.toast {
+  position:fixed; left:50%; bottom:24px; z-index:60; transform:translateX(-50%) translateY(16px);
+  opacity:0; pointer-events:none; padding:12px 18px; border-radius:999px;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  box-shadow:var(--lv-shadow-toast); font-size:14px; font-weight:600;
+  transition:opacity .25s ease, transform .25s cubic-bezier(.32,.72,0,1);
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="Лови">
+  <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="Лови">
+  <span class="role-pill">Амбассадор</span>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+</header>
+
+<main class="view">
+  <!-- Hero: мягкая подача (hero-top), эмодзи левитирует (lv-float) -->
+  <section class="hero lv-enter">
+    <span class="emoji">💖</span>
+    <h1>Привет, Алина!</h1>
+    <p>Ты в программе амбассадоров LOVII. Делись любовью — получай бонусы за каждый заказ по твоему коду.</p>
+  </section>
+
+  <!-- Промокод: градиентный текст вместо градиентной заливки -->
+  <section class="promo-card">
+    <div class="promo-label">Твой промокод</div>
+    <div class="promo-code">ALINA.LOVII</div>
+    <div class="promo-note">−15% другу · +100 баллов тебе с каждого заказа</div>
+    <div class="promo-actions">
+      <button class="btn btn-primary" id="copyBtn">Скопировать код</button>
+      <button class="btn btn-ghost" id="shareBtn">Поделиться</button>
+    </div>
+  </section>
+
+  <!-- Статистика -->
+  <section class="section">
+    <h2 class="section-title">Твой месяц</h2>
+    <div class="stats">
+      <div class="stat"><div class="v">37</div><div class="l">заказов по коду</div></div>
+      <div class="stat"><div class="v">2 100</div><div class="l">баллов начислено</div></div>
+      <div class="stat"><div class="v">4</div><div class="l">новых друга</div></div>
+    </div>
+  </section>
+
+  <!-- Уровни: текущий подсвечен розовым бордером -->
+  <section class="section">
+    <h2 class="section-title">Уровни</h2>
+    <p class="section-sub">Уровень зависит от числа заказов по твоему коду за календарный месяц.</p>
+    <div class="levels">
+      <div class="level lv-bronze">
+        <div class="medal">🥉</div>
+        <div class="name">Bronze</div>
+        <div class="cond">0–9 заказов</div>
+        <span class="reward">×1 баллы</span>
+      </div>
+      <div class="level lv-gold current">
+        <div class="medal">🥇</div>
+        <div class="name">Gold</div>
+        <div class="cond">10–29 заказов</div>
+        <span class="reward">×1,5 баллы</span>
+      </div>
+      <div class="level lv-silver">
+        <div class="medal">💎</div>
+        <div class="name">Diamond</div>
+        <div class="cond">30+ заказов</div>
+        <span class="reward">×2 баллы</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Задания: интерактивный чек-лист -->
+  <section class="section">
+    <h2 class="section-title">Задания недели</h2>
+    <div class="tasks" id="tasks">
+      <label class="task done">
+        <span class="checkbox">✓</span>
+        <span class="task-main">
+          <span class="task-title">Рассказать о LOVII в сторис</span>
+          <span class="task-sub">с промокодом · до воскресенья</span>
+        </span>
+        <span class="task-xp">+150</span>
+      </label>
+      <label class="task">
+        <span class="checkbox">✓</span>
+        <span class="task-main">
+          <span class="task-title">Пост-обзор подарка</span>
+          <span class="task-sub">отметка @lovii · хештег #ловимоменты</span>
+        </span>
+        <span class="task-xp">+300</span>
+      </label>
+      <label class="task">
+        <span class="checkbox">✓</span>
+        <span class="task-main">
+          <span class="task-title">Пригласить 3 друзей по коду</span>
+          <span class="task-sub">осталось 2 из 3</span>
+        </span>
+        <span class="task-xp">+500</span>
+      </label>
+    </div>
+  </section>
+
+  <!-- Баланс: пилюля на soft-gold, а не голый gold -->
+  <section class="section" style="text-align:center">
+    <span class="pill p-gold" style="font-size:13px; padding:10px 18px">💎 Баланс: 4 350 баллов · до Diamond 900</span>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('lovii_theme', t); }catch(e){}
+  var m = document.getElementById('metaTheme');
+  if(m) m.content = t === 'dark' ? '#171219' : '#f64a8a';
+}
+document.getElementById('themeBtn').addEventListener('click', function(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+var toastEl = document.getElementById('toast'), toastTimer;
+function showToast(text){
+  toastEl.textContent = text;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
+}
+document.getElementById('copyBtn').addEventListener('click', function(){
+  var done = function(){ showToast('✓ Промокод ALINA.LOVII скопирован'); };
+  if (navigator.clipboard) { navigator.clipboard.writeText('ALINA.LOVII').then(done, done); } else { done(); }
+});
+document.getElementById('shareBtn').addEventListener('click', function(){
+  showToast('Ссылка готова — отправь её в мессенджер');
+});
+/* Чек-лист: клик переключает состояние */
+document.querySelectorAll('#tasks .task').forEach(function(t){
+  t.addEventListener('click', function(){ t.classList.toggle('done'); });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#f64a8a">
+<title>LOVII · Пример: витрина (роль «Клиент»)</title>
+<script>
+/* Anti-FOUC: тема ставится ДО CSS. Копировать как есть. */
+(function(){try{var t=localStorage.getItem('lovii_theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+/* ============ Базовый каркас (канон: капсула 480px) ============ */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--lv-font); background:var(--lv-bg); color:var(--lv-ink); -webkit-font-smoothing:antialiased; }
+.view { max-width:var(--lv-container); margin:0 auto; padding-bottom:calc(var(--lv-nav-h) + 32px + env(safe-area-inset-bottom,0px)); }
+@media (min-width:640px){ .view { max-width:var(--lv-container-wide); padding-bottom:96px; } }
+.no-scrollbar { scrollbar-width:none; } .no-scrollbar::-webkit-scrollbar { display:none; }
+img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; }
+html[data-theme="light"] img.logo-dark-img { display:none; }
+html[data-theme="dark"] img.logo-light-img { display:none; }
+
+/* ============ Хедер: sticky glass, 56px ============ */
+.app-header {
+  position:sticky; top:0; z-index:40; height:var(--lv-header-h);
+  display:flex; align-items:center; gap:12px; padding:0 var(--lv-pad-x);
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.theme-btn {
+  margin-left:auto; width:36px; height:36px; border-radius:999px; flex:none;
+  background:var(--lv-surface); display:flex; align-items:center; justify-content:center;
+  font-size:16px; transition:transform .15s ease, background .2s ease;
+}
+.theme-btn:active { transform:scale(.95); }
+
+/* ============ Секции: 20px сверху, 12px до контента ============ */
+.section { margin-top:20px; }
+.section-head { display:flex; align-items:baseline; justify-content:space-between; padding:0 var(--lv-pad-x); margin-bottom:12px; }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-.02em; }
+.section-link { font-size:13px; font-weight:600; color:var(--lv-pink); text-decoration:none; }
+.section-link:active { opacity:.7; }
+
+/* ============ Hero-промо: брендовый градиент 135deg ============ */
+.hero {
+  margin:16px var(--lv-pad-x) 0; padding:24px 20px; border-radius:16px;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  box-shadow:var(--lv-shadow-lift); position:relative; overflow:hidden;
+}
+.hero .kicker { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.7); }
+.hero h1 { font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1.15; margin:8px 0 6px; }
+.hero p { font-size:14px; color:rgba(255,255,255,.7); line-height:1.6; max-width:32ch; }
+
+/* ============ Категории: плитки (только светлая подача) ============ */
+.tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:0 var(--lv-pad-x); }
+.tile {
+  border-radius:12px; padding:14px 8px 10px; text-align:center; text-decoration:none;
+  transition:transform .15s ease;
+}
+.tile:active { transform:scale(.96); }
+.tile .emoji { font-size:24px; }
+.tile .name { margin-top:6px; font-size:11px; font-weight:600; color:var(--lv-on-tile); } /* текст НА плитке — фиксированный, не темовый */
+.t-pink { background-image:var(--lv-tile-pink); } .t-tiffany { background-image:var(--lv-tile-tiffany); }
+.t-gold { background-image:var(--lv-tile-gold); } .t-ink { background-image:var(--lv-tile-ink); }
+
+/* ============ Карточка товара ============ */
+.grid-products { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; padding:0 var(--lv-pad-x); }
+@media (min-width:640px){ .grid-products { grid-template-columns:repeat(4,1fr); } }
+.card {
+  background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px;
+  box-shadow:var(--lv-shadow-soft); overflow:hidden;
+  transition:transform .15s ease, box-shadow .2s ease;
+}
+.card:hover { box-shadow:var(--lv-shadow-lift); }
+.card:active { transform:scale(.97); }
+.cover { position:relative; height:120px; display:flex; align-items:center; justify-content:center; font-size:40px; }
+.cv-hero { background:linear-gradient(180deg, var(--lv-hero-top), var(--lv-card)); }
+.cv-ink { background-image:var(--lv-gradient-ink); }
+.badge {
+  position:absolute; top:10px; left:10px; padding:4px 10px; border-radius:999px;
+  font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+}
+.b-hit { background:var(--lv-badge-hit); color:var(--lv-pink-dark); }
+.b-new { background:var(--lv-badge-new); color:var(--lv-tiffany-text); }
+.b-sale { background:var(--lv-badge-sale); color:var(--lv-gold-text); }
+.card-body { padding:12px 14px 14px; }
+.card-title { font-size:14px; font-weight:600; line-height:1.35; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.card-sub { margin-top:2px; font-size:11px; color:var(--lv-dim); }
+.card-row { margin-top:10px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.price { font-size:16px; font-weight:800; letter-spacing:-.02em; }
+.price small { font-size:11px; font-weight:600; color:var(--lv-dim); text-decoration:line-through; margin-left:4px; }
+.btn-add {
+  width:32px; height:32px; border-radius:999px; border:0; cursor:pointer; flex:none;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); font-size:16px; line-height:1;
+  box-shadow:var(--lv-shadow-soft); transition:transform .15s ease, box-shadow .2s ease;
+}
+.btn-add:hover { box-shadow:var(--lv-shadow-lift); } .btn-add:active { transform:scale(.92); }
+
+/* ============ Горизонтальная лента с растворением краёв ============ */
+.rail { display:flex; gap:12px; overflow-x:auto; padding:2px var(--lv-pad-x) 6px; scroll-snap-type:x proximity; }
+.rail .card { flex:0 0 150px; scroll-snap-align:start; }
+
+/* ============ Пилюли статусов: soft-пары ============ */
+.pill { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:600; }
+.pill .lv-dot { background:currentColor; }
+.p-pink { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
+.p-tiffany { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.p-gold { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
+.p-grey { background:var(--lv-grey-soft); color:#999; }
+
+/* ============ Нижняя навигация: 64px, иконки + подписи ============ */
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0; z-index:45;
+  height:calc(var(--lv-nav-h) + env(safe-area-inset-bottom,0px));
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  display:flex; align-items:stretch; justify-content:space-around;
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  box-shadow:var(--lv-shadow-nav);
+}
+@media (min-width:900px){
+  .bottom-nav {
+    left:50%; right:auto; transform:translateX(-50%); bottom:16px;
+    height:60px; padding:0 8px; border-radius:999px; width:min(420px,90vw);
+    box-shadow:var(--lv-shadow-nav);
+  }
+}
+.nav-item {
+  flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  text-decoration:none; color:var(--lv-dim); font-size:10px; font-weight:600;
+  transition:color .2s ease, transform .15s ease;
+}
+.nav-item:active { transform:scale(.95); }
+.nav-item svg { width:22px; height:22px; }
+.nav-item.active { color:var(--lv-pink); }
+
+/* ============ Toast ============ */
+.toast {
+  position:fixed; left:50%; bottom:calc(var(--lv-nav-h) + 16px + env(safe-area-inset-bottom,0px)); z-index:60;
+  transform:translateX(-50%) translateY(16px); opacity:0; pointer-events:none;
+  max-width:min(420px, calc(100vw - 32px)); padding:12px 18px; border-radius:999px;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  box-shadow:var(--lv-shadow-toast); font-size:14px; font-weight:600; text-align:center;
+  transition:opacity .25s ease, transform .25s cubic-bezier(.32,.72,0,1);
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+.toast small { display:block; font-size:11px; font-weight:500; color:var(--lv-toast-d); }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <a href="#" aria-label="Лови — на главную" style="display:flex">
+    <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="Лови">
+    <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="Лови">
+  </a>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+</header>
+
+<main class="view">
+  <!-- Hero на брендовом градиенте: текст только --lv-on-brand -->
+  <section class="hero lv-enter">
+    <span class="kicker">Любовь ближе, чем кажется</span>
+    <h1>Подарки для двоих</h1>
+    <p>Подборки к 14 февраля — со скидкой до 30%.</p>
+  </section>
+
+  <!-- Категории -->
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">Категории</h2></div>
+    <nav class="tiles" aria-label="Категории">
+      <a class="tile t-pink" href="#"><span class="emoji">💝</span><span class="name">Для неё</span></a>
+      <a class="tile t-tiffany" href="#"><span class="emoji">🎁</span><span class="name">Наборы</span></a>
+      <a class="tile t-gold" href="#"><span class="emoji">💎</span><span class="name">Премиум</span></a>
+      <a class="tile t-ink" href="#"><span class="emoji">💌</span><span class="name">Открытки</span></a>
+    </nav>
+  </section>
+
+  <!-- Хиты -->
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Хиты</h2>
+      <a class="section-link" href="#">Все</a>
+    </div>
+    <div class="grid-products">
+      <article class="card">
+        <div class="cover cv-hero"><span>🧸</span><span class="badge b-hit">Хит</span></div>
+        <div class="card-body">
+          <div class="card-title">Мишка «Обними меня»</div>
+          <div class="card-sub">40 см · плюш</div>
+          <div class="card-row">
+            <span class="price">1 890 ₽</span>
+            <button class="btn-add" aria-label="Добавить в корзину" data-toast="Мишка добавлен в корзину">+</button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="cover cv-hero"><span>🕯️</span><span class="badge b-new">Новинка</span></div>
+        <div class="card-body">
+          <div class="card-title">Свеча «Тёплый вечер»</div>
+          <div class="card-sub">ваниль · 30 часов</div>
+          <div class="card-row">
+            <span class="price">790 ₽ <small>990 ₽</small></span>
+            <button class="btn-add" aria-label="Добавить в корзину" data-toast="Свеча добавлена в корзину">+</button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="cover cv-hero"><span>🍫</span><span class="badge b-sale">−20%</span></div>
+        <div class="card-body">
+          <div class="card-title">Набор шоколада ручной работы</div>
+          <div class="card-sub">9 конфет · коробка</div>
+          <div class="card-row">
+            <span class="price">1 190 ₽</span>
+            <button class="btn-add" aria-label="Добавить в корзину" data-toast="Набор добавлен в корзину">+</button>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="cover cv-hero"><span>🌹</span></div>
+        <div class="card-body">
+          <div class="card-title">Букет «Нежность»</div>
+          <div class="card-sub">15 пионовидных роз</div>
+          <div class="card-row">
+            <span class="price">3 490 ₽</span>
+            <button class="btn-add" aria-label="Добавить в корзину" data-toast="Букет добавлен в корзину">+</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Новинки: лента -->
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Новинки</h2>
+      <a class="section-link" href="#">Все</a>
+    </div>
+    <div class="rail no-scrollbar lv-edge-fade">
+      <article class="card">
+        <div class="cover cv-ink"><span>💍</span></div>
+        <div class="card-body">
+          <div class="card-title">Парные браслеты</div>
+          <span class="pill p-tiffany"><span class="lv-dot"></span>В наличии</span>
+        </div>
+      </article>
+      <article class="card">
+        <div class="cover cv-ink"><span>📸</span></div>
+        <div class="card-body">
+          <div class="card-title">Фотокнига «Мы»</div>
+          <span class="pill p-gold"><span class="lv-dot"></span>Премиум</span>
+        </div>
+      </article>
+      <article class="card">
+        <div class="cover cv-ink"><span>🧩</span></div>
+        <div class="card-body">
+          <div class="card-title">Пазл по фото</div>
+          <span class="pill p-grey">Под заказ</span>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<nav class="bottom-nav" aria-label="Навигация">
+  <a class="nav-item active" href="#" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+    <span>Главная</span>
+  </a>
+  <a class="nav-item" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <span>Каталог</span>
+  </a>
+  <a class="nav-item" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.7-9.3-9.2C1.3 7.7 3.7 4.5 7 4.5c2.1 0 3.9 1.3 5 3 1.1-1.7 2.9-3 5-3 3.3 0 5.7 3.2 4.3 6.8-1.8 4.5-9.3 9.2-9.3 9.2Z"/></svg>
+    <span>Избранное</span>
+  </a>
+  <a class="nav-item" href="#">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 20c1.5-3.4 4.3-5 7.5-5s6 1.6 7.5 5"/></svg>
+    <span>Профиль</span>
+  </a>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* Тема: канонический applyTheme (localStorage + meta theme-color) */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('lovii_theme', t); }catch(e){}
+  var m = document.getElementById('metaTheme');
+  if(m) m.content = t === 'dark' ? '#171219' : '#f64a8a';
+}
+document.getElementById('themeBtn').addEventListener('click', function(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* Toast: один элемент переиспользуется */
+var toastEl = document.getElementById('toast'), toastTimer;
+function showToast(text){
+  toastEl.textContent = '✓ ' + text;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
+}
+document.querySelectorAll('[data-toast]').forEach(function(b){
+  b.addEventListener('click', function(){ showToast(b.getAttribute('data-toast')); });
+});
+</script>
+</body>
+</html>

@@ -10,6 +10,8 @@
 | Витрина-приложение | `bestdeejay-design/lovii_demo` | master | https://lovii.mobiap.com | Эталон реализации, канон стилей |
 | Посадочная страница | `bestdeejay-design/lovii-site` | main | https://bestdeejay-design.github.io/lovii-site/ | Информационная витрина |
 
+Клиентские роли LOVII (для новых экранов): **клиент** · **бизнес** · **партнёр** · **амбассадор** · **инвестор**. Референс-экраны каждой роли — `examples/01…05.html` (см. `examples/README.md`); собирать новый экран начинай с каркаса референса.
+
 - Канон стилей — **lovii.mobiap.com**. Токены канона — `tokens/tokens.css` и `tokens/design-tokens.json` в этом репозитории.
 - lovii-site — Next.js static export в `site-src/` (Tailwind 4, хеш-роуты `#/…`, деплой GitHub Actions).
 - lovii_demo — ванильный HTML/CSS/JS + service worker `sw.js` (кэш `lovii-vN`), ветка master деплоится напрямую.
@@ -30,11 +32,13 @@
 ## 3. Как применять (порядок работы агента)
 
 1. Прочитай `docs/01-principles.md` — принципы и приоритет источников.
-2. Для цвета/текста/геометрии — сверяйся с `tokens/tokens.css` (значения) и docs/02–04 (правила применения).
-3. Для тем — docs/05 (контракт) + копируй anti-FOUC/applyTheme как есть.
-4. Перед завершением задачи прогони `docs/checklist.md` — это приёмка.
-5. Если нужного токена нет — предложи токен (имя `--lv-*` по аналогии), внеси в tokens.css + design-tokens.json + style-guide (пересборка: `python3 tools/build-style-guide.py`), и только потом используй.
-6. Зафиксируй изменения: CHANGELOG.md (semver) + таблица расхождений (если затронута).
+2. Для нового экрана: определи роль → возьми каркас из `examples/` (01 клиент · 02 бизнес · 03 партнёр · 04 амбассадор · 05 инвестор).
+3. Компоненты собирай готовыми сниппетами из `docs/07-patterns.md`; для цвета/текста/геометрии — сверяйся с `tokens/tokens.css` (значения) и docs/02–04 (правила).
+4. Для тем — docs/05 (контракт) + копируй anti-FOUC/applyTheme как есть (есть и в SKILL.md, и в docs/07 §1).
+5. Типовые процедуры (новый токен, приёмка, перенос из легаси) — по рецептам `docs/08-recipes.md`.
+6. Перед завершением задачи прогони `docs/checklist.md` — это приёмка.
+7. Если нужного токена нет — предложи токен (имя `--lv-*` по аналогии), внеси в tokens.css + design-tokens.json + style-guide (пересборка: `python3 tools/build-style-guide.py`), и только потом используй.
+8. Зафиксируй изменения: CHANGELOG.md (semver) + таблица расхождений (если затронута).
 
 ## 4. Маппинг имён (легаси ↔ канон)
 
@@ -47,5 +51,8 @@
 - Значения и правила: docs/02-color · 03-typography · 04-space-shape-motion
 - Темы: docs/05-theming
 - Интеграция и расхождения: docs/06-application
+- Компоненты (сниппеты): docs/07-patterns
+- Рецепты типовых задач: docs/08-recipes
+- Референсы по ролям: examples/README.md
 - Приёмка: docs/checklist.md
 - Визуально: style-guide.html (обе темы)

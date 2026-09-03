@@ -1,6 +1,6 @@
 {
   "$name": "lovii-design-tokens",
-  "$version": "1.0.0",
+  "$version": "1.1.0",
   "$updated": "2026-09-04",
   "$description": "Канонические дизайн-токены LOVII «Лови». Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css). Формат: упрощённый W3C Design Tokens (поля $value, $type, $desc).",
   "$canonical": {
@@ -39,7 +39,10 @@
       "tiffany": { "$value": "linear-gradient(135deg, #e0f7f6, #eefcfb)", "$type": "gradient", "$desc": "Подложка-плитка категории tiffany." },
       "gold": { "$value": "linear-gradient(135deg, #f7edda, #fbf5ea)", "$type": "gradient", "$desc": "Подложка-плитка категории gold." },
       "sand": { "$value": "linear-gradient(135deg, #f3e9dc, #faf4ec)", "$type": "gradient", "$desc": "Подложка-плитка категории sand." },
-      "ink": { "$value": "linear-gradient(135deg, #f4f4f4, #fafafa)", "$type": "gradient", "$desc": "Подложка-плитка категории ink (нейтральная)." }
+      "ink": { "$value": "linear-gradient(135deg, #f4f4f4, #fafafa)", "$type": "gradient", "$desc": "Подложка-плитка категории ink (нейтральная)." },
+      "onTile": { "$value": "#1a1a1a", "$type": "color", "$desc": "Основной текст НА плитках (tile-*). Плитки фиксированно светлые — их текст не берётся из темовых ink/dim. Введено в v1.1.0." },
+      "onTileDim": { "$value": "#8a7a84", "$type": "color", "$desc": "Вторичный текст на плитках: условия уровней, подписи." },
+      "chip": { "$value": "rgba(26, 26, 26, 0.07)", "$type": "color", "$desc": "Нейтральный чип на плитке (пара с onTileDim): «×1,5 баллы» и т.п." }
     },
     "theme": {
       "light": {

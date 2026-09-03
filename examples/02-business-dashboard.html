@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#f64a8a">
+<title>LOVII · Пример: дашборд (роль «Бизнес»)</title>
+<script>
+(function(){try{var t=localStorage.getItem('lovii_theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:var(--lv-font); background:var(--lv-bg); color:var(--lv-ink); -webkit-font-smoothing:antialiased; }
+img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; }
+html[data-theme="light"] img.logo-dark-img { display:none; }
+html[data-theme="dark"] img.logo-light-img { display:none; }
+
+/* Хедер */
+.app-header {
+  position:sticky; top:0; z-index:40; height:var(--lv-header-h);
+  display:flex; align-items:center; gap:12px; padding:0 var(--lv-pad-x);
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.role-pill { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--lv-dim); }
+.theme-btn { margin-left:auto; width:36px; height:36px; border-radius:999px; background:var(--lv-surface);
+  display:flex; align-items:center; justify-content:center; font-size:16px; border:0; cursor:pointer; transition:transform .15s ease; }
+.theme-btn:active { transform:scale(.95); }
+
+/* Каркас: 480px мобайл → 1120px десктоп */
+.view { max-width:var(--lv-container); margin:0 auto; padding:0 var(--lv-pad-x) 48px; }
+@media (min-width:640px){ .view { max-width:var(--lv-container-wide); } }
+
+.page-title { margin-top:20px; font-size:26px; font-weight:800; letter-spacing:-.02em; }
+.page-sub { margin-top:4px; font-size:14px; color:var(--lv-dim); }
+
+/* Сегменты-переключатели периода */
+.segments { margin-top:16px; display:inline-flex; padding:4px; gap:4px; border-radius:999px; background:var(--lv-surface); }
+.segment { border:0; cursor:pointer; padding:8px 18px; border-radius:999px; font-size:13px; font-weight:600;
+  color:var(--lv-dim); background:transparent; transition:all .2s ease; font-family:inherit; }
+.segment.active { background:var(--lv-card); color:var(--lv-ink); box-shadow:var(--lv-shadow-soft); }
+
+/* KPI-сетка: 2 колонки мобайл → 4 десктоп */
+.kpi-grid { margin-top:20px; display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+@media (min-width:640px){ .kpi-grid { grid-template-columns:repeat(4,1fr); } }
+.kpi {
+  background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px;
+  padding:16px; box-shadow:var(--lv-shadow-soft); transition:box-shadow .2s ease, transform .15s ease;
+}
+.kpi:hover { box-shadow:var(--lv-shadow-lift); }
+.kpi .label { font-size:12px; font-weight:600; color:var(--lv-dim); }
+.kpi .value { margin-top:6px; font-size:26px; font-weight:800; letter-spacing:-.02em; }
+.kpi .delta { margin-top:8px; display:inline-flex; }
+.kpi.accent { background:var(--lv-kpi-soft); border-color:transparent; }
+.kpi.accent .value { background-image:var(--lv-gradient-brand); -webkit-background-clip:text; background-clip:text; color:transparent; }
+
+/* График: CSS-гистограмма (без библиотек) */
+.chart-card { margin-top:20px; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); padding:20px 16px 16px; }
+.chart-head { display:flex; align-items:baseline; justify-content:space-between; padding:0 4px 14px; }
+.chart-title { font-size:16px; font-weight:700; }
+.chart-note { font-size:11px; color:var(--lv-dim); }
+.bars { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; align-items:end; height:140px; }
+.bar-wrap { display:flex; flex-direction:column; align-items:center; gap:8px; height:100%; justify-content:flex-end; }
+.bar { width:100%; max-width:36px; border-radius:8px 8px 4px 4px; background-image:var(--lv-gradient-brand); opacity:.9; animation:grow .6s ease-out both; }
+.bar.muted { background:var(--lv-surface); opacity:1; }
+.bar.tiff { background-image:var(--lv-gradient-tiffany); }
+.bar-label { font-size:11px; color:var(--lv-dim); }
+@keyframes grow { from { transform:scaleY(0); transform-origin:bottom; } to { transform:scaleY(1); transform-origin:bottom; } }
+
+/* Заказы: строки внутри одной карточки */
+.list-card { margin-top:20px; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); overflow:hidden; }
+.list-head { padding:16px 16px 12px; display:flex; align-items:center; justify-content:space-between; }
+.list-title { font-size:16px; font-weight:700; }
+.row { display:flex; align-items:center; gap:12px; padding:12px 16px; border-top:1px solid var(--lv-line-2); transition:background .15s ease; }
+.row:hover { background:var(--lv-surface); }
+.avatar { width:36px; height:36px; border-radius:999px; flex:none; display:flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:700; }
+.av-pink { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
+.av-tiff { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.av-gold { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
+.row-main { min-width:0; flex:1; }
+.row-title { font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.row-sub { font-size:11px; color:var(--lv-dim); margin-top:1px; }
+.row-sum { font-size:14px; font-weight:700; white-space:nowrap; }
+
+/* Пилюли статусов: только soft-пары канона */
+.pill { padding:5px 11px; border-radius:999px; font-size:11px; font-weight:600; white-space:nowrap; }
+.s-new { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
+.s-done { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.s-ship { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
+.s-cancel { background:var(--lv-grey-soft); color:#999; }
+
+/* Кнопки */
+.actions { margin-top:20px; display:flex; gap:10px; }
+.btn { flex:1; height:48px; border:0; cursor:pointer; border-radius:999px; font-family:inherit;
+  font-size:15px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  transition:transform .15s ease, box-shadow .2s ease; }
+.btn:active { transform:scale(.96); }
+.btn-primary { background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); box-shadow:var(--lv-shadow-lift); }
+.btn-primary:hover { box-shadow:var(--lv-shadow-toast); }
+.btn-ghost { background:var(--lv-surface); color:var(--lv-ink); }
+.btn-ghost:hover { background:var(--lv-grey-soft); }
+
+@media (min-width:640px){
+  .actions { justify-content:flex-end; }
+  .btn { flex:0 0 auto; padding:0 28px; }
+}
+</style>
+</head>
+<body>
+<header class="app-header">
+  <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="Лови">
+  <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="Лови">
+  <span class="role-pill">Бизнес</span>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+</header>
+
+<main class="view">
+  <h1 class="page-title lv-enter">Дашборд</h1>
+  <p class="page-sub">Сводка по магазину за период</p>
+
+  <!-- Сегменты: активный = card + shadow-soft -->
+  <div class="segments" role="tablist" aria-label="Период">
+    <button class="segment" role="tab">День</button>
+    <button class="segment active" role="tab" aria-selected="true">Неделя</button>
+    <button class="segment" role="tab">Месяц</button>
+  </div>
+
+  <!-- KPI: акцентная карточка на kpi-soft, значение — градиентный текст -->
+  <section class="kpi-grid" aria-label="Ключевые показатели">
+    <div class="kpi accent">
+      <div class="label">Выручка</div>
+      <div class="value">284 500 ₽</div>
+      <span class="pill s-done">+18%</span>
+    </div>
+    <div class="kpi">
+      <div class="label">Заказы</div>
+      <div class="value">146</div>
+      <span class="pill s-done">+12%</span>
+    </div>
+    <div class="kpi">
+      <div class="label">Средний чек</div>
+      <div class="value">1 949 ₽</div>
+      <span class="pill s-new">+4%</span>
+    </div>
+    <div class="kpi">
+      <div class="label">Конверсия</div>
+      <div class="value">3,8%</div>
+      <span class="pill s-cancel">−0,3%</span>
+    </div>
+  </section>
+
+  <!-- График: бары на градиентах канона -->
+  <section class="chart-card" aria-label="Продажи по дням">
+    <div class="chart-head">
+      <h2 class="chart-title">Продажи по дням</h2>
+      <span class="chart-note">₽ / день</span>
+    </div>
+    <div class="bars">
+      <div class="bar-wrap"><div class="bar muted" style="height:38%"></div><span class="bar-label">Пн</span></div>
+      <div class="bar-wrap"><div class="bar muted" style="height:52%"></div><span class="bar-label">Вт</span></div>
+      <div class="bar-wrap"><div class="bar" style="height:64%"></div><span class="bar-label">Ср</span></div>
+      <div class="bar-wrap"><div class="bar muted" style="height:47%"></div><span class="bar-label">Чт</span></div>
+      <div class="bar-wrap"><div class="bar tiff" style="height:88%"></div><span class="bar-label">Пт</span></div>
+      <div class="bar-wrap"><div class="bar" style="height:100%"></div><span class="bar-label">Сб</span></div>
+      <div class="bar-wrap"><div class="bar" style="height:72%"></div><span class="bar-label">Вс</span></div>
+    </div>
+  </section>
+
+  <!-- Последние заказы -->
+  <section class="list-card" aria-label="Последние заказы">
+    <div class="list-head">
+      <h2 class="list-title">Последние заказы</h2>
+      <a class="section-link" href="#" style="font-size:13px;font-weight:600;color:var(--lv-pink);text-decoration:none">Все</a>
+    </div>
+    <div class="row">
+      <span class="avatar av-pink">АК</span>
+      <div class="row-main">
+        <div class="row-title">Анна К. · заказ #1042</div>
+        <div class="row-sub">сегодня, 12:40 · 2 товара</div>
+      </div>
+      <span class="pill s-new">Новый</span>
+      <span class="row-sum">3 480 ₽</span>
+    </div>
+    <div class="row">
+      <span class="avatar av-tiff">МС</span>
+      <div class="row-main">
+        <div class="row-title">Мария С. · заказ #1041</div>
+        <div class="row-sub">сегодня, 11:02 · 1 товар</div>
+      </div>
+      <span class="pill s-ship">В пути</span>
+      <span class="row-sum">1 890 ₽</span>
+    </div>
+    <div class="row">
+      <span class="avatar av-gold">ДВ</span>
+      <div class="row-main">
+        <div class="row-title">Дмитрий В. · заказ #1040</div>
+        <div class="row-sub">вчера, 19:25 · 4 товара</div>
+      </div>
+      <span class="pill s-done">Доставлен</span>
+      <span class="row-sum">7 260 ₽</span>
+    </div>
+    <div class="row">
+      <span class="avatar av-pink">ОП</span>
+      <div class="row-main">
+        <div class="row-title">Ольга П. · заказ #1039</div>
+        <div class="row-sub">вчера, 16:48 · отменён покупателем</div>
+      </div>
+      <span class="pill s-cancel">Отменён</span>
+      <span class="row-sum">990 ₽</span>
+    </div>
+  </section>
+
+  <div class="actions">
+    <button class="btn btn-ghost">Экспорт CSV</button>
+    <button class="btn btn-primary">+ Добавить товар</button>
+  </div>
+</main>
+
+<script>
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('lovii_theme', t); }catch(e){}
+  var m = document.getElementById('metaTheme');
+  if(m) m.content = t === 'dark' ? '#171219' : '#f64a8a';
+}
+document.getElementById('themeBtn').addEventListener('click', function(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+/* Сегменты: активный переключается мгновенно */
+document.querySelectorAll('.segment').forEach(function(s){
+  s.addEventListener('click', function(){
+    document.querySelectorAll('.segment').forEach(function(x){ x.classList.remove('active'); x.removeAttribute('aria-selected'); });
+    s.classList.add('active'); s.setAttribute('aria-selected','true');
+  });
+});
+</script>
+</body>
+</html>
