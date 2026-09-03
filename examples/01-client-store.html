@@ -39,6 +39,14 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   font-size:16px; transition:transform .15s ease, background .2s ease;
 }
 .theme-btn:active { transform:scale(.95); }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* ============ Секции: 20px сверху, 12px до контента ============ */
 .section { margin-top:20px; }
@@ -64,7 +72,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   transition:transform .15s ease;
 }
 .tile:active { transform:scale(.96); }
-.tile .emoji { font-size:24px; }
+.tile .emoji { width:26px; height:26px; color:var(--lv-on-tile); fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .tile .name { margin-top:6px; font-size:11px; font-weight:600; color:var(--lv-on-tile); } /* текст НА плитке — фиксированный, не темовый */
 .t-pink { background-image:var(--lv-tile-pink); } .t-tiffany { background-image:var(--lv-tile-tiffany); }
 .t-gold { background-image:var(--lv-tile-gold); } .t-ink { background-image:var(--lv-tile-ink); }
@@ -80,6 +88,12 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
 .card:hover { box-shadow:var(--lv-shadow-lift); }
 .card:active { transform:scale(.97); }
 .cover { position:relative; height:120px; display:flex; align-items:center; justify-content:center; font-size:40px; }
+.cover .cv-ico { width:46px; height:46px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.cv-hero .cv-ico { color:var(--lv-pink-dark); }
+.cv-ink .cv-ico { color:#ffffff; }
+.cover .cv-ico { width:46px; height:46px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.cv-hero .cv-ico { color:var(--lv-pink-dark); }
+.cv-ink .cv-ico { color:#ffffff; }
 .cv-hero { background:linear-gradient(180deg, var(--lv-hero-top), var(--lv-card)); }
 .cv-ink { background-image:var(--lv-gradient-ink); }
 .badge {
@@ -158,7 +172,10 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
     <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="Лови">
     <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="Лови">
   </a>
-  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему" title="Светлая/тёмная тема">
+  <svg class="tb-moon" aria-hidden="true"><use href="../assets/icons.svg#i-moon"/></svg>
+  <svg class="tb-sun" aria-hidden="true"><use href="../assets/icons.svg#i-sun"/></svg>
+</button>
 </header>
 
 <main class="view">
@@ -173,10 +190,10 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   <section class="section">
     <div class="section-head"><h2 class="section-title">Категории</h2></div>
     <nav class="tiles" aria-label="Категории">
-      <a class="tile t-pink" href="#"><span class="emoji">💝</span><span class="name">Для неё</span></a>
-      <a class="tile t-tiffany" href="#"><span class="emoji">🎁</span><span class="name">Наборы</span></a>
-      <a class="tile t-gold" href="#"><span class="emoji">💎</span><span class="name">Премиум</span></a>
-      <a class="tile t-ink" href="#"><span class="emoji">💌</span><span class="name">Открытки</span></a>
+      <a class="tile t-pink" href="#"><svg class="emoji" aria-hidden="true"><use href="../assets/icons.svg#i-heart"/></svg><span class="name">Для неё</span></a>
+      <a class="tile t-tiffany" href="#"><svg class="emoji" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg><span class="name">Наборы</span></a>
+      <a class="tile t-gold" href="#"><svg class="emoji" aria-hidden="true"><use href="../assets/icons.svg#i-gem"/></svg><span class="name">Премиум</span></a>
+      <a class="tile t-ink" href="#"><svg class="emoji" aria-hidden="true"><use href="../assets/icons.svg#i-mail"/></svg><span class="name">Открытки</span></a>
     </nav>
   </section>
 
@@ -188,7 +205,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
     </div>
     <div class="grid-products">
       <article class="card">
-        <div class="cover cv-hero"><span>🧸</span><span class="badge b-hit">Хит</span></div>
+        <div class="cover cv-hero"><svg class="cv-ico" aria-hidden="true"><use href="../assets/icons.svg#i-bear"/></svg><span class="badge b-hit">Хит</span></div>
         <div class="card-body">
           <div class="card-title">Мишка «Обними меня»</div>
           <div class="card-sub">40 см · плюш</div>
@@ -199,7 +216,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
         </div>
       </article>
       <article class="card">
-        <div class="cover cv-hero"><span>🕯️</span><span class="badge b-new">Новинка</span></div>
+        <div class="cover cv-hero"><svg class="cv-ico" aria-hidden="true"><use href="../assets/icons.svg#i-flame"/></svg><span class="badge b-new">Новинка</span></div>
         <div class="card-body">
           <div class="card-title">Свеча «Тёплый вечер»</div>
           <div class="card-sub">ваниль · 30 часов</div>
@@ -210,7 +227,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
         </div>
       </article>
       <article class="card">
-        <div class="cover cv-hero"><span>🍫</span><span class="badge b-sale">−20%</span></div>
+        <div class="cover cv-hero"><svg class="cv-ico" aria-hidden="true"><use href="../assets/icons.svg#i-choco"/></svg><span class="badge b-sale">−20%</span></div>
         <div class="card-body">
           <div class="card-title">Набор шоколада ручной работы</div>
           <div class="card-sub">9 конфет · коробка</div>
@@ -221,7 +238,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
         </div>
       </article>
       <article class="card">
-        <div class="cover cv-hero"><span>🌹</span></div>
+        <div class="cover cv-hero"><svg class="cv-ico" aria-hidden="true"><use href="../assets/icons.svg#i-flower"/></svg></div>
         <div class="card-body">
           <div class="card-title">Букет «Нежность»</div>
           <div class="card-sub">15 пионовидных роз</div>
@@ -242,21 +259,21 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
     </div>
     <div class="rail no-scrollbar lv-edge-fade">
       <article class="card">
-        <div class="cover cv-ink"><span>💍</span></div>
+        <div class="cover cv-ink"><svg class="cv-ico" aria-hidden="true"><use href="../assets/icons.svg#i-ring"/></svg></div>
         <div class="card-body">
           <div class="card-title">Парные браслеты</div>
           <span class="pill p-tiffany"><span class="lv-dot"></span>В наличии</span>
         </div>
       </article>
       <article class="card">
-        <div class="cover cv-ink"><span>📸</span></div>
+        <div class="cover cv-ink"><svg class="cv-ico" aria-hidden="true"><use href="../assets/icons.svg#i-camera"/></svg></div>
         <div class="card-body">
           <div class="card-title">Фотокнига «Мы»</div>
           <span class="pill p-gold"><span class="lv-dot"></span>Премиум</span>
         </div>
       </article>
       <article class="card">
-        <div class="cover cv-ink"><span>🧩</span></div>
+        <div class="cover cv-ink"><svg class="cv-ico" aria-hidden="true"><use href="../assets/icons.svg#i-shapes"/></svg></div>
         <div class="card-body">
           <div class="card-title">Пазл по фото</div>
           <span class="pill p-grey">Под заказ</span>

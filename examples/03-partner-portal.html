@@ -30,6 +30,14 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
 .theme-btn { margin-left:auto; width:36px; height:36px; border-radius:999px; background:var(--lv-surface);
   display:flex; align-items:center; justify-content:center; font-size:16px; border:0; cursor:pointer; transition:transform .15s ease; }
 .theme-btn:active { transform:scale(.95); }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* Линейные экраны: капсула 480px → narrow 760px */
 .view { max-width:var(--lv-container); margin:0 auto; padding:0 var(--lv-pad-x) 48px; }
@@ -84,6 +92,8 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
 .row { display:flex; align-items:center; gap:12px; padding:14px 16px; border-top:1px solid var(--lv-line-2); }
 .row:first-child { border-top:0; }
 .row-icon { width:36px; height:36px; border-radius:999px; flex:none; display:flex; align-items:center; justify-content:center; font-size:15px; }
+.row-icon svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.row-icon svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .ri-pink { background:var(--lv-soft-pink); } .ri-tiff { background:var(--lv-soft-tiffany); } .ri-gold { background:var(--lv-soft-gold); } .ri-grey { background:var(--lv-grey-soft); }
 .row-main { flex:1; min-width:0; }
 .row-title { font-size:14px; font-weight:600; }
@@ -120,7 +130,10 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="Лови">
   <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="Лови">
   <span class="role-pill">Партнёр</span>
-  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему" title="Светлая/тёмная тема">
+  <svg class="tb-moon" aria-hidden="true"><use href="../assets/icons.svg#i-moon"/></svg>
+  <svg class="tb-sun" aria-hidden="true"><use href="../assets/icons.svg#i-sun"/></svg>
+</button>
 </header>
 
 <main class="view">
@@ -163,7 +176,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
     <h2 class="section-title">Выплаты</h2>
     <div class="list-card">
       <div class="row">
-        <span class="row-icon ri-tiff">✓</span>
+        <span class="row-icon ri-tiff"><svg aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg></span>
         <div class="row-main">
           <div class="row-title">12 400 ₽ → СБП</div>
           <div class="row-sub">25 августа · удержано: 0 ₽</div>
@@ -171,7 +184,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
         <span class="pill p-done">Выплачено</span>
       </div>
       <div class="row">
-        <span class="row-icon ri-gold">⏳</span>
+        <span class="row-icon ri-gold"><svg aria-hidden="true"><use href="../assets/icons.svg#i-clock"/></svg></span>
         <div class="row-main">
           <div class="row-title">5 940 ₽ → СБП</div>
           <div class="row-sub">5 сентября · ожидает выплаты</div>
@@ -179,7 +192,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
         <span class="pill p-wait">В ожидании</span>
       </div>
       <div class="row">
-        <span class="row-icon ri-grey">✗</span>
+        <span class="row-icon ri-grey"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg></span>
         <div class="row-main">
           <div class="row-title">880 ₽ → карта •• 4218</div>
           <div class="row-sub">12 августа · реквизиты недействительны</div>
@@ -194,19 +207,19 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
     <h2 class="section-title">Уровни программы</h2>
     <div class="list-card">
       <div class="row">
-        <span class="row-icon ri-grey">🥉</span>
+        <span class="row-icon ri-grey"><svg aria-hidden="true"><use href="../assets/icons.svg#i-award"/></svg></span>
         <div class="row-main"><div class="row-title">Bronze — комиссия 5%</div><div class="row-sub">от 0 заказов в месяц</div></div>
       </div>
       <div class="row">
-        <span class="row-icon ri-tiff">🥈</span>
+        <span class="row-icon ri-tiff"><svg aria-hidden="true"><use href="../assets/icons.svg#i-award"/></svg></span>
         <div class="row-main"><div class="row-title">Silver — комиссия 6%</div><div class="row-sub">от 20 заказов в месяц</div></div>
       </div>
       <div class="row">
-        <span class="row-icon ri-gold">🥇</span>
+        <span class="row-icon ri-gold"><svg aria-hidden="true"><use href="../assets/icons.svg#i-award"/></svg></span>
         <div class="row-main"><div class="row-title">Gold — комиссия 8%</div><div class="row-sub">от 40 заказов в месяц</div></div>
       </div>
       <div class="row">
-        <span class="row-icon ri-pink">💎</span>
+        <span class="row-icon ri-pink"><svg aria-hidden="true"><use href="../assets/icons.svg#i-gem"/></svg></span>
         <div class="row-main"><div class="row-title">Platinum — комиссия 10%</div><div class="row-sub">от 60 заказов в месяц</div></div>
       </div>
     </div>

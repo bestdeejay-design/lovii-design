@@ -89,7 +89,9 @@ html[data-theme="dark"]  img.logo-light-img { display:none; }
 ```
 Навигация ДС: на любой странице ДС подключай `<script src="assets/nav.js" defer></script>` перед `</body>` — кнопка «☰» + шит-меню между хабом, гайдом и референсами (docs/07 §14).
 
-Остальные компоненты — бери готовыми из `docs/07-patterns.md` (§1–§14), не пиши с нуля.
+Иконки: ТОЛЬКО SVG из `assets/icons.svg` (`<svg class="ico" aria-hidden="true"><use href="assets/icons.svg#i-heart"/></svg>`). Эмоджи в UI запрещены (v1.3). Размеры/цвета иконок и анатомия компонентов — `docs/09-components.md`.
+
+Остальные компоненты — бери готовыми из `docs/07-patterns.md` (§1–§14) и `docs/09-components.md` (анатомия + состояния), не пиши с нуля.
 
 ## Процедура работы
 

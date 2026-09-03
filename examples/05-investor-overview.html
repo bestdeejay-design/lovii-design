@@ -30,6 +30,14 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
 .theme-btn { margin-left:auto; width:36px; height:36px; border-radius:999px; background:var(--lv-surface);
   display:flex; align-items:center; justify-content:center; font-size:16px; border:0; cursor:pointer; transition:transform .15s ease; }
 .theme-btn:active { transform:scale(.95); }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* Документный экран: узкая колонка 760px */
 .view { max-width:var(--lv-container); margin:0 auto; padding:0 var(--lv-pad-x) 48px; }
@@ -108,7 +116,10 @@ footer { margin-top:32px; padding-top:16px; border-top:1px solid var(--lv-hairli
   <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="Лови">
   <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="Лови">
   <span class="role-pill">Инвесторам</span>
-  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему" title="Светлая/тёмная тема">
+  <svg class="tb-moon" aria-hidden="true"><use href="../assets/icons.svg#i-moon"/></svg>
+  <svg class="tb-sun" aria-hidden="true"><use href="../assets/icons.svg#i-sun"/></svg>
+</button>
 </header>
 
 <main class="view">

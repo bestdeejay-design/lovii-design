@@ -41,6 +41,14 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   font-size:16px; transition:transform .15s ease, background .2s ease;
 }
 .theme-btn:active { transform:scale(.95); }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* Hero на брендовом градиенте */
 .hero {
@@ -99,6 +107,8 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   border-bottom:1px solid var(--lv-hairline);
 }
 .doc-row:last-child { border-bottom:none; }
+.doc-num svg { width:15px; height:15px; display:block; fill:none; stroke:var(--lv-pink); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.doc-num svg { width:15px; height:15px; display:block; fill:none; stroke:var(--lv-pink); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .doc-num { font-size:12px; font-weight:700; color:var(--lv-dim); font-variant-numeric:tabular-nums; flex:none; width:26px; }
 .doc-row .t { font-size:14px; font-weight:600; }
 .doc-row .d { font-size:12px; color:var(--lv-dim); margin-left:auto; text-align:right; }
@@ -122,7 +132,10 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   <img src="assets/lovii-logo-light.svg" class="logo-light-img" alt="LOVII">
   <img src="assets/lovii-logo-dark.svg" class="logo-dark-img" alt="LOVII">
   <span class="ver-pill">v1.2.0</span>
-  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему" title="Светлая/тёмная тема">
+  <svg class="tb-moon" aria-hidden="true"><use href="assets/icons.svg#i-moon"/></svg>
+  <svg class="tb-sun" aria-hidden="true"><use href="assets/icons.svg#i-sun"/></svg>
+</button>
 </header>
 
 <div class="wrap">
@@ -221,11 +234,14 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
       <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/08-recipes.md" target="_blank" rel="noopener">
         <span class="doc-num">08</span><span class="t">Рецепты агента</span><span class="d">8 процедур Р1–Р8</span>
       </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/09-components.md" target="_blank" rel="noopener">
+        <span class="doc-num">09</span><span class="t">Компоненты</span><span class="d">анатомия, состояния, иконки</span>
+      </a>
       <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/checklist.md" target="_blank" rel="noopener">
         <span class="doc-num">✓</span><span class="t">Чек-лист приёмки</span><span class="d">перед каждым коммитом</span>
       </a>
       <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/AGENTS.md" target="_blank" rel="noopener">
-        <span class="doc-num">🤖</span><span class="t">AGENTS.md + SKILL.md</span><span class="d">правила для ИИ</span>
+        <span class="doc-num"><svg aria-hidden="true"><use href="assets/icons.svg#i-bot"/></svg></span><span class="t">AGENTS.md + SKILL.md</span><span class="d">правила для ИИ</span>
       </a>
     </div>
   </section>

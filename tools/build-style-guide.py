@@ -29,6 +29,10 @@ html = (
     + read(TPL / "tpl-js.part.html")
 )
 
+icons_svg = read(ROOT / "assets" / "icons.svg").replace(
+    '<svg xmlns="http://www.w3.org/2000/svg">',
+    '<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">', 1)
+html = html.replace("%%ICON_SPRITE%%", icons_svg)
 html = html.replace("%%TOKENS_CSS%%", tokens_css)
 html = html.replace("%%LOGO_LIGHT_B64%%", logo_light)
 html = html.replace("%%LOGO_DARK_B64%%", logo_dark)

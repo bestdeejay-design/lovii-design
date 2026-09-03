@@ -53,7 +53,7 @@ img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; 
 html[data-theme="light"] img.logo-dark-img { display:none; }
 html[data-theme="dark"]  img.logo-light-img { display:none; }
 ```
-⚠️ Специфичность: селектор с `html[data-theme=…]` бьёт простые классы. Если логотип вложен в блок со своими правилами (`img.xxx-logo`), правило скрытия должно быть не слабее — см. баг из style-guide (`.gs-header img.gs-logo` перебивал скрытие).
+⚠ Специфичность: селектор с `html[data-theme=…]` бьёт простые классы. Если логотип вложен в блок со своими правилами (`img.xxx-logo`), правило скрытия должно быть не слабее — см. баг из style-guide (`.gs-header img.gs-logo` перебивал скрытие).
 
 ### applyTheme (канон)
 
@@ -209,21 +209,22 @@ Don't: бейдж на `soft-*` в тёмной теме — подложки `b
 ### Плитки категорий и уровней (фиксированно светлые подложки)
 
 ```html
-<a class="tile t-pink" href="#"><span class="emoji">💝</span><span class="name">Для неё</span></a>
+<a class="tile t-pink" href="#"><svg class="emoji" aria-hidden="true"><use href="assets/icons.svg#i-heart"/></svg><span class="name">Для неё</span></a>
 ```
 ```css
 .tile { border-radius:12px; padding:14px 8px 10px; text-align:center; text-decoration:none; transition:transform .15s ease; }
 .tile:active { transform:scale(.96); }
+.tile .emoji { width:26px; height:26px; color:var(--lv-on-tile); fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .tile .name { font-size:11px; font-weight:600; color:var(--lv-on-tile); } /* НЕ --lv-ink! */
 .t-pink { background-image:var(--lv-tile-pink); }
 ```
-⚠️ Плитки `tile-*` остаются светлыми в обеих темах, поэтому их текст — только `--lv-on-tile` / `--lv-on-tile-dim`, чипы на плитке — `--lv-tile-chip` + `--lv-on-tile-dim`. Темовые `ink/dim` в тёмной теме станут светлыми и растворятся.
+⚠ Плитки `tile-*` остаются светлыми в обеих темах, поэтому их текст — только `--lv-on-tile` / `--lv-on-tile-dim`, чипы на плитке — `--lv-tile-chip` + `--lv-on-tile-dim`. Темовые `ink/dim` в тёмной теме станут светлыми и растворятся.
 
 ### Карточка товара
 
 ```html
 <article class="card">
-  <div class="cover cv-hero"><span>🧸</span><span class="badge b-hit">Хит</span></div>
+  <div class="cover cv-hero"><span>(мишка)</span><span class="badge b-hit">Хит</span></div>
   <div class="card-body">
     <div class="card-title">Название товара</div>
     <div class="card-sub">40 см · плюш</div>
@@ -359,7 +360,7 @@ Don't: несколько тостов одновременно; белый те
 
 ```html
 <div class="empty">
-  <span class="empty-emoji">💌</span>
+  <svg class="empty-ico" aria-hidden="true"><use href="assets/icons.svg#i-mail"/></svg>
   <div class="empty-title">Пока пусто</div>
   <p class="empty-text">Здесь появятся заказы — оформите первый подарок.</p>
   <button class="btn btn-primary">В каталог</button>
@@ -367,7 +368,7 @@ Don't: несколько тостов одновременно; белый те
 ```
 ```css
 .empty { text-align:center; padding:48px 24px; }
-.empty-emoji { font-size:40px; animation:lv-float 5s ease-in-out infinite; display:inline-block; }
+.empty-ico { width:44px; height:44px; fill:none; stroke:var(--lv-dim); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; animation:lv-float 5s ease-in-out infinite; }
 .empty-title { margin-top:12px; font-size:18px; font-weight:800; }
 .empty-text { margin:6px auto 16px; font-size:14px; color:var(--lv-dim); line-height:1.6; max-width:32ch; }
 ```

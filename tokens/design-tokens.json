@@ -1,6 +1,6 @@
 {
   "$name": "lovii-design-tokens",
-  "$version": "1.2.0",
+  "$version": "1.3.0",
   "$updated": "2026-09-04",
   "$description": "Канонические дизайн-токены LOVII «Лови». Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css). Формат: упрощённый W3C Design Tokens (поля $value, $type, $desc).",
   "$canonical": {
@@ -48,13 +48,13 @@
       "light": {
         "ink": { "$value": "#1a1a1a", "$type": "color", "$desc": "Основной текст." },
         "dim": { "$value": "#888888", "$type": "color", "$desc": "Вторичный текст, подписи, placeholder." },
-        "bg": { "$value": "#f7f2f4", "$type": "color", "$desc": "Фон вокруг капсулы приложения (body)." },
+        "bg": { "$value": "#f8f5f0", "$type": "color", "$desc": "Фон вокруг капсулы приложения (body). v1.3: тёплый бежевый — розоватый #f7f2f4 убран по решению владельца; демка — очередь разноски." },
         "page": { "$value": "#ffffff", "$type": "color", "$desc": "Фон страницы посадки." },
         "card": { "$value": "#ffffff", "$type": "color", "$desc": "Карточки, шиты, навигация." },
         "surface": { "$value": "#f8f8f8", "$type": "color", "$desc": "Заливка контролов: пилюли, инпуты, сегменты, треки." },
         "glass": { "$value": "rgba(255, 255, 255, 0.85)", "$type": "color", "$desc": "Стеклянный хедер/навигация + backdrop-blur(14px)." },
-        "line": { "$value": "#f0e8ec", "$type": "color", "$desc": "Бордер карточек (тёплый розоватый)." },
-        "line2": { "$value": "#f7f2f5", "$type": "color", "$desc": "Разделитель строк внутри карточки (светлее line)." },
+        "line": { "$value": "#ece5da", "$type": "color", "$desc": "Бордер карточек (тёплый бежевый нейтральный, v1.3)." },
+        "line2": { "$value": "#f6f1e8", "$type": "color", "$desc": "Разделитель строк внутри карточки (светлее line, v1.3)." },
         "hairline": { "$value": "rgba(26, 26, 26, 0.08)", "$type": "color", "$desc": "Тонкая линия (юр.блок)." },
         "softPink": { "$value": "rgba(246, 74, 138, 0.12)", "$type": "color", "$desc": "Розовая soft-заливка: плашки, тоновые карточки, qty." },
         "mistPink": { "$value": "rgba(246, 74, 138, 0.06)", "$type": "color", "$desc": "Едва заметная розовая подложка." },
