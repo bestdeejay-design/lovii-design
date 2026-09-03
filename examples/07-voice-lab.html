@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#f64a8a">
+<title>LOVII · Тон-лаборатория: голос, тексты, юр.блок</title>
+<script>
+/* Anti-FOUC: тема ставится ДО CSS. Копировать как есть. */
+(function(){try{var t=localStorage.getItem('lovii_theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+/* ============ Базовый каркас (канон: капсула 480px) ============ */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html { scroll-behavior:auto; } }
+body { font-family:var(--lv-font); background:var(--lv-bg); color:var(--lv-ink); -webkit-font-smoothing:antialiased; }
+.view { max-width:var(--lv-container); margin:0 auto; padding-bottom:calc(var(--lv-nav-h) + 32px + env(safe-area-inset-bottom,0px)); }
+@media (min-width:640px){ .view { max-width:var(--lv-container-wide); padding-bottom:96px; } }
+.no-scrollbar { scrollbar-width:none; } .no-scrollbar::-webkit-scrollbar { display:none; }
+img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; }
+html[data-theme="light"] img.logo-dark-img { display:none; }
+html[data-theme="dark"] img.logo-light-img { display:none; }
+
+/* ============ Хедер: sticky glass, 56px ============ */
+.app-header {
+  position:sticky; top:0; z-index:40; height:var(--lv-header-h);
+  display:flex; align-items:center; gap:12px; padding:0 var(--lv-pad-x);
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.theme-btn {
+  margin-left:auto; width:36px; height:36px; border-radius:999px; flex:none;
+  background:var(--lv-surface); display:flex; align-items:center; justify-content:center;
+  transition:transform .15s ease, background .2s ease;
+}
+.theme-btn:active { transform:scale(.95); }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
+
+/* ============ Hero ============ */
+.hero {
+  margin:16px var(--lv-pad-x) 0; padding:24px 20px; border-radius:16px;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  box-shadow:var(--lv-shadow-lift); position:relative; overflow:hidden;
+}
+.hero .kicker { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.7); }
+.hero h1 { font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1.15; margin:8px 0 6px; }
+.hero p { font-size:14px; color:rgba(255,255,255,.7); line-height:1.6; max-width:44ch; }
+
+/* ============ Якорная лента ============ */
+.anchor-rail { display:flex; gap:8px; overflow-x:auto; padding:14px var(--lv-pad-x) 2px; }
+.anchor-chip {
+  flex:none; display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 14px;
+  border-radius:999px; background:var(--lv-card); border:1px solid var(--lv-line);
+  font-size:12px; font-weight:600; color:var(--lv-ink); text-decoration:none;
+  transition:background .15s ease, border-color .15s ease;
+}
+.anchor-chip .ico { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.anchor-chip:hover { background:var(--lv-soft-pink); border-color:transparent; }
+section[id] { scroll-margin-top:calc(var(--lv-header-h) + 12px); }
+
+/* ============ Секции и панели ============ */
+.section { margin-top:24px; padding:0 var(--lv-pad-x); }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-.02em; }
+.section-sub { font-size:13px; color:var(--lv-dim); line-height:1.6; margin:4px 0 14px; }
+.panel {
+  background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px;
+  box-shadow:var(--lv-shadow-soft); padding:16px;
+}
+.panel + .panel { margin-top:12px; }
+.panel h3 { font-size:15px; font-weight:700; letter-spacing:-.01em; }
+.panel p { font-size:13px; color:var(--lv-dim); line-height:1.6; margin-top:6px; }
+.panel code {
+  font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size:12px; color:var(--lv-pink-dark); background:var(--lv-soft-pink);
+  border-radius:6px; padding:1px 6px;
+}
+
+/* ============ §1 Голос: принципы и пары «пишем / не пишем» ============ */
+.principle-head { display:flex; align-items:center; gap:10px; }
+.principle-num {
+  flex:none; width:26px; height:26px; border-radius:999px;
+  background:var(--lv-soft-pink); color:var(--lv-pink-dark);
+  font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center;
+}
+.say {
+  display:flex; align-items:flex-start; gap:8px; margin-top:10px;
+  font-size:13px; line-height:1.55;
+}
+.say .tag {
+  flex:none; display:inline-flex; align-items:center; gap:4px; height:20px; padding:0 8px;
+  border-radius:999px; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+  margin-top:1px;
+}
+.say .tag svg { width:11px; height:11px; fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+.say.do .tag { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.say.do b { color:var(--lv-tiffany-text); font-weight:600; }
+.say.dont .tag { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
+.say.dont s { color:var(--lv-pink-dark); text-decoration-color:rgba(201,42,106,.5); }
+
+/* ============ §2 Матрица тона: чипы ситуаций + живые панели ============ */
+.tone-chips { display:flex; gap:8px; overflow-x:auto; padding-bottom:2px; }
+.tone-chip {
+  flex:none; display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px;
+  border-radius:999px; border:1px solid var(--lv-line); background:var(--lv-card);
+  font-size:12px; font-weight:600; color:var(--lv-ink); cursor:pointer;
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
+}
+.tone-chip .ico { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.tone-chip:hover { background:var(--lv-surface); }
+.tone-chip.active { background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); border-color:transparent; }
+.tone-stage { margin-top:12px; }
+.demo-row { display:flex; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap; }
+.dont-note {
+  display:flex; gap:8px; align-items:flex-start; margin-top:14px; padding:10px 12px;
+  border-radius:12px; background:var(--lv-soft-pink);
+  font-size:12.5px; line-height:1.55; color:var(--lv-pink-dark);
+}
+.dont-note svg { flex:none; width:14px; height:14px; margin-top:2px; fill:none; stroke:currentColor; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+.dont-note s { text-decoration-color:rgba(201,42,106,.5); }
+
+/* пустое состояние (живой компонент docs/07 §11) */
+.empty-demo { display:flex; flex-direction:column; align-items:center; text-align:center; padding:20px 12px 4px; }
+.empty-demo .big-ico { width:48px; height:48px; fill:none; stroke:var(--lv-dim); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.empty-demo h4 { margin-top:10px; font-size:15px; font-weight:700; }
+.empty-demo p { margin-top:4px; font-size:12.5px; color:var(--lv-dim); }
+
+/* загрузка */
+.skeleton { display:flex; align-items:center; gap:10px; margin-top:14px; }
+.skeleton .bar { height:12px; border-radius:999px; background:var(--lv-grey-soft); overflow:hidden; position:relative; flex:1; }
+.skeleton .bar::after {
+  content:''; position:absolute; inset:0; width:40%;
+  background:var(--lv-surface); border-radius:999px;
+  animation:lv-skeleton 1.2s ease-in-out infinite;
+}
+@keyframes lv-skeleton { 0% { transform:translateX(-100%);} 100% { transform:translateX(320%);} }
+@media (prefers-reduced-motion: reduce){ .skeleton .bar::after { animation:none; } }
+
+/* деньги */
+.money-card { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; padding:14px; border-radius:16px; background:var(--lv-sand-soft); }
+.money-card .sum { font-size:22px; font-weight:800; letter-spacing:-.02em; color:var(--lv-gold-text); font-variant-numeric:tabular-nums; }
+.money-card .lbl { font-size:12px; font-weight:600; color:var(--lv-dim); margin-top:2px; }
+
+/* ============ §3 Числа и время: живая карточка + копирование ============ */
+.mini-card { display:flex; gap:12px; align-items:center; margin-top:12px; }
+.mini-cover { flex:none; width:64px; height:64px; border-radius:14px; display:flex; align-items:center; justify-content:center; background-image:var(--lv-tile-tiffany); }
+.mini-cover svg { width:28px; height:28px; fill:none; stroke:var(--lv-on-tile); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.mini-card .nm { font-size:14px; font-weight:700; }
+.mini-card .mt { font-size:12px; color:var(--lv-dim); margin-top:2px; font-variant-numeric:tabular-nums; }
+.copy-row {
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:11px 2px; border-bottom:1px solid var(--lv-hairline);
+}
+.copy-row:last-child { border-bottom:none; }
+.copy-row .t { font-size:13px; font-weight:600; }
+.copy-row .d { font-size:11.5px; color:var(--lv-dim); margin-top:2px; }
+.copy-btn {
+  flex:none; width:32px; height:32px; border-radius:999px; border:0; cursor:pointer;
+  background:var(--lv-surface); display:flex; align-items:center; justify-content:center;
+  color:var(--lv-ink); transition:background .15s ease, transform .15s ease;
+}
+.copy-btn:hover { background:var(--lv-soft-pink); }
+.copy-btn:active { transform:scale(.92); }
+.copy-btn svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+/* ============ §4 Юр.блок: живой образец ============ */
+.legal-demo {
+  margin-top:14px; padding-top:14px; border-top:1px solid var(--lv-hairline);
+  display:flex; flex-wrap:wrap; gap:6px 14px; font-size:12px; color:var(--lv-dim); line-height:1.7;
+}
+.legal-demo a { color:var(--lv-pink-dark); font-weight:600; text-decoration:none; }
+.legal-demo a:hover { text-decoration:underline; }
+
+/* ============ Футер, тост ============ */
+.footer { margin:40px var(--lv-pad-x) 0; padding-top:16px; border-top:1px solid var(--lv-hairline); font-size:12px; color:var(--lv-dim); line-height:1.7; }
+.footer a { color:var(--lv-pink); font-weight:600; }
+.toast {
+  position:fixed; left:50%; bottom:24px; transform:translate(-50%, 16px);
+  background:var(--lv-ink); color:var(--lv-bg); font-size:13px; font-weight:600;
+  padding:10px 18px; border-radius:999px; opacity:0; pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease; z-index:90;
+  text-align:center; max-width:calc(100% - 32px);
+}
+.toast.show { opacity:1; transform:translate(-50%, 0); }
+.toast .d { display:block; font-size:11px; font-weight:400; color:var(--lv-toast-d); margin-top:2px; }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="LOVII">
+  <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="LOVII">
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему" title="Светлая/тёмная тема">
+    <svg class="tb-moon" aria-hidden="true"><use href="../assets/icons.svg#i-moon"/></svg>
+    <svg class="tb-sun" aria-hidden="true"><use href="../assets/icons.svg#i-sun"/></svg>
+  </button>
+</header>
+
+<div class="view">
+
+  <section class="hero">
+    <div class="kicker">Дизайн-система · v4</div>
+    <h1>Тон-лаборатория</h1>
+    <p>Голос «Лови» и тексты вживую: пять принципов, матрица тона, числа и время, юр.блок. Канон — docs/11-brand-voice.md.</p>
+  </section>
+
+  <nav class="anchor-rail no-scrollbar" aria-label="Разделы страницы">
+    <a class="anchor-chip" href="#s-voice"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-heart"/></svg>Голос</a>
+    <a class="anchor-chip" href="#s-tone"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-shapes"/></svg>Матрица тона</a>
+    <a class="anchor-chip" href="#s-copy"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-copy"/></svg>Числа и тексты</a>
+    <a class="anchor-chip" href="#s-legal"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-mail"/></svg>Юр.блок</a>
+  </nav>
+
+  <!-- ================= §1 Голос ================= -->
+  <section class="section" id="s-voice">
+    <h2 class="section-title">Голос: пять принципов</h2>
+    <p class="section-sub">Голос один для всех ролей и продуктов, меняется только тон (§2). Каждая пара — из канонических таблиц docs/11 §1.</p>
+
+    <div class="panel">
+      <div class="principle-head"><span class="principle-num">1</span><h3>По-человечески, на «ты»</h3></div>
+      <div class="say do"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Пишем</span><span>Покажем точки рядом с тобой</span></div>
+      <div class="say dont"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg>Не пишем</span><s>Уважаемый пользователь! Вам доступны точки</s></div>
+    </div>
+    <div class="panel">
+      <div class="principle-head"><span class="principle-num">2</span><h3>Короче — лучше</h3></div>
+      <div class="say do"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Пишем</span><span>Добавили в корзину</span></div>
+      <div class="say dont"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg>Не пишем</span><s>Товар успешно добавлен в вашу корзину покупок</s></div>
+    </div>
+    <div class="panel">
+      <div class="principle-head"><span class="principle-num">3</span><h3>Глаголы действия</h3></div>
+      <div class="say do"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Пишем</span><span>Скопировать ссылку</span></div>
+      <div class="say dont"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg>Не пишем</span><s>Здесь вы можете скопировать ссылку</s></div>
+    </div>
+    <div class="panel">
+      <div class="principle-head"><span class="principle-num">4</span><h3>Конкретика вместо оценок</h3></div>
+      <div class="say do"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Пишем</span><span>7 минут пешком · до 18:00</span></div>
+      <div class="say dont"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg>Не пишем</span><s>Рядом с вами · работает допоздна</s></div>
+    </div>
+    <div class="panel">
+      <div class="principle-head"><span class="principle-num">5</span><h3>Без вины пользователя</h3></div>
+      <div class="say do"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Пишем</span><span>Не получилось. Проверь номер — нужно 11 цифр</span></div>
+      <div class="say dont"><span class="tag"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg>Не пишем</span><s>Ты ввёл неверные данные!</s></div>
+    </div>
+  </section>
+
+  <!-- ================= §2 Матрица тона ================= -->
+  <section class="section" id="s-tone">
+    <h2 class="section-title">Матрица тона</h2>
+    <p class="section-sub">Выбери ситуацию — ниже живой компонент с каноническим текстом и кнопкой-триггером. Розовая плашка под демо — что звучало бы неправильно.</p>
+
+    <div class="tone-chips no-scrollbar" role="tablist" aria-label="Ситуации тона">
+      <button class="tone-chip active" data-tone="success" role="tab" aria-selected="true"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Успех</button>
+      <button class="tone-chip" data-tone="error" role="tab" aria-selected="false"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg>Ошибка</button>
+      <button class="tone-chip" data-tone="empty" role="tab" aria-selected="false"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bear"/></svg>Пусто</button>
+      <button class="tone-chip" data-tone="loading" role="tab" aria-selected="false"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-clock"/></svg>Загрузка</button>
+      <button class="tone-chip" data-tone="money" role="tab" aria-selected="false"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gem"/></svg>Деньги</button>
+    </div>
+
+    <div class="tone-stage">
+      <div class="panel" data-tone-panel="success">
+        <h3>Добавили в корзину</h3>
+        <p>Тост: одна строка сути + подпись с деталями (канон docs/07 §10). Тон тёплый, но сдержанный — без восторгов.</p>
+        <div class="demo-row">
+          <button class="ghost-btn" data-toast="cart"><svg style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Показать тост</button>
+        </div>
+        <div class="dont-note"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg><span>Не так: <s>«Ура!!! Товар твой! Поздравляем, ты отличный покупатель!»</s> — восторги и три восклицания ломают доверие.</span></div>
+      </div>
+
+      <div class="panel" data-tone-panel="error" hidden>
+        <h3>Нет сети</h3>
+        <p>Ошибка = что случилось + что мы с этим делаем. Спокойно, без капса, кодов и обвинений.</p>
+        <div class="demo-row">
+          <button class="ghost-btn" data-toast="net"><svg style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg>Показать тост</button>
+        </div>
+        <div class="dont-note"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg><span>Не так: <s>«ОШИБКА: ECONNREFUSED. Повторите попытку позже»</s> — код в интерфейсе и «позже» без альтернативы.</span></div>
+      </div>
+
+      <div class="panel" data-tone-panel="empty" hidden>
+        <h3>Пустое состояние</h3>
+        <p>Формула: иконка-маскот + заголовок + тело с перспективой + кнопка действия. Извинения не нужны.</p>
+        <div class="empty-demo">
+          <svg class="big-ico" aria-hidden="true"><use href="../assets/icons.svg#i-bear"/></svg>
+          <h4>Здесь пока пусто</h4>
+          <p>Загляни через пару минут — витрина пополняется</p>
+          <button class="ghost-btn sm" data-toast="refresh" style="margin-top:10px">Обновить</button>
+        </div>
+        <div class="dont-note"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg><span>Не так: <s>«Список пуст»</s> — голый факт без действия; <s>«Приносим извинения за неудобства»</s> — неудобства тут никому не причинили.</span></div>
+      </div>
+
+      <div class="panel" data-tone-panel="loading" hidden>
+        <h3>Загрузка</h3>
+        <p>Честный процесс: что именно происходит и признак жизни на экране — скелетон или пульс, а не «подождите».</p>
+        <div class="skeleton" aria-hidden="true"><span class="bar"></span></div>
+        <div class="demo-row"><span style="font-size:13px;font-weight:600">Загружаем витрину…</span></div>
+        <div class="dont-note"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg><span>Не так: <s>«Пожалуйста, подождите, идёт обработка вашего запроса»</s> — канцелярит и ноль конкретики.</span></div>
+      </div>
+
+      <div class="panel" data-tone-panel="money" hidden>
+        <h3>Выплата</h3>
+        <p>Деньги — режим максимальной точности: конкретный срок, табличные цифры, ноль шуток и уменьшительных.</p>
+        <div class="money-card">
+          <div><div class="sum">12 480 ₽</div><div class="lbl">Выплата придёт до 5 числа</div></div>
+          <span class="status-pill" style="background:var(--lv-soft-gold);color:var(--lv-gold-text)">В пути</span>
+        </div>
+        <div class="dont-note"><svg aria-hidden="true"><use href="../assets/icons.svg#i-x"/></svg><span>Не так: <s>«Денежка уже летит к тебе!!!»</s> — несерьёзность в теме, где пользователь считает каждую дату.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= §3 Числа и канонические тексты ================= -->
+  <section class="section" id="s-copy">
+    <h2 class="section-title">Числа, время, формулировки</h2>
+    <p class="section-sub">Расстояние — минутами пешком, время — «до ЧЧ:ММ», деньги — «249 ₽» с пробелом, метрики — табличными цифрами. Кнопка справа копирует формулировку — она тоже произнесена в тоне канона.</p>
+
+    <div class="panel">
+      <h3>Живая карточка канона</h3>
+      <div class="mini-card">
+        <div class="mini-cover"><svg aria-hidden="true"><use href="../assets/icons.svg#i-salad"/></svg></div>
+        <div>
+          <div class="nm">Авокадо Хасс</div>
+          <div class="mt">Молочная лавка · 7 мин пешком · до 18:00</div>
+          <div style="margin-top:4px"><span style="font-size:15px;font-weight:800;font-variant-numeric:tabular-nums">189 ₽</span> <span style="font-size:12px;color:var(--lv-dim);text-decoration:line-through;font-variant-numeric:tabular-nums">240 ₽</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Канонические формулировки — копируй</h3>
+      <div class="copy-row">
+        <div><div class="t">Добавили в корзину</div><div class="d">тост успеха · подпись: Молочная лавка · самовывоз через 15 минут</div></div>
+        <button class="copy-btn" data-copy="Добавили в корзину" aria-label="Скопировать"><svg aria-hidden="true"><use href="../assets/icons.svg#i-copy"/></svg></button>
+      </div>
+      <div class="copy-row">
+        <div><div class="t">Нет сети</div><div class="d">тост ошибки · подпись: Покажем сохранённое</div></div>
+        <button class="copy-btn" data-copy="Нет сети" aria-label="Скопировать"><svg aria-hidden="true"><use href="../assets/icons.svg#i-copy"/></svg></button>
+      </div>
+      <div class="copy-row">
+        <div><div class="t">Здесь пока пусто</div><div class="d">empty-заголовок · тело: Загляни через пару минут — витрина пополняется</div></div>
+        <button class="copy-btn" data-copy="Здесь пока пусто" aria-label="Скопировать"><svg aria-hidden="true"><use href="../assets/icons.svg#i-copy"/></svg></button>
+      </div>
+      <div class="copy-row">
+        <div><div class="t">Выплата придёт до 5 числа</div><div class="d">деньги · конкретный срок, без обещаний «мгновенно»</div></div>
+        <button class="copy-btn" data-copy="Выплата придёт до 5 числа" aria-label="Скопировать"><svg aria-hidden="true"><use href="../assets/icons.svg#i-copy"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= §4 Юр.блок ================= -->
+  <section class="section" id="s-legal">
+    <h2 class="section-title">Юр.блок</h2>
+    <p class="section-sub">Единственное место, где «ты» уступает нейтральному изложению, а полнота важнее краткости. Образец ниже — живой: hairline сверху, dim 12px, ссылки pink-dark.</p>
+    <div class="panel">
+      <h3>Подвал по канону docs/11 §6</h3>
+      <div class="legal-demo">
+        <span>© «Лови», 2026</span>
+        <a href="#s-legal">Оферта</a>
+        <a href="#s-legal">Политика конфиденциальности</a>
+        <a href="#s-legal">Реквизиты</a>
+      </div>
+      <p style="margin-top:12px">Реквизиты и полные даты («редакция от 04.09.2026») — на отдельной странице, не в футере. Маркетинг в юр.текстах запрещён: ни «лучшего», ни «уникального».</p>
+    </div>
+  </section>
+
+  <div class="footer">
+    Канон бренда и тона — <a href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/11-brand-voice.md" target="_blank" rel="noopener">docs/11-brand-voice.md</a> ·
+    Компоненты и состояния — docs/09, examples/01–06<br>
+    Дизайн-система LOVII · v1.5.0 · изменение потока: lovii-design → lovii_demo → lovii-site
+  </div>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* Тема: канонический applyTheme (localStorage + meta theme-color) */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('lovii_theme', t); }catch(e){}
+  var m = document.getElementById('metaTheme');
+  if(m) m.content = t === 'dark' ? '#171219' : '#f64a8a';
+}
+document.getElementById('themeBtn').addEventListener('click', function(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* Тост: главная строка + подпись .d (канон docs/07 §10, тексты docs/11 §5) */
+var toastEl = document.getElementById('toast'), toastTimer;
+function showToast(text, d){
+  toastEl.innerHTML = text + (d ? '<span class="d">' + d + '</span>' : '');
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
+}
+
+/* Канонические тексты тостов (docs/11 §5) */
+var TONE_TOASTS = {
+  cart:    ['Добавили в корзину', 'Молочная лавка · самовывоз через 15 минут'],
+  net:     ['Нет сети', 'Покажем сохранённое'],
+  refresh: ['Обновили витрину', '']
+};
+
+/* §1.2 docs/10: внешний вход по якорю — повтор на load */
+addEventListener('load', function(){
+  var h = location.hash;
+  if (h && h.indexOf('#/') !== 0) {
+    var t = document.querySelector(h);
+    if (t) t.scrollIntoView({ block: 'start' });
+  }
+});
+
+/* Матрица тона: чипы ситуаций → живые панели */
+var chips = document.querySelectorAll('[data-tone]');
+var panels = document.querySelectorAll('[data-tone-panel]');
+chips.forEach(function(ch){
+  ch.addEventListener('click', function(){
+    var key = ch.getAttribute('data-tone');
+    chips.forEach(function(c){
+      var on = c === ch;
+      c.classList.toggle('active', on);
+      c.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    panels.forEach(function(p){ p.hidden = p.getAttribute('data-tone-panel') !== key; });
+  });
+});
+
+/* Триггеры тостов внутри панелей */
+document.querySelectorAll('[data-toast]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var t = TONE_TOASTS[btn.getAttribute('data-toast')] || ['Готово', ''];
+    showToast(t[0], t[1]);
+  });
+});
+
+/* Копирование формулировок: успех и неуспех — тоже в тоне канона */
+document.querySelectorAll('[data-copy]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var text = btn.getAttribute('data-copy');
+    function done(){ showToast('Скопировали текст', ''); }
+    function fail(){ showToast('Не получилось скопировать', 'Выдели и скопируй вручную'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fail);
+    } else { fail(); }
+  });
+});
+</script>
+
+<script src="../assets/nav.js" defer></script>
+</body>
+</html>
