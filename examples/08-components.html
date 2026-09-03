@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#f64a8a">
+<title>LOVII · Библиотека компонентов: полный набор</title>
+<script>
+/* Anti-FOUC: тема ставится ДО CSS. Копировать как есть. */
+(function(){try{var t=localStorage.getItem('lovii_theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+/* ============ Каркас (канон examples) ============ */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html { scroll-behavior:auto; } }
+body { font-family:var(--lv-font); background:var(--lv-bg); color:var(--lv-ink); -webkit-font-smoothing:antialiased; }
+.view { max-width:var(--lv-container-wide); margin:0 auto; padding:0 16px calc(var(--lv-nav-h) + 32px + env(safe-area-inset-bottom,0px)); }
+.no-scrollbar { scrollbar-width:none; } .no-scrollbar::-webkit-scrollbar { display:none; }
+img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; }
+html[data-theme="light"] img.logo-dark-img { display:none; }
+html[data-theme="dark"] img.logo-light-img { display:none; }
+.ico { fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+section[id] { scroll-margin-top:calc(var(--lv-header-h) + 12px); }
+
+/* Хедер: sticky glass 56px */
+.app-header {
+  position:sticky; top:0; z-index:40; height:var(--lv-header-h);
+  display:flex; align-items:center; gap:12px; padding:0 var(--lv-pad-x);
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.theme-btn {
+  margin-left:auto; width:36px; height:36px; border-radius:999px; flex:none;
+  background:var(--lv-surface); display:flex; align-items:center; justify-content:center;
+  color:var(--lv-ink); transition:transform .15s ease, background .2s ease;
+}
+.theme-btn:active { transform:scale(.95); }
+.theme-btn svg { width:16px; height:16px; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
+.head-pill { font-size:11px; font-weight:700; color:var(--lv-dim); background:var(--lv-surface); border-radius:999px; padding:4px 10px; white-space:nowrap; }
+
+/* Hero */
+.hero {
+  margin-top:16px; padding:26px 22px; border-radius:16px;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  box-shadow:var(--lv-shadow-lift); position:relative; overflow:hidden;
+}
+.hero .kicker { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.7); }
+.hero h1 { font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1.15; margin:8px 0 6px; }
+.hero p { font-size:14px; color:rgba(255,255,255,.72); line-height:1.6; max-width:52ch; }
+.hero .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.hero .chip { font-size:12px; font-weight:600; padding:6px 12px; border-radius:999px; background:rgba(255,255,255,.14); color:var(--lv-on-brand); }
+
+/* Якорная лента */
+.anchor-rail { display:flex; gap:8px; overflow-x:auto; padding:14px 0 2px; }
+.anchor-chip {
+  flex:none; display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 14px;
+  border-radius:999px; background:var(--lv-card); border:1px solid var(--lv-line);
+  font-size:12px; font-weight:600; color:var(--lv-ink); text-decoration:none;
+  transition:background .15s ease, border-color .15s ease;
+}
+.anchor-chip .ico { width:14px; height:14px; }
+.anchor-chip:hover { background:var(--lv-soft-pink); border-color:transparent; }
+
+/* Секции и панели */
+.section { margin-top:28px; }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-.02em; }
+.section-sub { font-size:13px; color:var(--lv-dim); line-height:1.6; margin:4px 0 14px; }
+.section-sub code { font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size:12px; color:var(--lv-pink-dark); background:var(--lv-soft-pink); border-radius:6px; padding:1px 6px; }
+.panel {
+  background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px;
+  box-shadow:var(--lv-shadow-soft); padding:16px;
+}
+.panel + .panel { margin-top:12px; }
+.panel h3 { font-size:14px; font-weight:700; letter-spacing:-.01em; }
+.spec {
+  margin-top:12px; padding-top:10px; border-top:1px solid var(--lv-line-2);
+  font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size:10.5px; line-height:1.6; color:var(--lv-dim);
+}
+.spec b { color:var(--lv-ink); font-weight:700; }
+.demo-row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.demo-row + .demo-row { margin-top:12px; }
+.demo-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:12px; }
+@media (max-width:560px){ .demo-grid { grid-template-columns:1fr 1fr; } }
+
+/* ============ §1 Кнопки (канон docs/09 §2) ============ */
+.btn-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:0; align-items:center; }
+.btn-row + .btn-row { margin-top:12px; }
+.cta-btn { height:36px; padding:0 16px; border-radius:999px; color:var(--lv-on-brand); font-size:12px; font-weight:700; transition:all .2s; display:inline-flex; align-items:center; justify-content:center; gap:6px; background-image:var(--lv-gradient-brand); }
+.cta-btn:hover { box-shadow:var(--lv-shadow-lift); }
+.cta-btn:active { transform:scale(.95); }
+.cta-btn.big { height:48px; font-size:14px; padding:0 24px; }
+.cta-btn.sm { height:32px; padding:0 12px; font-size:12px; }
+.cta-btn .ico { width:16px; height:16px; }
+.cta-btn.plain { background-image:none; background:var(--lv-surface); color:var(--lv-ink); }
+.cta-btn.disabled { opacity:.5; pointer-events:none; }
+.cta-btn.loading { opacity:.7; pointer-events:none; }
+.cta-btn .spinner { width:14px; height:14px; border-radius:999px; border:2px solid rgba(255,255,255,.4); border-top-color:var(--lv-on-brand); animation:spin .8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.ghost-btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; height:40px; padding:0 16px; border-radius:999px; border:1.5px solid var(--lv-line); background:var(--lv-card); font-size:13px; font-weight:700; color:var(--lv-ink); transition:all .2s; }
+.ghost-btn:hover { border-color:var(--lv-pink); color:var(--lv-pink-dark); }
+.ghost-btn.sm { height:32px; padding:0 12px; font-size:12px; }
+.ghost-btn .ico { width:16px; height:16px; }
+.link-btn { display:inline-flex; align-items:center; gap:2px; font-size:13px; font-weight:600; color:var(--lv-pink-dark); transition:gap .2s; cursor:pointer; }
+.link-btn:hover { gap:6px; }
+.link-btn .ico { width:16px; height:16px; }
+.pill-btn { display:flex; align-items:center; gap:6px; height:36px; padding:0 10px; border-radius:999px; background:var(--lv-surface); font-size:14px; font-weight:500; color:var(--lv-ink); transition:background .2s; }
+.pill-btn:hover { background:var(--lv-soft-pink); }
+.pill-btn .ico { width:16px; height:16px; color:var(--lv-pink); flex-shrink:0; }
+.icon-btn { position:relative; display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:999px; background:var(--lv-surface); color:var(--lv-ink); transition:background .2s; }
+.icon-btn:hover { background:var(--lv-soft-pink); }
+.icon-btn:active { transform:scale(.95); }
+.icon-btn .ico { width:18px; height:18px; }
+.count-badge {
+  position:absolute; top:-3px; right:-3px; min-width:17px; height:17px; padding:0 4px;
+  border-radius:999px; background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  font-variant-numeric:tabular-nums; border:2px solid var(--lv-card);
+}
+
+/* ============ §2 Чипы, статусы, бейджи (канон docs/09 §3) ============ */
+.pill-row { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+.pill-row + .pill-row { margin-top:12px; }
+.stat-pill { display:inline-flex; align-items:center; gap:6px; height:28px; padding:0 12px; border-radius:999px; font-size:12px; font-weight:600; }
+.stat-pill.pink { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
+.stat-pill.tiffany { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.stat-pill.gold { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
+.stat-pill.grey { background:var(--lv-grey-soft); color:#999; }
+.badge-pill { display:inline-flex; align-items:center; height:20px; padding:0 8px; border-radius:999px; font-size:10px; font-weight:700; }
+.badge-hit { background:var(--lv-badge-hit); color:var(--lv-pink-dark); }
+.badge-new { background:var(--lv-badge-new); color:var(--lv-tiffany-text); }
+.badge-sale { background:var(--lv-badge-sale); color:var(--lv-gold-text); }
+.badge-eco { background:var(--lv-green-soft); color:var(--lv-green-text); }
+.status-pill { display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 10px; border-radius:999px; font-size:11px; font-weight:700; }
+.st-chip { display:inline-flex; align-items:center; gap:5px; height:22px; padding:0 9px; border-radius:999px; font-size:10.5px; font-weight:700; }
+.walk-pill { display:inline-flex; align-items:center; gap:4px; height:24px; padding:0 8px; border-radius:999px; background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); font-size:11px; font-weight:600; }
+.walk-pill .ico { width:13px; height:13px; }
+.open-pill { display:inline-flex; align-items:center; gap:4px; height:20px; padding:0 8px; border-radius:999px; font-size:10px; font-weight:700; }
+.open-pill .dot { width:6px; height:6px; border-radius:999px; }
+.open-pill.on { background:var(--lv-badge-new); color:var(--lv-tiffany-text); }
+.open-pill.on .dot { background:var(--lv-tiffany); }
+.open-pill.off { background:var(--lv-grey-soft); color:#999; }
+.open-pill.off .dot { background:#bbb; }
+.filter-chip {
+  display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px;
+  border-radius:999px; border:1px solid var(--lv-line); background:var(--lv-card);
+  font-size:12px; font-weight:600; color:var(--lv-ink); cursor:pointer;
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
+}
+.filter-chip .ico { width:14px; height:14px; }
+.filter-chip:hover { background:var(--lv-surface); }
+.filter-chip.active { background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); border-color:transparent; }
+.filter-chip:focus-visible { outline:2px solid var(--lv-pink); outline-offset:2px; }
+
+/* ============ §3 Поля и контролы (канон docs/07 §5) ============ */
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media (max-width:640px){ .form-grid { grid-template-columns:1fr; } }
+.f-field { display:block; }
+.f-field .lb { display:block; margin-bottom:6px; font-size:12px; font-weight:700; color:var(--lv-ink); }
+.f-field input, .f-field textarea, .f-field select { width:100%; border:1.5px solid var(--lv-line); border-radius:14px; padding:12px 14px; font:inherit; font-size:14px; background:var(--lv-card); color:var(--lv-ink); outline:none; transition:border-color .2s, box-shadow .2s; }
+.f-field input:focus, .f-field textarea:focus, .f-field select:focus { border-color:var(--lv-pink); box-shadow:var(--lv-ring-field); }
+.f-field textarea { min-height:84px; resize:vertical; }
+.f-field .err { display:none; margin-top:6px; font-size:11px; font-weight:600; color:var(--lv-pink-dark); }
+.f-field.error input { border-color:var(--lv-pink); box-shadow:var(--lv-ring-field); }
+.f-field.error .err { display:block; }
+.search-bar { display:flex; align-items:center; gap:8px; height:44px; padding:0 16px; border-radius:999px; background:var(--lv-surface); transition:all .2s; }
+.search-bar:focus-within { background:var(--lv-card); box-shadow:var(--lv-ring-search); }
+.search-bar .ico { width:16px; height:16px; color:var(--lv-dim); flex-shrink:0; }
+.search-bar input { flex:1; border:0; outline:none; background:none; font-size:14px; color:var(--lv-ink); min-width:0; }
+.search-bar input::placeholder { color:var(--lv-dim); }
+.check-row { display:flex; align-items:center; gap:10px; cursor:pointer; font-size:13px; font-weight:600; color:var(--lv-ink); }
+.check-row input { position:absolute; opacity:0; width:0; height:0; }
+.cbx { flex:none; width:20px; height:20px; border-radius:6px; border:1.5px solid var(--lv-line); background:var(--lv-card); display:flex; align-items:center; justify-content:center; transition:all .15s ease; }
+.cbx .ico { width:12px; height:12px; stroke-width:3; color:var(--lv-on-brand); opacity:0; transform:scale(.5); transition:all .15s ease; }
+.check-row input:checked + .cbx { background-image:var(--lv-gradient-brand); border-color:transparent; }
+.check-row input:checked + .cbx .ico { opacity:1; transform:scale(1); }
+.check-row input:focus-visible + .cbx { outline:2px solid var(--lv-pink); outline-offset:2px; }
+.switch-row { display:flex; align-items:center; justify-content:space-between; gap:12px; font-size:13px; font-weight:600; color:var(--lv-ink); }
+.switch { position:relative; flex:none; width:42px; height:24px; border-radius:999px; background:var(--lv-grey-soft); transition:background .2s ease; cursor:pointer; }
+.switch input { position:absolute; opacity:0; width:0; height:0; }
+.switch .knob { position:absolute; top:2px; left:2px; width:20px; height:20px; border-radius:999px; background:var(--lv-card); box-shadow:var(--lv-shadow-float); transition:transform .2s ease; }
+.switch input:checked ~ .knob { transform:translateX(18px); }
+.switch:has(input:checked) { background-image:var(--lv-gradient-brand); }
+.switch input:focus-visible ~ .knob { outline:2px solid var(--lv-pink); outline-offset:2px; }
+.seg { display:inline-flex; gap:2px; padding:3px; border-radius:999px; background:var(--lv-surface); }
+.seg button { height:30px; padding:0 14px; border-radius:999px; border:0; background:none; font-size:12px; font-weight:700; color:var(--lv-dim); cursor:pointer; transition:all .15s ease; font-family:inherit; }
+.seg button.active { background:var(--lv-card); color:var(--lv-ink); box-shadow:var(--lv-shadow-float); }
+.seg button:focus-visible { outline:2px solid var(--lv-pink); outline-offset:1px; }
+.stepper { display:inline-flex; align-items:center; gap:2px; height:36px; padding:0 4px; border-radius:999px; background:var(--lv-surface); }
+.stepper button { width:28px; height:28px; border-radius:999px; border:0; background:none; color:var(--lv-ink); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s ease; font-family:inherit; }
+.stepper button:hover { background:var(--lv-soft-pink); }
+.stepper button:active { transform:scale(.92); }
+.stepper button .ico { width:14px; height:14px; }
+.stepper .val { min-width:28px; text-align:center; font-size:14px; font-weight:700; font-variant-numeric:tabular-nums; }
+
+/* ============ §4 Карточки (канон docs/09 §4) ============ */
+.btn-card { display:block; width:100%; text-align:left; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); overflow:hidden; transition:transform .2s, box-shadow .2s; padding:0; cursor:pointer; color:var(--lv-ink); font-family:inherit; }
+.btn-card:hover { transform:translateY(-2px); box-shadow:var(--lv-shadow-lift); }
+.btn-card:active { transform:scale(.97); }
+.cover { height:80px; display:flex; align-items:center; justify-content:center; position:relative; }
+.cover .em { width:38px; height:38px; color:var(--lv-on-tile); transition:transform .2s; }
+.btn-card:hover .em { transform:scale(1.1); }
+.cover.tile-pink { background:var(--lv-tile-pink); }
+.cover.tile-tiffany { background:var(--lv-tile-tiffany); }
+.cover.tile-gold { background:var(--lv-tile-gold); }
+.cover.tile-sand { background:var(--lv-tile-sand); }
+.cover.tile-ink { background:var(--lv-tile-ink); }
+.card-body { padding:12px; }
+.card-name { font-size:14px; font-weight:700; letter-spacing:-.01em; }
+.card-sub { font-size:12px; color:var(--lv-dim); margin-top:2px; }
+.card-foot { display:flex; align-items:center; justify-content:space-between; margin-top:10px; }
+.rating { display:flex; align-items:center; gap:3px; font-size:12px; font-weight:700; color:var(--lv-gold); }
+.star-ico { display:inline-block; width:12px; height:12px; fill:var(--lv-gold); flex:none; }
+.price { font-size:16px; font-weight:800; font-variant-numeric:tabular-nums; }
+.price-old { font-size:12px; color:var(--lv-dim); text-decoration:line-through; font-variant-numeric:tabular-nums; }
+.quick-btn { width:36px; height:36px; border-radius:999px; border:0; background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all .2s; flex:none; }
+.quick-btn:hover { box-shadow:var(--lv-shadow-lift); }
+.quick-btn:active { transform:scale(.95); }
+.quick-btn .ico { width:16px; height:16px; }
+.promo-card { border-radius:16px; padding:16px; transition:transform .2s, box-shadow .2s; }
+.promo-card:hover { transform:translateY(-2px); box-shadow:var(--lv-shadow-lift); }
+.promo-card.tone-pink { background:var(--lv-soft-pink); }
+.promo-card.tone-gold { background:var(--lv-sand-soft); }
+.promo-mini { display:inline-flex; align-items:center; gap:6px; height:20px; padding:0 8px; border-radius:999px; background:rgba(255,255,255,.8); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--lv-pink-dark); }
+.promo-title { margin-top:8px; font-size:16px; font-weight:800; line-height:1.3; }
+.promo-desc { font-size:12px; color:var(--lv-dim); margin-top:2px; }
+.kpi { border-radius:16px; padding:12px 14px; min-width:0; background:var(--lv-card); border:1px solid var(--lv-line); box-shadow:var(--lv-shadow-soft); }
+.kpi.accent { background-image:linear-gradient(150deg, var(--lv-kpi-soft), var(--lv-card)); border-color:rgba(246, 74, 138, .25); }
+.kpi .l { font-size:10.5px; font-weight:700; color:var(--lv-dim); text-transform:uppercase; letter-spacing:.04em; }
+.kpi .v { margin-top:5px; font-size:19px; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+.kpi .d { margin-top:5px; display:flex; align-items:center; gap:6px; font-size:11px; font-weight:700; }
+.delta-up { color:var(--lv-tiffany-text); }
+.delta-down { color:var(--lv-pink-dark); }
+
+/* ============ §5 Списки и строки ============ */
+.list-card { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); padding:4px 0; }
+.row { display:flex; align-items:center; gap:12px; padding:11px 14px; border-bottom:1px solid var(--lv-line-2); cursor:pointer; background:none; border-left:0; border-right:0; border-top:0; width:100%; text-align:left; font-family:inherit; color:var(--lv-ink); transition:background .15s ease; }
+.row:last-child { border-bottom:0; }
+.row:hover { background:var(--lv-surface); }
+.row-icon { flex:none; width:36px; height:36px; border-radius:12px; background:var(--lv-soft-pink); color:var(--lv-pink-dark); display:flex; align-items:center; justify-content:center; }
+.row-icon.tiffany { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.row-icon.gold { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
+.row-icon .ico { width:17px; height:17px; }
+.row-main { flex:1; min-width:0; }
+.row-title { font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.row-sub { font-size:12px; color:var(--lv-dim); margin-top:1px; }
+.row .chev { flex:none; width:16px; height:16px; color:var(--lv-dim); }
+.row.danger .row-title, .row.danger .row-icon { color:var(--lv-pink-dark); }
+.row.danger .row-icon { background:var(--lv-soft-pink); }
+.district-row { display:flex; align-items:center; justify-content:space-between; height:56px; padding:0 16px; border-radius:16px; border:1px solid var(--lv-line); transition:all .2s; text-align:left; width:100%; color:var(--lv-ink); background:var(--lv-card); cursor:pointer; font-family:inherit; }
+.district-row:hover { border-color:var(--lv-pink); }
+.district-row.active { border-color:var(--lv-pink); background:var(--lv-soft-pink); }
+.district-row .nm { display:block; font-size:14px; font-weight:600; }
+.district-row .mt { display:block; font-size:12px; color:var(--lv-dim); }
+.divider-demo { display:flex; flex-direction:column; gap:14px; }
+.divider-demo .cap { font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size:10.5px; color:var(--lv-dim); }
+.hr-2 { height:1px; background:var(--lv-line-2); }
+.hr-hair { height:1px; background:var(--lv-hairline); }
+
+/* ============ §6 Навигация ============ */
+.nav-demo { border:1px solid var(--lv-line); border-radius:16px; background:var(--lv-card); overflow:hidden; max-width:480px; }
+.app-nav-in { display:grid; grid-template-columns:repeat(5, 1fr); height:64px; }
+.nav-btn { position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; font-size:11px; font-weight:500; color:var(--lv-dim); transition:color .2s; font-family:inherit; border:0; background:none; cursor:pointer; }
+.nav-btn.active { color:var(--lv-pink); font-weight:700; }
+.nav-btn .top-ind { position:absolute; top:0; width:32px; height:2px; border-radius:999px; background:var(--lv-pink); display:none; }
+.nav-btn.active .top-ind { display:block; }
+.nav-btn:active { transform:scale(.95); }
+.nav-ico { display:flex; }
+.nav-ico .ico { width:22px; height:22px; }
+.subheader-demo { display:flex; align-items:center; gap:10px; height:48px; padding:0 12px; border:1px solid var(--lv-line); border-radius:16px; background:var(--lv-card); max-width:480px; }
+.subheader-demo .back { flex:none; width:32px; height:32px; border-radius:999px; background:var(--lv-surface); display:flex; align-items:center; justify-content:center; color:var(--lv-ink); border:0; cursor:pointer; transition:background .15s ease; font-family:inherit; }
+.subheader-demo .back:hover { background:var(--lv-soft-pink); }
+.subheader-demo .back .ico { width:16px; height:16px; }
+.subheader-demo .t { font-size:15px; font-weight:700; }
+.tabs { display:flex; gap:2px; border-bottom:1px solid var(--lv-line-2); max-width:480px; }
+.tabs button { flex:1; height:40px; padding:0 8px; border:0; background:none; font-size:13px; font-weight:600; color:var(--lv-dim); cursor:pointer; position:relative; transition:color .15s ease; font-family:inherit; }
+.tabs button.active { color:var(--lv-pink-dark); font-weight:700; }
+.tabs button.active::after { content:''; position:absolute; left:50%; transform:translateX(-50%); bottom:-1px; width:32px; height:2px; border-radius:999px; background:var(--lv-pink); }
+.tabs button:focus-visible { outline:2px solid var(--lv-pink); outline-offset:-2px; border-radius:10px; }
+
+/* ============ §7 Обратная связь ============ */
+.toast-wrap { position:fixed; left:0; right:0; bottom:84px; z-index:60; display:flex; flex-direction:column; align-items:center; gap:8px; pointer-events:none; padding:0 16px; }
+.toast { max-width:100%; background:var(--lv-ink); color:var(--lv-card); border-radius:16px; padding:10px 16px; font-size:13px; font-weight:600; box-shadow:var(--lv-shadow-toast); animation:lv-toast-in .25s ease-out; }
+.toast .d { font-size:11px; color:var(--lv-toast-d); font-weight:400; margin-top:2px; }
+@keyframes lv-toast-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+.toast.hide { opacity:0; transform:translateY(8px); transition:all .25s; }
+.sheet-overlay { position:fixed; inset:0; z-index:50; background:rgba(26, 26, 26, .4); opacity:0; pointer-events:none; transition:opacity .25s; }
+.sheet-overlay.open { opacity:1; pointer-events:auto; }
+.sheet { position:fixed; left:0; right:0; bottom:0; z-index:51; background:var(--lv-card); border-radius:24px 24px 0 0; max-height:72dvh; display:flex; flex-direction:column; transform:translateY(100%); visibility:hidden; transition:transform .3s cubic-bezier(.32, .72, 0, 1), visibility .3s; max-width:var(--lv-container); margin:0 auto; }
+.sheet.open { transform:translateY(0); visibility:visible; }
+.sheet-head { padding:20px 16px 8px; }
+.sheet-head h3 { margin:0; font-size:18px; font-weight:800; }
+.sheet-head p { margin:4px 0 0; font-size:14px; color:var(--lv-dim); }
+.sheet-body { padding:0 16px 24px; overflow-y:auto; display:grid; gap:8px; }
+.skeleton-card { border:1px solid var(--lv-line); border-radius:16px; padding:12px; display:flex; gap:12px; align-items:center; }
+.sk { background:var(--lv-grey-soft); border-radius:8px; position:relative; overflow:hidden; }
+.sk::after { content:''; position:absolute; inset:0; transform:translateX(-100%); background:linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent); animation:shimmer 1.4s infinite; }
+@keyframes shimmer { to { transform:translateX(100%); } }
+.sk-ava { width:44px; height:44px; border-radius:999px; flex:none; }
+.sk-l1 { height:12px; width:70%; }
+.sk-l2 { height:10px; width:45%; margin-top:8px; }
+.empty-state { display:flex; flex-direction:column; align-items:center; text-align:center; padding:28px 16px; }
+.empty-state .ico { width:44px; height:44px; color:var(--lv-dim); stroke-width:1.6; }
+.empty-state h4 { margin-top:12px; font-size:16px; font-weight:800; }
+.empty-state p { margin-top:4px; font-size:13px; color:var(--lv-dim); line-height:1.55; max-width:34ch; }
+.empty-state .cta-btn { margin-top:14px; }
+.progress-wrap { max-width:360px; }
+.progress-track { height:6px; border-radius:999px; background:var(--lv-grey-soft); overflow:hidden; }
+.progress-fill { height:100%; width:64%; border-radius:999px; background-image:var(--lv-gradient-brand); transition:width .3s ease; }
+.progress-meta { display:flex; justify-content:space-between; margin-top:6px; font-size:11px; font-weight:600; color:var(--lv-dim); font-variant-numeric:tabular-nums; }
+.spinner-lg { width:20px; height:20px; border-radius:999px; border:2px solid var(--lv-soft-pink); border-top-color:var(--lv-pink); animation:spin .8s linear infinite; }
+
+/* ============ §8 Контентные блоки ============ */
+.section-head { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+.section-head .t { font-size:16px; font-weight:800; letter-spacing:-.01em; }
+.tiles-row { display:grid; grid-template-columns:repeat(5, 1fr); gap:8px; }
+@media (max-width:560px){ .tiles-row { grid-template-columns:repeat(3, 1fr); } }
+.tile { border-radius:12px; padding:12px 8px; display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; border:0; font-family:inherit; color:var(--lv-on-tile); transition:transform .15s ease; }
+.tile:active { transform:scale(.96); }
+.tile .ico { width:26px; height:26px; color:var(--lv-on-tile); }
+.tile .nm { font-size:11px; font-weight:600; }
+.tile-pink { background:var(--lv-tile-pink); }
+.tile-tiffany { background:var(--lv-tile-tiffany); }
+.tile-gold { background:var(--lv-tile-gold); }
+.tile-sand { background:var(--lv-tile-sand); }
+.tile-ink { background:var(--lv-tile-ink); }
+.glass-demo { border-radius:24px; padding:20px; color:var(--lv-on-brand); background-image:var(--lv-gradient-ink); position:relative; overflow:hidden; }
+.glass-demo .kicker { font-size:10.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.6); }
+.glass-demo .big { margin-top:6px; font-size:18px; font-weight:800; }
+.glass-demo .big .g { color:var(--lv-gold); }
+.glass-chip { display:inline-flex; align-items:center; gap:4px; height:28px; padding:0 12px; border-radius:999px; background:rgba(255,255,255,.1); font-size:12px; font-weight:600; color:var(--lv-on-brand); }
+.glass-chip .g { color:var(--lv-gold); }
+.glass-chip .t { color:var(--lv-tiffany); }
+.stars-row { display:flex; align-items:center; gap:3px; }
+.stars-row .star-ico { width:16px; height:16px; }
+.stars-row .off { fill:var(--lv-grey-soft); }
+.stars-meta { margin-left:8px; font-size:12px; font-weight:600; color:var(--lv-dim); }
+.avatar-row { display:flex; align-items:center; gap:12px; }
+.avatar { flex:none; width:40px; height:40px; border-radius:999px; background:var(--lv-soft-pink); color:var(--lv-pink-dark); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; letter-spacing:.02em; }
+.avatar.tiffany { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.avatar.gold { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
+.avatar .ico { width:18px; height:18px; }
+.timeline { position:relative; padding-left:22px; display:grid; gap:16px; }
+.timeline::before { content:''; position:absolute; left:5px; top:6px; bottom:6px; width:1px; background:var(--lv-hairline); }
+.milestone { position:relative; }
+.milestone .pt { position:absolute; left:-22px; top:3px; width:11px; height:11px; border-radius:999px; background:var(--lv-dim); border:2px solid var(--lv-card); }
+.milestone.done .pt { background:var(--lv-tiffany); }
+.milestone.now .pt { background:var(--lv-pink); animation:lv-pulse-dot 1.4s ease-in-out infinite; }
+.milestone .t { font-size:13px; font-weight:700; }
+.milestone.now .t { color:var(--lv-pink-dark); }
+.milestone .s { font-size:12px; color:var(--lv-dim); margin-top:1px; }
+.promo-code { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-radius:16px; border:1.5px dashed var(--lv-line); background:var(--lv-card); max-width:360px; }
+.promo-code .code { font-size:20px; font-weight:800; letter-spacing:.06em; background-image:var(--lv-gradient-brand); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.copy-mini { flex:none; width:36px; height:36px; border-radius:999px; border:0; background:var(--lv-surface); color:var(--lv-pink-dark); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s ease; font-family:inherit; }
+.copy-mini:hover { background:var(--lv-soft-pink); }
+.copy-mini .ico { width:16px; height:16px; }
+.legal { border-top:1px solid var(--lv-hairline); padding-top:12px; margin-top:14px; font-size:12px; line-height:1.7; color:var(--lv-dim); }
+.legal a { color:var(--lv-pink-dark); font-weight:600; text-decoration:none; }
+
+/* ============ §9 Состояния ============ */
+.state-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:10px; }
+.state-cell { border:1px solid var(--lv-line-2); border-radius:14px; padding:14px 12px 10px; display:flex; flex-direction:column; align-items:center; gap:10px; }
+.state-cell .nm { font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size:10px; color:var(--lv-dim); }
+.enter-target { transition:none; }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="LOVII">
+  <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="LOVII">
+  <span class="head-pill">v5 · набор</span>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему" title="Светлая/тёмная тема">
+    <svg class="tb-moon ico" aria-hidden="true"><use href="../assets/icons.svg#i-moon"/></svg>
+    <svg class="tb-sun ico" aria-hidden="true"><use href="../assets/icons.svg#i-sun"/></svg>
+  </button>
+</header>
+
+<main class="view">
+
+  <section class="hero lv-enter">
+    <div class="kicker">v5 · Роадмап дизайн-системы</div>
+    <h1>Библиотека компонентов</h1>
+    <p>Полный набор «Лови» вживую: каждый компонент — из канонических токенов, со всеми состояниями, в обеих темах. Сниппеты — docs/07, анатомия — docs/09, реестр набора — docs/12.</p>
+    <div class="chips">
+      <span class="chip">9 групп</span>
+      <span class="chip">60+ демо</span>
+      <span class="chip">43 иконки</span>
+      <span class="chip">Светлая / тёмная</span>
+    </div>
+  </section>
+
+  <nav class="anchor-rail no-scrollbar" aria-label="Группы компонентов">
+    <a class="anchor-chip" href="#buttons"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-shapes"/></svg>Кнопки</a>
+    <a class="anchor-chip" href="#chips"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-award"/></svg>Чипы и статусы</a>
+    <a class="anchor-chip" href="#fields"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-edit"/></svg>Поля и контролы</a>
+    <a class="anchor-chip" href="#cards"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bag"/></svg>Карточки</a>
+    <a class="anchor-chip" href="#lists"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-home"/></svg>Списки</a>
+    <a class="anchor-chip" href="#nav"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-map-pin"/></svg>Навигация</a>
+    <a class="anchor-chip" href="#feedback"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bell"/></svg>Фидбек</a>
+    <a class="anchor-chip" href="#blocks"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gem"/></svg>Блоки</a>
+    <a class="anchor-chip" href="#states"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Состояния</a>
+  </nav>
+
+  <!-- ================= §1 Кнопки ================= -->
+  <section class="section" id="buttons">
+    <h2 class="section-title">Кнопки</h2>
+    <p class="section-sub">Одна primary на экран. Высоты <code>32 / 36 / 48</code>, радиус-капсула, иконка 16px слева. Hover — shadow-lift, нажатие — scale .95.</p>
+    <div class="panel">
+      <div class="btn-row">
+        <button class="cta-btn">В корзину</button>
+        <button class="cta-btn"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bag"/></svg>В корзину · иконка</button>
+        <button class="cta-btn big">Оформить заказ · 48</button>
+        <button class="cta-btn sm">Подробнее · 32</button>
+      </div>
+      <div class="btn-row">
+        <button class="cta-btn plain">Вторичная · plain</button>
+        <button class="ghost-btn">Призрак · 40</button>
+        <button class="ghost-btn sm"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-filter"/></svg>Фильтры · 32</button>
+        <span class="link-btn">Смотреть все <svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-chevron-right"/></svg></span>
+      </div>
+      <div class="btn-row">
+        <button class="pill-btn"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-map-pin"/></svg>Район</button>
+        <button class="icon-btn" aria-label="Уведомления"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bell"/></svg></button>
+        <button class="icon-btn" aria-label="Корзина, 3 товара"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bag"/></svg><span class="count-badge">3</span></button>
+        <button class="icon-btn" aria-label="Ещё"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-dots"/></svg></button>
+      </div>
+      <div class="btn-row">
+        <button class="cta-btn disabled" aria-disabled="true">Недоступно · 50%</button>
+        <button class="cta-btn" id="loadingBtn"><span class="spinner" hidden></span><span class="lbl">Отправить заказ</span></button>
+      </div>
+      <div class="spec"><b>cta-btn</b> h36 · pad 0 16 · radius 999 · 12px/700 · gradient-brand + on-brand · hover: shadow-lift · active: scale .95 · disabled: opacity .5<br><b>ghost-btn</b> h40 · border 1.5 line · 13px/700 &nbsp;·&nbsp; <b>icon-btn</b> 36×36 · surface · иконка 18 &nbsp;·&nbsp; <b>count-badge</b> 17px · gradient-brand · бордер card 2px</div>
+    </div>
+  </section>
+
+  <!-- ================= §2 Чипы и статусы ================= -->
+  <section class="section" id="chips">
+    <h2 class="section-title">Чипы, статусы, бейджи</h2>
+    <p class="section-sub">Только парные заливки: <code>soft-pink→pink-dark</code>, <code>soft-tiffany→tiffany-text</code>, <code>soft-gold→gold-text</code>, <code>grey-soft→#999</code>. Смешивать пары нельзя.</p>
+    <div class="panel">
+      <div class="pill-row">
+        <span class="stat-pill pink">Хит продаж</span>
+        <span class="stat-pill tiffany">Открыто до 21:00</span>
+        <span class="stat-pill gold">Премиум</span>
+        <span class="stat-pill grey">Закрыто</span>
+      </div>
+      <div class="pill-row">
+        <span class="badge-pill badge-hit">Хит</span>
+        <span class="badge-pill badge-new">Новинка</span>
+        <span class="badge-pill badge-sale">−20%</span>
+        <span class="badge-pill badge-eco">Эко</span>
+        <span class="walk-pill"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-map-pin"/></svg>7 минут пешком</span>
+      </div>
+      <div class="pill-row">
+        <span class="status-pill" style="background:var(--lv-soft-pink);color:var(--lv-pink-dark)">Сборка · <span class="lv-dot" style="background:var(--lv-pink)"></span></span>
+        <span class="status-pill" style="background:var(--lv-soft-tiffany);color:var(--lv-tiffany-text)">Готов · <span class="lv-dot" style="background:var(--lv-tiffany)"></span></span>
+        <span class="open-pill on"><span class="dot"></span>Открыто</span>
+        <span class="open-pill off"><span class="dot"></span>Закрыто</span>
+        <span class="st-chip" style="background:var(--lv-soft-gold);color:var(--lv-gold-text)">На модерации</span>
+        <span class="st-chip" style="background:var(--lv-grey-soft);color:#999">Приостановлен</span>
+      </div>
+      <div class="pill-row" id="filterChips" role="group" aria-label="Фильтры витрины">
+        <button class="filter-chip active" aria-pressed="true">Все</button>
+        <button class="filter-chip" aria-pressed="false">Скидки</button>
+        <button class="filter-chip" aria-pressed="false">Новинки</button>
+        <button class="filter-chip" aria-pressed="false"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-map-pin"/></svg>Рядом</button>
+      </div>
+      <div class="spec"><b>stat-pill</b> h28 · 12px/600 · soft-пара &nbsp;·&nbsp; <b>badge-pill</b> h20 · 10px/700 · фикс-подложка badge-* &nbsp;·&nbsp; <b>filter-chip</b> h36 · интерактив · active = gradient-brand + aria-pressed &nbsp;·&nbsp; <b>lv-dot</b> пульс 1.4s</div>
+    </div>
+  </section>
+
+  <!-- ================= §3 Поля и контролы ================= -->
+  <section class="section" id="fields">
+    <h2 class="section-title">Поля и контролы</h2>
+    <p class="section-sub">Инпуты 44px, радиус 14px, фокус — <code>ring-field</code>. Поиск — капсула с <code>ring-search</code>. Ошибка — розовый бордер + подпись без вины (docs/11).</p>
+    <div class="panel">
+      <div class="search-bar" style="max-width:480px">
+        <svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-search"/></svg>
+        <input type="text" placeholder="Найти товар или точку рядом" aria-label="Поиск">
+      </div>
+      <div class="form-grid" style="margin-top:12px; max-width:640px">
+        <label class="f-field"><span class="lb">Название точки</span><input type="text" placeholder="Пекарня «Колос»"></label>
+        <label class="f-field error"><span class="lb">Телефон</span><input type="tel" value="+7 900 00"><span class="err">Похоже, номер неполный — проверь последние цифры</span></label>
+        <label class="f-field"><span class="lb">Роль</span><select><option>Клиент</option><option>Бизнес</option><option>Партнёр</option></select></label>
+        <label class="f-field"><span class="lb">Комментарий</span><textarea placeholder="Что нужно знать курьеру?"></textarea></label>
+      </div>
+      <div class="demo-row" style="margin-top:14px; gap:18px; flex-wrap:wrap">
+        <label class="check-row"><input type="checkbox" checked><span class="cbx"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg></span>Самовывоз</label>
+        <label class="check-row"><input type="checkbox"><span class="cbx"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg></span>Доставка</label>
+        <div class="switch-row"><span>Уведомления о выплатах</span><span class="switch"><input type="checkbox" checked aria-label="Уведомления о выплатах"><span class="knob"></span></span></div>
+      </div>
+      <div class="demo-row" style="margin-top:14px">
+        <div class="seg" role="tablist" aria-label="Период">
+          <button class="active" aria-selected="true">Неделя</button>
+          <button aria-selected="false">Месяц</button>
+          <button aria-selected="false">Год</button>
+        </div>
+        <div class="stepper" aria-label="Количество">
+          <button type="button" data-step="-1" aria-label="Убавить"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-minus"/></svg></button>
+          <span class="val" id="stepVal">1</span>
+          <button type="button" data-step="1" aria-label="Прибавить"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-plus"/></svg></button>
+        </div>
+      </div>
+      <div class="spec"><b>search-bar</b> h44 · капсула · focus: ring-search &nbsp;·&nbsp; <b>f-field</b> 14px · border 1.5 line · focus: pink + ring-field · error: подпись 11px &nbsp;·&nbsp; <b>cbx</b> 20px · check 12px stroke 3 &nbsp;·&nbsp; <b>switch</b> 42×24 · knob 20 · только transform &nbsp;·&nbsp; <b>seg</b> h30 · active: card + shadow-float &nbsp;·&nbsp; <b>stepper</b> h36 · val tabular-nums</div>
+    </div>
+  </section>
+
+  <!-- ================= §4 Карточки ================= -->
+  <section class="section" id="cards">
+    <h2 class="section-title">Карточки</h2>
+    <p class="section-sub">Радиус 16px, покой — <code>shadow-soft</code>, hover — <code>shadow-lift</code> + подъём 2px. Вся карточка кликабельна, бейдж — поверх медиа 8px/8px.</p>
+    <div class="panel">
+      <div class="demo-grid">
+        <button class="btn-card">
+          <div class="cover tile-pink"><svg class="em ico" aria-hidden="true"><use href="../assets/icons.svg#i-coffee"/></svg><span class="badge-pill badge-hit" style="position:absolute;top:8px;left:8px">Хит</span></div>
+          <div class="card-body"><div class="card-name">Пекарня «Колос»</div><div class="card-sub">Выпечка · 7 мин</div>
+            <div class="card-foot"><span class="rating"><svg class="star-ico" aria-hidden="true"><use href="../assets/icons.svg#i-star"/></svg>4.9</span><span class="walk-pill">Пешком</span></div>
+          </div>
+        </button>
+        <button class="btn-card">
+          <div class="cover tile-tiffany"><svg class="em ico" aria-hidden="true"><use href="../assets/icons.svg#i-salad"/></svg><span class="badge-pill badge-new" style="position:absolute;top:8px;left:8px">Новинка</span></div>
+          <div class="card-body"><div class="card-name">Авокадо Хасс</div><div class="card-sub">Молочная лавка</div>
+            <div class="card-foot"><span class="price">189 ₽</span><span class="price-old">240 ₽</span></div>
+          </div>
+        </button>
+        <button class="btn-card">
+          <div class="cover tile-gold"><svg class="em ico" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg><span class="badge-pill badge-sale" style="position:absolute;top:8px;left:8px">−20%</span></div>
+          <div class="card-body"><div class="card-name">Набор «Уют»</div><div class="card-sub">Подарки · до 18:00</div>
+            <div class="card-foot"><span class="price">1 290 ₽</span><span class="quick-btn" role="button" aria-label="Добавить в корзину"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-plus"/></svg></span></div>
+          </div>
+        </button>
+        <div class="promo-card tone-pink">
+          <span class="promo-mini">Успей до вечера</span>
+          <div class="promo-title">Кофе + круассан = 199 ₽</div>
+          <div class="promo-desc">Кофейня «Дым» · 5 минут пешком</div>
+        </div>
+        <div class="promo-card tone-gold">
+          <span class="promo-mini" style="color:var(--lv-gold-text)">Партнёрам</span>
+          <div class="promo-title">Кэшбэк 15% в октябре</div>
+          <div class="promo-desc">Подключение за один день</div>
+        </div>
+        <div style="display:grid;gap:12px;align-content:start">
+          <div class="kpi accent"><div class="l">Заказы за неделю</div><div class="v">128</div><div class="d"><span class="delta-up">▲ +12%</span><span style="font-size:11px;color:var(--lv-dim);font-weight:500">к прошлой неделе</span></div></div>
+          <div class="kpi"><div class="l">Средний чек</div><div class="v">640 ₽</div><div class="d"><span class="delta-down">▼ −3%</span><span style="font-size:11px;color:var(--lv-dim);font-weight:500">нужно внимание</span></div></div>
+        </div>
+      </div>
+      <div class="spec"><b>btn-card</b> radius 16 · cover 80 · tile-* 135° · hover: lift + translateY(−2px) · active: scale .97 &nbsp;·&nbsp; <b>quick-btn</b> 36 · gradient-brand · иконка 16 &nbsp;·&nbsp; <b>promo-card</b> soft-подложка · mini-капсула 20px &nbsp;·&nbsp; <b>kpi</b> v 19px/800 · tabular-nums · accent: kpi-soft + бордер pink .25</div>
+    </div>
+  </section>
+
+  <!-- ================= §5 Списки и строки ================= -->
+  <section class="section" id="lists">
+    <h2 class="section-title">Списки и строки</h2>
+    <p class="section-sub">Строка: иконка на soft-подложке 36px + заголовок + подпись + шеврон. Разделители строк — <code>line-2</code>, карточек — <code>line</code>, юр.блока — <code>hairline</code>.</p>
+    <div class="panel">
+      <div class="list-card" style="max-width:480px">
+        <button class="row"><span class="row-icon"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bag"/></svg></span><span class="row-main"><span class="row-title">Мои заказы</span><span class="row-sub">2 активных · 12 завершённых</span></span><svg class="ico chev" aria-hidden="true"><use href="../assets/icons.svg#i-chevron-right"/></svg></button>
+        <button class="row"><span class="row-icon tiffany"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-heart"/></svg></span><span class="row-main"><span class="row-title">Избранное</span><span class="row-sub">7 товаров</span></span><span class="stat-pill tiffany" style="height:22px;font-size:11px">7</span><svg class="ico chev" aria-hidden="true"><use href="../assets/icons.svg#i-chevron-right"/></svg></button>
+        <button class="row"><span class="row-icon gold"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg></span><span class="row-main"><span class="row-title">Промокоды</span><span class="row-sub">1 активен до 30 сентября</span></span><svg class="ico chev" aria-hidden="true"><use href="../assets/icons.svg#i-chevron-right"/></svg></button>
+        <button class="row"><span class="row-icon"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bell"/></svg></span><span class="row-main"><span class="row-title">Уведомления</span><span class="row-sub">Пуш, email — настраивается</span></span><span class="open-pill on"><span class="dot"></span>Вкл</span></button>
+        <button class="row danger"><span class="row-icon"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-trash"/></svg></span><span class="row-main"><span class="row-title">Удалить аккаунт</span><span class="row-sub">Безвозвратно, данные не восстановить</span></span></button>
+      </div>
+      <div class="demo-grid" style="margin-top:12px; grid-template-columns:1fr; max-width:480px">
+        <div style="display:grid; gap:8px">
+          <button class="district-row active"><span><span class="nm">Центральный</span><span class="mt">24 точки · 5 мин</span></span><span class="stat-pill pink">Выбран</span></button>
+          <button class="district-row"><span><span class="nm">Северный</span><span class="mt">18 точек · 9 мин</span></span></button>
+        </div>
+      </div>
+      <div class="divider-demo" style="margin-top:16px; max-width:480px">
+        <div><div class="cap">--lv-line-2 · разделитель строк внутри карточки</div><div class="hr-2" style="margin-top:6px"></div></div>
+        <div><div class="cap">--lv-hairline · тонкая линия (юр.блок, футеры)</div><div class="hr-hair" style="margin-top:6px"></div></div>
+      </div>
+      <div class="spec"><b>row</b> h~58 · разделитель line-2 · row-icon 36px radius 12 · chev 16px dim &nbsp;·&nbsp; <b>district-row</b> h56 · active: pink-бордер + soft-pink &nbsp;·&nbsp; <b>danger</b> — розовая пара, текст без вины</div>
+    </div>
+  </section>
+
+  <!-- ================= §6 Навигация ================= -->
+  <section class="section" id="nav">
+    <h2 class="section-title">Навигация</h2>
+    <p class="section-sub">Хедер 56px glass, подшапка «назад» 48px, нижняя навигация 64px с индикатором 32×2px. На ≥900px капсула всплывает над контентом. Табы — с розовым подчёркиванием.</p>
+    <div class="panel">
+      <div class="subheader-demo">
+        <button class="back" aria-label="Назад"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-arrow-left"/></svg></button>
+        <span class="t">Оформление заказа</span>
+      </div>
+      <div class="tabs" style="margin-top:12px" role="tablist" aria-label="Разделы">
+        <button class="active" aria-selected="true">Обзор</button>
+        <button aria-selected="false">Заказы</button>
+        <button aria-selected="false">Выплаты</button>
+      </div>
+      <div class="nav-demo" style="margin-top:12px">
+        <div class="app-nav-in">
+          <button class="nav-btn active"><span class="top-ind"></span><span class="nav-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-home"/></svg></span>Главная</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-search"/></svg></span>Поиск</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bag"/></svg></span>Корзина</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg></span>Заказы</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-user"/></svg></span>Профиль</button>
+        </div>
+      </div>
+      <div class="spec"><b>app-header</b> 56px · glass blur 16 &nbsp;·&nbsp; <b>subheader</b> 48px · back 32px &nbsp;·&nbsp; <b>nav-btn</b> иконка 22 · active: pink + top-ind 32×2 &nbsp;·&nbsp; <b>tabs</b> h40 · active: pink-dark + underline 32×2 &nbsp;·&nbsp; z-карта: overlay 50 · sheet 51 · toast 60 · nav 70–85</div>
+    </div>
+  </section>
+
+  <!-- ================= §7 Обратная связь ================= -->
+  <section class="section" id="feedback">
+    <h2 class="section-title">Обратная связь</h2>
+    <p class="section-sub">Тост — инвертированная пара <code>ink↔card</code>, главная строка + подпись. Тексты — по матрице тона docs/11: без вины, глаголы, конкретика.</p>
+    <div class="panel">
+      <div class="btn-row">
+        <button class="cta-btn" data-toast="cart">Тост · успех</button>
+        <button class="ghost-btn" data-toast="net">Тост · ошибка сети</button>
+        <button class="ghost-btn sm" data-toast="refresh">Тост · нейтральный</button>
+        <button class="cta-btn" data-action="open-sheet">Шит · выбор района</button>
+      </div>
+      <div class="demo-row" style="margin-top:14px; align-items:stretch">
+        <div class="skeleton-card" style="flex:1; min-width:220px" aria-hidden="true">
+          <span class="sk sk-ava"></span>
+          <span style="flex:1"><span class="sk sk-l1" style="display:block"></span><span class="sk sk-l2" style="display:block"></span></span>
+        </div>
+        <div class="progress-wrap" style="flex:1; min-width:220px">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="progress-meta"><span>Загружаем витрину</span><span id="progressVal">64%</span></div>
+        </div>
+        <div class="spinner-lg" role="status" aria-label="Загрузка"></div>
+      </div>
+      <div class="empty-state" style="margin-top:8px">
+        <svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bear"/></svg>
+        <h4>Здесь пока пусто</h4>
+        <p>Добавь первый товар — покажем его в корзине и напомним до конца акции.</p>
+        <button class="cta-btn">На витрину</button>
+      </div>
+      <div class="spec"><b>toast</b> ink↔card · radius 16 · shadow-toast · .d подпись toast-d &nbsp;·&nbsp; <b>skeleton</b> grey-soft · shimmer 1.4s &nbsp;·&nbsp; <b>empty</b> иконка 44 + заголовок 16/800 + перспектива + CTA &nbsp;·&nbsp; <b>progress</b> h6 · gradient-brand &nbsp;·&nbsp; <b>sheet</b> radius 24 · cubic-bezier(.32,.72,0,1) · закрытие: оверлей/Escape/действие</div>
+    </div>
+  </section>
+
+  <!-- ================= §8 Контентные блоки ================= -->
+  <section class="section" id="blocks">
+    <h2 class="section-title">Контентные блоки</h2>
+    <p class="section-sub">Готовые композиции из токенов: заголовок секции, плитки категорий, карта лояльности на <code>gradient-ink</code>, рейтинг, аватары, таймлайн, промокод, юр.блок.</p>
+    <div class="panel">
+      <div class="section-head">
+        <span class="t">Акции рядом</span>
+        <span class="link-btn">Все <svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-chevron-right"/></svg></span>
+      </div>
+      <div class="tiles-row" style="margin-top:12px">
+        <button class="tile tile-pink"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-coffee"/></svg><span class="nm">Кофе</span></button>
+        <button class="tile tile-tiffany"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-salad"/></svg><span class="nm">Эко</span></button>
+        <button class="tile tile-gold"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-crown"/></svg><span class="nm">Премиум</span></button>
+        <button class="tile tile-sand"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg><span class="nm">Подарки</span></button>
+        <button class="tile tile-ink"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-shapes"/></svg><span class="nm">Прочее</span></button>
+      </div>
+      <div class="demo-row" style="margin-top:16px; align-items:stretch">
+        <div class="glass-demo" style="flex:1; min-width:260px">
+          <div class="kicker">Карта лояльности</div>
+          <div class="big">Кэшбэк <span class="g">до 15%</span> в точках района</div>
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+            <span class="glass-chip"><svg class="star-ico" aria-hidden="true"><use href="../assets/icons.svg#i-star"/></svg>240 баллов</span>
+            <span class="glass-chip"><span class="t">●</span>Tiffany-статус</span>
+          </div>
+        </div>
+        <div style="display:grid; gap:14px; align-content:start; flex:1; min-width:220px">
+          <div class="demo-row">
+            <span class="stars-row" aria-label="Рейтинг 4 из 5">
+              <svg class="star-ico" aria-hidden="true"><use href="../assets/icons.svg#i-star"/></svg>
+              <svg class="star-ico" aria-hidden="true"><use href="../assets/icons.svg#i-star"/></svg>
+              <svg class="star-ico" aria-hidden="true"><use href="../assets/icons.svg#i-star"/></svg>
+              <svg class="star-ico" aria-hidden="true"><use href="../assets/icons.svg#i-star"/></svg>
+              <svg class="star-ico off" aria-hidden="true"><use href="../assets/icons.svg#i-star"/></svg>
+            </span><span class="stars-meta">4.0 · 126 оценок</span>
+          </div>
+          <div class="avatar-row">
+            <span class="avatar">СМ</span>
+            <span><div style="font-size:14px;font-weight:700">Сергей М.</div><div style="font-size:12px;color:var(--lv-dim)">Владелец · 3 точки</div></span>
+          </div>
+          <div class="avatar-row">
+            <span class="avatar tiffany"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-bot"/></svg></span>
+            <span><div style="font-size:14px;font-weight:700">Помощник Лови</div><div style="font-size:12px;color:var(--lv-dim)">Ответит с 9:00 до 21:00</div></span>
+          </div>
+        </div>
+      </div>
+      <div class="demo-row" style="margin-top:16px; align-items:stretch">
+        <div class="timeline" style="flex:1; min-width:240px">
+          <div class="milestone done"><span class="pt"></span><div class="t">Заказ собран</div><div class="s">Сегодня · 12:40</div></div>
+          <div class="milestone now"><span class="pt"></span><div class="t">Курьер в пути</div><div class="s">Прибудет около 13:20</div></div>
+          <div class="milestone"><span class="pt"></span><div class="t">Самовывоз</div><div class="s">Пекарня «Колос» · до 21:00</div></div>
+        </div>
+        <div style="display:grid; gap:12px; align-content:start; flex:1; min-width:240px">
+          <div class="promo-code">
+            <span><span class="cap" style="font-size:11px;color:var(--lv-dim);display:block">Промокод на октябрь</span><span class="code">LOVII15</span></span>
+            <button class="copy-mini" data-copy="LOVII15" aria-label="Скопировать промокод"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-copy"/></svg></button>
+          </div>
+          <div class="legal">
+            © 2026 Лови. Сервис показывает товары и точки партнёров. Цены и наличие подтверждает точка выдачи. Условия программы — <a href="#" onclick="return false">в оферте</a>. Обновлено 4 сентября 2026.
+          </div>
+        </div>
+      </div>
+      <div class="spec"><b>section-head</b> 16/800 + link-btn &nbsp;·&nbsp; <b>tile</b> radius 12 · иконка 26 · on-tile &nbsp;·&nbsp; <b>glass-demo</b> gradient-ink · chips white .1 &nbsp;·&nbsp; <b>promo-code</b> dashed line · градиентный текст &nbsp;·&nbsp; <b>timeline</b> hairline · done tiffany · now pink-пульс &nbsp;·&nbsp; <b>legal</b> hairline · dim 12px · без маркетинга</div>
+    </div>
+  </section>
+
+  <!-- ================= §9 Состояния ================= -->
+  <section class="section" id="states">
+    <h2 class="section-title">Состояния</h2>
+    <p class="section-sub">Единая сетка docs/09 §6 на одной кнопке и одном поле. Анимируются только <code>transform</code> и <code>opacity</code>; <code>prefers-reduced-motion</code> обязателен.</p>
+    <div class="panel">
+      <div class="state-grid">
+        <div class="state-cell"><button class="cta-btn">Default</button><span class="nm">default · shadow-soft нет</span></div>
+        <div class="state-cell"><button class="cta-btn" style="box-shadow:var(--lv-shadow-lift)">Hover</button><span class="nm">hover · shadow-lift</span></div>
+        <div class="state-cell"><button class="cta-btn" style="transform:scale(.95)">Active</button><span class="nm">active · scale .95</span></div>
+        <div class="state-cell"><button class="cta-btn loading"><span class="spinner"></span><span class="lbl">Отправляем…</span></button><span class="nm">loading · блокировка</span></div>
+        <div class="state-cell"><button class="cta-btn disabled" aria-disabled="true">Disabled</button><span class="nm">disabled · opacity .5</span></div>
+      </div>
+      <div class="state-grid" style="margin-top:12px">
+        <div class="state-cell" style="width:100%"><div style="width:100%; max-width:280px"><label class="f-field"><span class="lb">Focus — кликни</span><input type="text" placeholder="ring-field 4px"></label></div><span class="nm">focus-visible · pink + ring-field</span></div>
+        <div class="state-cell" style="width:100%"><div style="width:100%; max-width:280px"><label class="f-field error"><span class="lb">Ошибка</span><input type="text" value="+7 900 00"><span class="err">Что исправить — подсказали под полем</span></label></div><span class="nm">error · pink-бордер + подпись</span></div>
+      </div>
+      <div class="btn-row" style="margin-top:14px">
+        <button class="ghost-btn sm" id="replayEnter"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-share"/></svg>Повторить вход .lv-enter</button>
+        <span id="enterTarget" style="font-size:13px;font-weight:600; display:inline-flex; align-items:center; gap:8px"><span class="lv-dot" style="background:var(--lv-tiffany)"></span>Каскад: 0.35s ease-out, шаг 0.06s</span>
+      </div>
+      <div class="spec"><b>сетка состояний</b> default / hover / active / focus-visible / disabled / loading / empty / enter — все обязательны, где применимы &nbsp;·&nbsp; reduce-motion: duration .01ms</div>
+    </div>
+  </section>
+
+  <div class="legal" style="margin-top:36px">
+    Библиотека компонентов ДС LOVII · v1.6.0 · канон: <a href="https://lovii.mobiap.com">lovii.mobiap.com</a> · реестр набора и правила расширения — <a href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/12-components.md">docs/12-components.md</a>. Поток: lovii-design → lovii_demo → lovii-site.
+  </div>
+
+</main>
+
+<!-- Шит выбора района (демо) -->
+<div class="sheet-overlay" id="sheetOverlay"></div>
+<div class="sheet" id="demoSheet" role="dialog" aria-modal="true" aria-label="Выбор района">
+  <div class="sheet-head">
+    <h3>Где вы сейчас?</h3>
+    <p>Покажем точки и товары в шаговой доступности</p>
+  </div>
+  <div class="sheet-body">
+    <button class="district-row active"><span><span class="nm">Центральный</span><span class="mt">24 точки · 5 мин</span></span><span class="stat-pill pink">Выбран</span></button>
+    <button class="district-row"><span><span class="nm">Северный</span><span class="mt">18 точек · 9 мин</span></span></button>
+    <button class="district-row"><span><span class="nm">Парковый</span><span class="mt">11 точек · 12 мин</span></span></button>
+    <button class="cta-btn big" data-action="close-sheet" style="margin-top:8px">Готово</button>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+<script>
+/* Тема: канонический applyTheme (localStorage + meta theme-color) */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('lovii_theme', t); }catch(e){}
+  var m = document.getElementById('metaTheme');
+  if(m) m.content = t === 'dark' ? '#171219' : '#f64a8a';
+}
+document.getElementById('themeBtn').addEventListener('click', function(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* Тост: главная строка + подпись .d (канон docs/07 §10, тексты docs/11 §5) */
+var toastWrap = document.getElementById('toastWrap'), toastTimer;
+function showToast(text, d){
+  toastWrap.innerHTML = '<div class="toast">' + text + (d ? '<span class="d">' + d + '</span>' : '') + '</div>';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastWrap.innerHTML = ''; }, 2400);
+}
+var TOASTS = {
+  cart:    ['Добавили в корзину', 'Молочная лавка · самовывоз через 15 минут'],
+  net:     ['Нет сети', 'Покажем сохранённое'],
+  refresh: ['Обновили витрину', '']
+};
+document.querySelectorAll('[data-toast]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var t = TOASTS[btn.getAttribute('data-toast')] || ['Готово', ''];
+    showToast(t[0], t[1]);
+  });
+});
+
+/* Шит: оверлей, Escape, действие (канон docs/07 §9) */
+var sheet = document.getElementById('demoSheet'), overlay = document.getElementById('sheetOverlay');
+function openSheet(){ overlay.classList.add('open'); sheet.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeSheet(){ overlay.classList.remove('open'); sheet.classList.remove('open'); document.body.style.overflow = ''; }
+document.querySelectorAll('[data-action="open-sheet"]').forEach(function(b){ b.addEventListener('click', openSheet); });
+document.querySelectorAll('[data-action="close-sheet"]').forEach(function(b){ b.addEventListener('click', closeSheet); });
+overlay.addEventListener('click', closeSheet);
+document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSheet(); });
+
+/* Loading-кнопка: спиннер 1.8s → тост по канону */
+var loadBtn = document.getElementById('loadingBtn');
+loadBtn.addEventListener('click', function(){
+  loadBtn.classList.add('loading');
+  loadBtn.querySelector('.spinner').hidden = false;
+  loadBtn.querySelector('.lbl').textContent = 'Отправляем…';
+  setTimeout(function(){
+    loadBtn.classList.remove('loading');
+    loadBtn.querySelector('.spinner').hidden = true;
+    loadBtn.querySelector('.lbl').textContent = 'Отправить заказ';
+    showToast('Заказ отправили', 'Пекарня «Колос» · забрать после 14:00');
+  }, 1800);
+});
+
+/* Фильтр-чипы: toggle + aria-pressed */
+document.querySelectorAll('#filterChips .filter-chip').forEach(function(ch){
+  ch.addEventListener('click', function(){
+    var on = !ch.classList.contains('active');
+    ch.classList.toggle('active', on);
+    ch.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+});
+
+/* Сегменты: одна активная */
+document.querySelectorAll('.seg').forEach(function(seg){
+  seg.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click', function(){
+      seg.querySelectorAll('button').forEach(function(x){
+        x.classList.toggle('active', x === b);
+        x.setAttribute('aria-selected', x === b ? 'true' : 'false');
+      });
+    });
+  });
+});
+
+/* Табы: одна активная */
+document.querySelectorAll('.tabs').forEach(function(tabs){
+  tabs.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click', function(){
+      tabs.querySelectorAll('button').forEach(function(x){
+        x.classList.toggle('active', x === b);
+        x.setAttribute('aria-selected', x === b ? 'true' : 'false');
+      });
+    });
+  });
+});
+
+/* Степпер: 1..9 */
+var stepVal = 1, stepEl = document.getElementById('stepVal');
+document.querySelectorAll('.stepper [data-step]').forEach(function(b){
+  b.addEventListener('click', function(){
+    stepVal = Math.min(9, Math.max(1, stepVal + parseInt(b.getAttribute('data-step'), 10)));
+    stepEl.textContent = stepVal;
+  });
+});
+
+/* Прогресс: живая полоса */
+var pv = 64;
+setInterval(function(){
+  pv = pv >= 96 ? 64 : pv + 4;
+  var f = document.getElementById('progressFill'), v = document.getElementById('progressVal');
+  if (f) f.style.width = pv + '%';
+  if (v) v.textContent = pv + '%';
+}, 900);
+
+/* Промокод: копирование с каноническим фолбэком */
+document.querySelectorAll('[data-copy]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var text = btn.getAttribute('data-copy');
+    function done(){ showToast('Скопировали промокод', text + ' · применится в корзине'); }
+    function fail(){ showToast('Не получилось скопировать', 'Выдели и скопируй вручную'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fail);
+    } else { fail(); }
+  });
+});
+
+/* Повтор входа .lv-enter */
+document.getElementById('replayEnter').addEventListener('click', function(){
+  var t = document.getElementById('enterTarget');
+  t.classList.remove('lv-enter'); void t.offsetWidth; t.classList.add('lv-enter');
+});
+
+/* Внешний вход по якорю — повтор на load (docs/10 §1.2) */
+addEventListener('load', function(){
+  var h = location.hash;
+  if (h && h.indexOf('#/') !== 0) {
+    var t = document.querySelector(h);
+    if (t) t.scrollIntoView({ block: 'start' });
+  }
+});
+</script>
+
+<script src="../assets/nav.js" defer></script>
+</body>
+</html>

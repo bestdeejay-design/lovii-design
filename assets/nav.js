@@ -23,7 +23,8 @@
     { p: 'examples/04-ambassador-program.html', t: 'Амбассадор',     s: 'референс-экран',   c: 'var(--lv-pink)' },
     { p: 'examples/05-investor-overview.html',  t: 'Инвестор',       s: 'референс-экран',   c: 'var(--lv-dim)' },
     { p: 'examples/06-ux-lab.html',             t: 'UX-лаборатория', s: 'живые паттерны v3', c: 'var(--lv-tiffany)' },
-    { p: 'examples/07-voice-lab.html',          t: 'Тон-лаборатория', s: 'голос и тексты v4', c: 'var(--lv-gold)' }
+    { p: 'examples/07-voice-lab.html',          t: 'Тон-лаборатория', s: 'голос и тексты v4', c: 'var(--lv-gold)' },
+    { p: 'examples/08-components.html',         t: 'Библиотека компонентов', s: 'полный набор v5', c: 'var(--lv-pink)' }
   ];
   var GH = 'https://github.com/bestdeejay-design/lovii-design';
 
