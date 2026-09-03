@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#f64a8a">
+<title>LOVII · Дизайн-система</title>
+<script>
+/* Anti-FOUC: тема ставится ДО CSS. Копировать как есть. */
+(function(){try{var t=localStorage.getItem('lovii_theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="tokens/tokens.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:var(--lv-font); background:var(--lv-bg); color:var(--lv-ink); -webkit-font-smoothing:antialiased; }
+a { color:inherit; text-decoration:none; }
+.wrap { max-width:960px; margin:0 auto; padding:0 var(--lv-pad-x) 96px; }
+
+/* Хедер: sticky glass 56px */
+.app-header {
+  position:sticky; top:0; z-index:40; height:var(--lv-header-h);
+  display:flex; align-items:center; gap:12px; padding:0 var(--lv-pad-x);
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+img.logo-dark-img, img.logo-light-img { display:block; height:26px; width:auto; }
+html[data-theme="light"] img.logo-dark-img { display:none; }
+html[data-theme="dark"] img.logo-light-img { display:none; }
+.ver-pill {
+  margin-left:10px; font-size:11px; font-weight:700; color:var(--lv-dim);
+  background:var(--lv-surface); border-radius:999px; padding:4px 10px; white-space:nowrap;
+}
+.theme-btn {
+  margin-left:auto; width:36px; height:36px; border-radius:999px; flex:none;
+  background:var(--lv-surface); display:flex; align-items:center; justify-content:center;
+  font-size:16px; transition:transform .15s ease, background .2s ease;
+}
+.theme-btn:active { transform:scale(.95); }
+
+/* Hero на брендовом градиенте */
+.hero {
+  margin-top:16px; padding:28px 24px; border-radius:16px;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  box-shadow:var(--lv-shadow-lift); position:relative; overflow:hidden;
+}
+.hero .kicker { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.7); }
+.hero h1 { font-size:30px; font-weight:800; letter-spacing:-.02em; line-height:1.12; margin:10px 0 8px; }
+.hero p { font-size:14px; color:rgba(255,255,255,.72); line-height:1.65; max-width:52ch; }
+.hero .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+.hero .chip {
+  font-size:12px; font-weight:600; padding:6px 12px; border-radius:999px;
+  background:rgba(255,255,255,.14); color:#fff;
+}
+
+/* Секции */
+.section { margin-top:32px; }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-.02em; margin-bottom:4px; }
+.section-sub { font-size:13px; color:var(--lv-dim); line-height:1.6; margin-bottom:14px; }
+
+/* Главная карта: живой гайд */
+.guide-card {
+  display:block; border-radius:16px; background:var(--lv-card);
+  border:1px solid var(--lv-hairline); box-shadow:var(--lv-shadow-lift);
+  padding:20px; transition:transform .15s ease;
+}
+.guide-card:active { transform:scale(.985); }
+.guide-card .swatches { display:flex; gap:6px; margin-bottom:14px; }
+.guide-card .sw { width:28px; height:28px; border-radius:9px; border:1px solid var(--lv-hairline); }
+.guide-card h3 { font-size:17px; font-weight:800; letter-spacing:-.02em; }
+.guide-card p { font-size:13px; color:var(--lv-dim); line-height:1.6; margin-top:6px; }
+.guide-card .go { display:inline-flex; align-items:center; gap:6px; margin-top:12px; font-size:13px; font-weight:700; color:var(--lv-pink); }
+
+/* Сетка ролевых карточек */
+.role-grid { display:grid; grid-template-columns:1fr; gap:12px; }
+@media (min-width:640px){ .role-grid { grid-template-columns:repeat(2, 1fr); } }
+.role-card {
+  display:block; border-radius:16px; background:var(--lv-card);
+  border:1px solid var(--lv-hairline); padding:18px;
+  transition:transform .15s ease;
+}
+.role-card:active { transform:scale(.985); }
+.role-card .badge {
+  display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  border-radius:999px; padding:4px 10px; margin-bottom:10px;
+}
+.role-card h3 { font-size:15px; font-weight:800; letter-spacing:-.02em; }
+.role-card p { font-size:13px; color:var(--lv-dim); line-height:1.55; margin-top:6px; }
+.role-card .file { display:inline-block; margin-top:10px; font-size:12px; font-weight:600; color:var(--lv-tiffany); }
+
+/* Список документов */
+.doc-list { display:flex; flex-direction:column; }
+.doc-row {
+  display:flex; align-items:baseline; gap:12px; padding:13px 2px;
+  border-bottom:1px solid var(--lv-hairline);
+}
+.doc-row:last-child { border-bottom:none; }
+.doc-num { font-size:12px; font-weight:700; color:var(--lv-dim); font-variant-numeric:tabular-nums; flex:none; width:26px; }
+.doc-row .t { font-size:14px; font-weight:600; }
+.doc-row .d { font-size:12px; color:var(--lv-dim); margin-left:auto; text-align:right; }
+
+.footer { margin-top:40px; padding-top:16px; border-top:1px solid var(--lv-hairline); font-size:12px; color:var(--lv-dim); line-height:1.7; }
+.footer a { color:var(--lv-pink); font-weight:600; }
+
+/* Toast */
+.toast {
+  position:fixed; left:50%; bottom:24px; transform:translate(-50%, 16px);
+  background:var(--lv-ink); color:var(--lv-bg); font-size:13px; font-weight:600;
+  padding:10px 18px; border-radius:999px; opacity:0; pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease; z-index:60;
+}
+.toast.show { opacity:1; transform:translate(-50%, 0); }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <img src="assets/lovii-logo-light.svg" class="logo-light-img" alt="LOVII">
+  <img src="assets/lovii-logo-dark.svg" class="logo-dark-img" alt="LOVII">
+  <span class="ver-pill">v1.1.0</span>
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему">🌙</button>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">Дизайн-система LOVII</div>
+    <h1>Единый стиль всех интерфейсов «Лови»</h1>
+    <p>Токены, компоненты, референс-экраны и правила для людей и ИИ-агентов. Канон стиля: lovii.mobiap.com. Поток изменений: lovii-design → lovii_demo → lovii-site.</p>
+    <div class="chips">
+      <span class="chip">Pink #f64a8a</span>
+      <span class="chip">Tiffany #0abab5</span>
+      <span class="chip">Gold #d4a854</span>
+      <span class="chip">Inter 400–800</span>
+      <span class="chip">Light / Dark</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Живой style-guide</h2>
+    <p class="section-sub">Все токены и компоненты в одном самодостаточном файле: палитра, типографика, кнопки, пилюли, карточки, bottom-sheet, toast. Обе темы — переключалкой в хедере.</p>
+    <a class="guide-card" href="style-guide.html">
+      <div class="swatches">
+        <span class="sw" style="background:#f64a8a"></span>
+        <span class="sw" style="background:#0abab5"></span>
+        <span class="sw" style="background:#d4a854"></span>
+        <span class="sw" style="background:var(--lv-bg)"></span>
+      </div>
+      <h3>style-guide.html — открой и изучай</h3>
+      <p>Собран скриптом из tokens/tokens.css, поэтому никогда не расходится с каноном.</p>
+      <span class="go">Открыть гайд →</span>
+    </a>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Референсы по ролям</h2>
+    <p class="section-sub">Пять самодостаточных экранов: копируй каркас и подставляй контент своей роли.</p>
+    <div class="role-grid">
+      <a class="role-card" href="examples/01-client-store.html">
+        <span class="badge" style="background:var(--lv-soft-pink); color:var(--lv-pink);">Клиент</span>
+        <h3>Витрина магазина</h3>
+        <p>Hero на градиенте, категории-плитки, карточки с бейджами, лента с edge-fade, bottom-nav.</p>
+        <span class="file">examples/01-client-store.html</span>
+      </a>
+      <a class="role-card" href="examples/02-business-dashboard.html">
+        <span class="badge" style="background:var(--lv-soft-tiffany); color:var(--lv-tiffany);">Бизнес</span>
+        <h3>Дашборд бизнеса</h3>
+        <p>KPI с градиентным текстом, сегменты, CSS-гистограмма, статусы заказов. Wide 1120px.</p>
+        <span class="file">examples/02-business-dashboard.html</span>
+      </a>
+      <a class="role-card" href="examples/03-partner-portal.html">
+        <span class="badge" style="background:var(--lv-soft-gold); color:var(--lv-gold);">Партнёр</span>
+        <h3>Партнёрский портал</h3>
+        <p>Статус на gradient-ink, прогресс, реферальная ссылка с копированием, выплаты. Narrow 760px.</p>
+        <span class="file">examples/03-partner-portal.html</span>
+      </a>
+      <a class="role-card" href="examples/04-ambassador-program.html">
+        <span class="badge" style="background:var(--lv-soft-pink); color:var(--lv-pink);">Амбассадор</span>
+        <h3>Амбассадорская программа</h3>
+        <p>Hero на hero-top, промокод градиентным текстом, уровни на tile-*, чек-лист задач.</p>
+        <span class="file">examples/04-ambassador-program.html</span>
+      </a>
+      <a class="role-card" href="examples/05-investor-overview.html">
+        <span class="badge" style="background:var(--lv-grey-soft); color:var(--lv-dim);">Инвестор</span>
+        <h3>Обзор для инвестора</h3>
+        <p>Метрики, таймлайн на hairline, команда, CTA на kpi-soft. Сдержанная подача.</p>
+        <span class="file">examples/05-investor-overview.html</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Документация</h2>
+    <p class="section-sub">Полные тексты — в репозитории на GitHub.</p>
+    <div class="doc-list">
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/01-principles.md" target="_blank" rel="noopener">
+        <span class="doc-num">01</span><span class="t">Принципы</span><span class="d">основа стиля</span>
+      </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/02-color.md" target="_blank" rel="noopener">
+        <span class="doc-num">02</span><span class="t">Цвет</span><span class="d">47 токенов, Do / Don't</span>
+      </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/03-typography.md" target="_blank" rel="noopener">
+        <span class="doc-num">03</span><span class="t">Типографика</span><span class="d">Inter, шкала</span>
+      </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/04-space-shape-motion.md" target="_blank" rel="noopener">
+        <span class="doc-num">04</span><span class="t">Пространство, форма, движение</span><span class="d">радиусы, анимации</span>
+      </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/05-theming.md" target="_blank" rel="noopener">
+        <span class="doc-num">05</span><span class="t">Темы</span><span class="d">контракт light / dark</span>
+      </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/06-application.md" target="_blank" rel="noopener">
+        <span class="doc-num">06</span><span class="t">Применение</span><span class="d">маппинг, расхождения</span>
+      </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/07-patterns.md" target="_blank" rel="noopener">
+        <span class="doc-num">07</span><span class="t">Паттерны</span><span class="d">13 сниппетов copy-paste</span>
+      </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/08-recipes.md" target="_blank" rel="noopener">
+        <span class="doc-num">08</span><span class="t">Рецепты агента</span><span class="d">8 процедур Р1–Р8</span>
+      </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/checklist.md" target="_blank" rel="noopener">
+        <span class="doc-num">✓</span><span class="t">Чек-лист приёмки</span><span class="d">перед каждым коммитом</span>
+      </a>
+      <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/AGENTS.md" target="_blank" rel="noopener">
+        <span class="doc-num">🤖</span><span class="t">AGENTS.md + SKILL.md</span><span class="d">правила для ИИ</span>
+      </a>
+    </div>
+  </section>
+
+  <div class="footer">
+    Репозиторий: <a href="https://github.com/bestdeejay-design/lovii-design" target="_blank" rel="noopener">bestdeejay-design/lovii-design</a> ·
+    Канон: <a href="https://lovii.mobiap.com" target="_blank" rel="noopener">lovii.mobiap.com</a><br>
+    Источник истины стилей. Изменения начинаются здесь, затем lovii_demo, затем lovii-site.
+  </div>
+
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* Тема: канонический applyTheme (localStorage + meta theme-color) */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('lovii_theme', t); }catch(e){}
+  var m = document.getElementById('metaTheme');
+  if(m) m.content = t === 'dark' ? '#171219' : '#f64a8a';
+  showToast(t === 'dark' ? 'Тёмная тема' : 'Светлая тема');
+}
+document.getElementById('themeBtn').addEventListener('click', function(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+var toastEl = document.getElementById('toast'), toastTimer;
+function showToast(text){
+  toastEl.textContent = '✓ ' + text;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
+}
+</script>
+</body>
+</html>
