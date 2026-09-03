@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>LOVII — Дизайн-система · style guide</title>
+  <meta name="theme-color" id="meta-theme" content="#f64a8a">
+  <script>
+    /* Тема до отрисовки: явный выбор → системная. Канон docs/05-theming */
+    (function () {
+      try {
+        var t = localStorage.getItem('lovii_theme');
+        if (t !== 'dark' && t !== 'light') {
+          t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.dataset.theme = t;
+      } catch (e) { document.documentElement.dataset.theme = 'light'; }
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===================== Канонические токены (инлайн из tokens/tokens.css) ===================== */
+/* ============================================================
+   LOVII «Лови» — канонические дизайн-токены v1.0.0
+   Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css)
+   Репо дизайн-системы: bestdeejay-design/lovii-design
+
+   Как подключать:
+     <link rel="stylesheet" href="tokens/tokens.css">
+   Как использовать: только var(--lv-*). Хардкод цветов/теней запрещён.
+
+   Совместимость (маппинг легаси-имён):
+     lovii_demo  css/lovii.css : --pink, --bg, --card, --soft-pink …
+     lovii-site  globals.css   : --color-lovii-* (Tailwind), --lv-* (частично)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. БРЕНДОВЫЕ ЦВЕТА — не зависят от темы
+   ------------------------------------------------------------ */
+:root {
+  --lv-pink: #f64a8a;          /* primary-акцент: CTA, ссылки, фокус */
+  --lv-pink-dark: #c92a6a;     /* hover CTA, конец градиента, текст на soft-pink */
+  --lv-tiffany: #0abab5;       /* secondary-акцент: «рядом», «в наличии», успех */
+  --lv-gold: #d4a854;          /* tertiary: премиум, рейтинг, лояльность */
+  --lv-sand: #e8d5b7;          /* золотой акцент-бордер/текст на тёмном */
+
+  /* Градиенты */
+  --lv-gradient-brand: linear-gradient(135deg, #f64a8a 0%, #c92a6a 100%);
+  --lv-gradient-ink: linear-gradient(150deg, #262023 0%, #1a1a1a 55%, #2b1219 100%);
+  --lv-gradient-tiffany: linear-gradient(90deg, #0abab5, #078d89);
+  --lv-gradient-gold: linear-gradient(90deg, #d4a854, #b98d3e);
+
+  /* Подложки-плитки категорий (только светлая подача) */
+  --lv-tile-pink: linear-gradient(135deg, #fde8f1, #fbf0f5);
+  --lv-tile-tiffany: linear-gradient(135deg, #e0f7f6, #eefcfb);
+  --lv-tile-gold: linear-gradient(135deg, #f7edda, #fbf5ea);
+  --lv-tile-sand: linear-gradient(135deg, #f3e9dc, #faf4ec);
+  --lv-tile-ink: linear-gradient(135deg, #f4f4f4, #fafafa);
+
+  /* Плашки-бейджи на обложках (фиксированные светлые подложки) */
+  --lv-badge-hit: #fde8f1;
+  --lv-badge-new: #e0f7f6;
+  --lv-badge-sale: #f7edda;
+
+  /* Типографика */
+  --lv-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Механика тем */
+  --lv-theme-key: 'lovii_theme';      /* localStorage ключ */
+  --lv-meta-light: #f64a8a;           /* meta theme-color для светлой */
+  --lv-meta-dark: #171219;            /* meta theme-color для тёмной */
+
+  /* Каркас */
+  --lv-header-h: 56px;                /* шапка приложения-витрины */
+  --lv-subheader-h: 48px;             /* подшапка «назад» */
+  --lv-nav-h: 64px;                   /* нижняя навигация (десктоп-капсула 60px) */
+  --lv-container: 480px;              /* мобильная капсула приложения */
+  --lv-container-wide: 1120px;        /* общий поток ≥640px */
+  --lv-container-narrow: 760px;       /* линейные экраны ≥640px */
+  --lv-pad-x: 16px;                   /* боковой отступ экрана */
+}
+
+/* ------------------------------------------------------------
+   2. СВЕТЛАЯ ТЕМА (по умолчанию; [data-theme="light"])
+   ------------------------------------------------------------ */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Текст */
+  --lv-ink: #1a1a1a;                  /* основной текст */
+  --lv-dim: #888888;                  /* вторичный текст */
+
+  /* Поверхности */
+  --lv-bg: #f7f2f4;                   /* фон вокруг капсулы приложения */
+  --lv-page: #ffffff;                 /* фон страницы (посадка) */
+  --lv-card: #ffffff;                 /* карточки */
+  --lv-surface: #f8f8f8;              /* заливка контролов: пилюли, инпуты, сегменты */
+  --lv-glass: rgba(255, 255, 255, .85);  /* стеклянный хедер/навигация */
+  --lv-on-brand: #ffffff;             /* текст НА брендовом градиенте */
+
+  /* Бордеры и разделители */
+  --lv-line: #f0e8ec;                 /* бордер карточек */
+  --lv-line-2: #f7f2f5;               /* разделитель строк внутри карточки */
+  --lv-hairline: rgba(26, 26, 26, .08);   /* тонкая линия (юр.блок) */
+
+  /* Soft-заливки акцентов (плашки статусов, тоновые карточки) */
+  --lv-soft-pink: rgba(246, 74, 138, .12);
+  --lv-mist-pink: rgba(246, 74, 138, .06);
+  --lv-soft-tiffany: rgba(10, 186, 181, .12);
+  --lv-soft-gold: rgba(212, 168, 84, .16);
+  --lv-sand-soft: #f6ecdf;
+  --lv-grey-soft: #f1f1f1;
+
+  /* Читаемые тексты на soft-заливках (пары: soft → text) */
+  --lv-gold-text: #8a6a25;
+  --lv-tiffany-text: #07726f;
+  --lv-green-text: #4a7a2a;
+  --lv-green-soft: #eef7e6;
+
+  /* Спец-поверхности */
+  --lv-hero-top: #fdf1f6;             /* верх hero-градиента */
+  --lv-kpi-soft: #fff5f8;             /* фон акцентного KPI */
+  --lv-ch-ink-a: #3a3a3a;             /* чернильная пара A (чаты/декор) */
+  --lv-ch-ink-b: #1a1a1a;             /* чернильная пара B */
+  --lv-toast-d: rgba(255, 255, 255, .7);  /* подпись на тосте */
+
+  /* Тени */
+  --lv-shadow-soft: 0 1px 3px rgba(26, 26, 26, .06);
+  --lv-shadow-lift: 0 12px 32px -12px rgba(201, 42, 106, .22);
+  --lv-shadow-nav: 0 12px 32px -12px rgba(26, 26, 26, .28);
+  --lv-shadow-stuck: 0 12px 16px -16px rgba(26, 26, 26, .28);
+  --lv-shadow-toast: 0 12px 32px -12px rgba(201, 42, 106, .35);
+  --lv-shadow-float: 0 2px 8px rgba(26, 26, 26, .1);
+  --lv-shadow-app: 0 0 60px rgba(26, 26, 26, .08);
+  --lv-ring-search: 0 0 0 2px rgba(246, 74, 138, .4);
+  --lv-ring-field: 0 0 0 4px rgba(246, 74, 138, .1);
+
+  /* Скроллбар */
+  --lv-scroll-thumb: rgba(26, 26, 26, .15);
+}
+
+/* ------------------------------------------------------------
+   3. ТЁМНАЯ ТЕМА — [data-theme="dark"] на <html>
+   Тёмно-сливовые поверхности, тёплый светлый текст.
+   Брендовые pink/tiffany/gold НЕ меняются.
+   ------------------------------------------------------------ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --lv-ink: #f3ebf0;
+  --lv-dim: #a798a6;
+
+  --lv-bg: #171219;
+  --lv-page: #171219;
+  --lv-card: #211b26;
+  --lv-surface: #2b2331;
+  --lv-glass: rgba(30, 23, 34, .86);
+  --lv-on-brand: #ffffff;
+
+  --lv-line: #372d3e;
+  --lv-line-2: #2e2535;
+  --lv-hairline: rgba(255, 255, 255, .12);
+
+  --lv-soft-pink: rgba(246, 74, 138, .12);   /* канон демки; см. docs/06 — расхождение с lovii-site (.2) */
+  --lv-mist-pink: rgba(246, 74, 138, .06);
+  --lv-soft-tiffany: rgba(10, 186, 181, .12);
+  --lv-soft-gold: rgba(212, 168, 84, .16);
+  --lv-sand-soft: #38302a;
+  --lv-grey-soft: #2e2535;
+
+  --lv-gold-text: #e2c88c;
+  --lv-tiffany-text: #6fd9d4;
+  --lv-green-text: #a8d686;
+  --lv-green-soft: rgba(110, 180, 80, .16);
+
+  --lv-hero-top: #1e1524;
+  --lv-kpi-soft: #2b1f2b;
+  --lv-ch-ink-a: #c9b6c4;
+  --lv-ch-ink-b: #9c8496;
+  --lv-toast-d: rgba(26, 26, 26, .55);
+
+  --lv-shadow-soft: 0 1px 3px rgba(26, 26, 26, .06);   /* канон демки; lovii-site использует rgba(0,0,0,.45) */
+  --lv-shadow-lift: 0 12px 32px -12px rgba(201, 42, 106, .22);
+  --lv-shadow-nav: 0 12px 32px -12px rgba(26, 26, 26, .28);
+  --lv-shadow-stuck: 0 12px 16px -16px rgba(26, 26, 26, .28);
+  --lv-shadow-toast: 0 12px 32px -12px rgba(201, 42, 106, .35);
+  --lv-shadow-float: 0 2px 8px rgba(26, 26, 26, .1);
+  --lv-shadow-app: 0 0 60px rgba(26, 26, 26, .08);
+  --lv-ring-search: 0 0 0 2px rgba(246, 74, 138, .4);
+  --lv-ring-field: 0 0 0 4px rgba(246, 74, 138, .1);
+
+  --lv-scroll-thumb: rgba(255, 255, 255, .18);
+}
+
+/* ------------------------------------------------------------
+   4. БАЗОВЫЕ СТИЛИ (опционально — можно не подключать)
+   ------------------------------------------------------------ */
+body {
+  font-family: var(--lv-font);
+  background: var(--lv-bg);
+  color: var(--lv-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button { font-family: inherit; border: 0; background: none; padding: 0; cursor: pointer; color: inherit; font-size: inherit; }
+input, textarea, select { font-family: inherit; }
+
+/* Фокус с клавиатуры — всегда розовый брендовый */
+:focus-visible { outline: 2px solid var(--lv-pink); outline-offset: 2px; border-radius: 8px; }
+
+/* Уважение к reduce motion — обязательное a11y-правило */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   5. ДВИЖЕНИЕ (ключевые кадры канона)
+   ------------------------------------------------------------ */
+@keyframes lv-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes lv-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes lv-pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.8); } }
+
+.lv-enter { animation: lv-enter .35s ease-out both; }
+.lv-float { animation: lv-float 5s ease-in-out infinite; }
+.lv-dot { width: 6px; height: 6px; border-radius: 999px; display: inline-block; animation: lv-pulse-dot 1.4s ease-in-out infinite; }
+
+/* Ленты-карусели: карточки растворяются у краёв */
+.lv-edge-fade {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+}
+
+
+    /* ===================== Стили самого гайда ===================== */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: var(--lv-font); background: var(--lv-bg); color: var(--lv-ink); -webkit-font-smoothing: antialiased; }
+
+    .gs-header { position: sticky; top: 0; z-index: 40; background: var(--lv-glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--lv-line); }
+    .gs-header-in { display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 16px; max-width: 1080px; margin: 0 auto; }
+    .gs-header img.gs-logo { height: 32px; width: auto; display: block; }
+    .gs-header img.logo-dark-img { display: none; }
+    [data-theme="dark"] .gs-header img.logo-dark-img { display: block; }
+    [data-theme="dark"] .gs-header img.logo-light-img { display: none; }
+    .gs-head-right { display: flex; align-items: center; gap: 8px; }
+
+    .icon-btn { position: relative; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 999px; background: var(--lv-surface); transition: background .2s; }
+    .icon-btn:hover { background: var(--lv-soft-pink); }
+    .icon-btn svg { width: 18px; height: 18px; }
+    .icon-btn .theme-ico-sun { display: none; }
+    [data-theme="dark"] .icon-btn .theme-ico-sun { display: block; }
+    [data-theme="dark"] .icon-btn .theme-ico-moon { display: none; }
+
+    .gs-wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px 96px; }
+    .gs-hero { padding: 28px 0 8px; background: linear-gradient(180deg, var(--lv-hero-top) 0%, var(--lv-bg) 100%); margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+    .gs-hero h1 { margin: 8px 0 0; font-size: 26px; line-height: 1.22; font-weight: 800; letter-spacing: -.01em; }
+    .gs-hero h1 .accent { color: var(--lv-pink); }
+    .gs-hero .lead { margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: var(--lv-dim); max-width: 640px; }
+    .gs-hero .lead b { color: var(--lv-ink); font-weight: 600; }
+    .gs-hero-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+
+    .stat-pill { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .stat-pill.pink { background: var(--lv-soft-pink); color: var(--lv-pink-dark); }
+    .stat-pill.tiffany { background: var(--lv-soft-tiffany); color: var(--lv-tiffany-text); }
+    .stat-pill.gold { background: var(--lv-soft-gold); color: var(--lv-gold-text); }
+    .stat-pill.grey { background: var(--lv-grey-soft); color: #999; }
+
+    .gs-section { padding-top: 28px; }
+    .gs-kicker { font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--lv-pink-dark); background: var(--lv-soft-pink); border-radius: 999px; padding: 3px 9px; display: inline-block; }
+    .gs-section h2 { margin: 10px 0 0; font-size: 16px; font-weight: 800; }
+    .gs-section .gs-sub { margin: 4px 0 0; font-size: 13px; color: var(--lv-dim); line-height: 1.55; max-width: 720px; }
+    .gs-section .gs-sub code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; background: var(--lv-surface); border-radius: 6px; padding: 1px 6px; color: var(--lv-pink-dark); }
+
+    .gs-card { background: var(--lv-card); border: 1px solid var(--lv-line); border-radius: 16px; box-shadow: var(--lv-shadow-soft); }
+    .gs-panel { padding: 16px; }
+
+    /* Свотчи палитры */
+    .sw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 10px; margin-top: 14px; }
+    .sw { border-radius: 12px; overflow: hidden; border: 1px solid var(--lv-line); background: var(--lv-card); }
+    .sw .chip { height: 56px; border-bottom: 1px solid var(--lv-line); }
+    .sw .info { padding: 7px 9px; }
+    .sw .nm { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 700; color: var(--lv-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sw .hx { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; color: var(--lv-dim); margin-top: 1px; }
+    .sw-title { margin: 18px 0 0; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--lv-dim); }
+
+    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    @media (max-width: 720px) { .duo { grid-template-columns: 1fr; } }
+    .duo h3 { margin: 0 0 8px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+    .duo .dot { width: 8px; height: 8px; border-radius: 999px; }
+
+    /* Типографика */
+    .type-row { display: flex; align-items: baseline; gap: 16px; padding: 12px 0; border-top: 1px solid var(--lv-line-2); }
+    .type-row:first-child { border-top: 0; }
+    .type-meta { flex-shrink: 0; width: 190px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10.5px; color: var(--lv-dim); line-height: 1.5; }
+    .type-demo { min-width: 0; }
+    @media (max-width: 640px) { .type-row { flex-direction: column; gap: 4px; } .type-meta { width: auto; } }
+
+    /* Радиусы и тени */
+    .shape-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+    .shape { width: 108px; height: 76px; background: var(--lv-surface); border: 1.5px solid var(--lv-line); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; color: var(--lv-dim); }
+    .shadow-card { width: 168px; padding: 14px; font-size: 12px; font-weight: 600; border-radius: 16px; background: var(--lv-card); border: 1px solid var(--lv-line); }
+    .shadow-card .mono { display: block; margin-top: 4px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9.5px; color: var(--lv-dim); font-weight: 400; }
+
+    /* Кнопки */
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
+    .cta-btn { height: 36px; padding: 0 16px; border-radius: 999px; color: var(--lv-on-brand); font-size: 12px; font-weight: 700; transition: all .2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background-image: linear-gradient(135deg, #f64a8a 0%, #c92a6a 100%); }
+    .cta-btn:hover { box-shadow: var(--lv-shadow-lift); }
+    .cta-btn:active { transform: scale(.95); }
+    .cta-btn.big { height: 48px; font-size: 14px; padding: 0 24px; }
+    .cta-btn.sm { height: 32px; padding: 0 12px; font-size: 12px; }
+    .cta-btn.plain { background-image: none; background: var(--lv-surface); color: var(--lv-ink); }
+    .cta-btn.disabled { opacity: .5; pointer-events: none; }
+    .ghost-btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 40px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--lv-line); background: var(--lv-card); font-size: 13px; font-weight: 700; color: var(--lv-ink); transition: all .2s; }
+    .ghost-btn:hover { border-color: var(--lv-pink); color: var(--lv-pink-dark); }
+    .ghost-btn.sm { height: 32px; padding: 0 12px; font-size: 12px; }
+    .link-btn { display: inline-flex; align-items: center; gap: 2px; font-size: 13px; font-weight: 600; color: var(--lv-pink-dark); transition: gap .2s; }
+    .link-btn:hover { gap: 6px; }
+    .pill-btn { display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 10px; border-radius: 999px; background: var(--lv-surface); font-size: 14px; font-weight: 500; transition: background .2s; }
+    .pill-btn:hover { background: var(--lv-soft-pink); }
+    .pill-btn svg { width: 16px; height: 16px; color: var(--lv-pink); flex-shrink: 0; }
+
+    /* Пилюли и статусы */
+    .pill-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 14px; }
+    .walk-pill { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 8px; border-radius: 999px; background: var(--lv-soft-tiffany); color: var(--lv-tiffany-text); font-size: 11px; font-weight: 600; }
+    .open-pill { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+    .open-pill .dot { width: 6px; height: 6px; border-radius: 999px; }
+    .open-pill.on { background: #e0f7f6; color: var(--lv-tiffany-text); }
+    .open-pill.on .dot { background: var(--lv-tiffany); }
+    .open-pill.off { background: var(--lv-grey-soft); color: #999; }
+    .open-pill.off .dot { background: #bbb; }
+    .badge-pill { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+    .badge-hit { background: #fde8f1; color: var(--lv-pink-dark); }
+    .badge-new { background: #e0f7f6; color: var(--lv-tiffany-text); }
+    .badge-sale { background: #f7edda; color: var(--lv-gold-text); }
+    .badge-eco { background: var(--lv-green-soft); color: var(--lv-green-text); }
+    .status-pill { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+    .st-chip { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 10.5px; font-weight: 700; }
+    .glass-demo { margin-top: 14px; border-radius: 24px; padding: 20px; color: #fff; background-image: linear-gradient(150deg, #262023 0%, #1a1a1a 55%, #2b1219 100%); position: relative; overflow: hidden; }
+    .glass-demo .kicker { font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+    .glass-demo .big { margin-top: 6px; font-size: 18px; font-weight: 800; }
+    .glass-demo .big .g { color: var(--lv-gold); }
+    .glass-chip { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 12px; border-radius: 999px; background: rgba(255,255,255,.1); font-size: 12px; font-weight: 600; color: #fff; }
+    .glass-chip .g { color: var(--lv-gold); }
+    .glass-chip .t { color: var(--lv-tiffany); }
+
+    /* Формы */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } }
+    .f-field { display: block; }
+    .f-field .lb { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 700; color: var(--lv-ink); }
+    .f-field input, .f-field textarea, .f-field select { width: 100%; border: 1.5px solid var(--lv-line); border-radius: 14px; padding: 12px 14px; font: inherit; font-size: 14px; background: var(--lv-card); color: var(--lv-ink); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .f-field input:focus, .f-field textarea:focus, .f-field select:focus { border-color: var(--lv-pink); box-shadow: var(--lv-ring-field); }
+    .f-field textarea { min-height: 84px; resize: vertical; }
+    .search-bar { display: flex; align-items: center; gap: 8px; height: 44px; padding: 0 16px; border-radius: 999px; background: var(--lv-surface); transition: all .2s; }
+    .search-bar:focus-within { background: var(--lv-card); box-shadow: var(--lv-ring-search); }
+    .search-bar svg { width: 16px; height: 16px; color: var(--lv-dim); flex-shrink: 0; }
+    .search-bar input { flex: 1; border: 0; outline: none; background: none; font-size: 14px; color: var(--lv-ink); min-width: 0; }
+    .search-bar input::placeholder { color: var(--lv-dim); }
+
+    /* Карточки-образцы */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 14px; }
+    .btn-card { display: block; width: 100%; text-align: left; background: var(--lv-card); border: 1px solid var(--lv-line); border-radius: 16px; box-shadow: var(--lv-shadow-soft); overflow: hidden; transition: transform .2s, box-shadow .2s; padding: 0; cursor: pointer; color: var(--lv-ink); }
+    .btn-card:hover { transform: translateY(-2px); box-shadow: var(--lv-shadow-lift); }
+    .cover { height: 80px; display: flex; align-items: center; justify-content: center; position: relative; }
+    .cover .em { font-size: 36px; transition: transform .2s; }
+    .btn-card:hover .em { transform: scale(1.1); }
+    .cover.tile-pink { background: linear-gradient(135deg, #fde8f1, #fbf0f5); }
+    .cover.tile-tiffany { background: linear-gradient(135deg, #e0f7f6, #eefcfb); }
+    .cover.tile-gold { background: linear-gradient(135deg, #f7edda, #fbf5ea); }
+    .card-body { padding: 12px; }
+    .card-name { font-size: 14px; font-weight: 700; }
+    .card-sub { font-size: 12px; color: var(--lv-dim); margin-top: 2px; }
+    .card-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+    .rating { display: flex; align-items: center; gap: 2px; font-size: 12px; font-weight: 700; color: var(--lv-gold); }
+    .promo-card { border-radius: 16px; padding: 16px; transition: transform .2s, box-shadow .2s; }
+    .promo-card:hover { transform: translateY(-2px); box-shadow: var(--lv-shadow-lift); }
+    .promo-card.tone-pink { background: var(--lv-soft-pink); }
+    .promo-mini { display: inline-flex; align-items: center; gap: 6px; height: 20px; padding: 0 8px; border-radius: 999px; background: rgba(255,255,255,.8); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--lv-pink-dark); }
+    .promo-title { margin-top: 8px; font-size: 16px; font-weight: 800; line-height: 1.3; }
+    .promo-desc { font-size: 12px; color: var(--lv-dim); margin-top: 2px; }
+    .kpi { border-radius: 16px; padding: 12px 14px; min-width: 0; background: var(--lv-card); border: 1px solid var(--lv-line); box-shadow: var(--lv-shadow-soft); }
+    .kpi.accent { background-image: linear-gradient(150deg, var(--lv-kpi-soft), var(--lv-card)); border-color: rgba(246, 74, 138, .25); }
+    .kpi .l { font-size: 10.5px; font-weight: 700; color: var(--lv-dim); text-transform: uppercase; letter-spacing: .04em; }
+    .kpi .v { margin-top: 5px; font-size: 19px; font-weight: 800; letter-spacing: -.02em; }
+    .kpi .d { margin-top: 5px; display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; }
+    .delta-up { color: var(--lv-tiffany-text); }
+    .delta-down { color: var(--lv-pink-dark); }
+
+    /* Навигация */
+    .nav-demo { margin-top: 14px; border: 1px solid var(--lv-line); border-radius: 16px; background: var(--lv-card); overflow: hidden; max-width: 480px; }
+    .app-nav-in { display: grid; grid-template-columns: repeat(5, 1fr); height: 64px; }
+    .nav-btn { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 11px; font-weight: 500; color: var(--lv-dim); transition: color .2s; }
+    .nav-btn.active { color: var(--lv-pink); }
+    .nav-btn .top-ind { position: absolute; top: 0; width: 32px; height: 2px; border-radius: 999px; background: var(--lv-pink); display: none; }
+    .nav-btn.active .top-ind { display: block; }
+    .nav-ico { display: flex; }
+    .nav-ico svg { width: 22px; height: 22px; }
+
+    /* Шит и тост */
+    .sheet-overlay { position: fixed; inset: 0; z-index: 50; background: rgba(26, 26, 26, .4); opacity: 0; pointer-events: none; transition: opacity .25s; }
+    .sheet-overlay.open { opacity: 1; pointer-events: auto; }
+    .sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 51; background: var(--lv-card); border-radius: 24px 24px 0 0; max-height: 72dvh; display: flex; flex-direction: column; transform: translateY(100%); visibility: hidden; transition: transform .3s cubic-bezier(.32, .72, 0, 1), visibility .3s; max-width: 480px; margin: 0 auto; }
+    .sheet.open { transform: translateY(0); visibility: visible; }
+    .sheet-head { padding: 20px 16px 8px; }
+    .sheet-head h3 { margin: 0; font-size: 18px; font-weight: 800; }
+    .sheet-head p { margin: 4px 0 0; font-size: 14px; color: var(--lv-dim); }
+    .sheet-body { padding: 0 16px 24px; overflow-y: auto; display: grid; gap: 8px; }
+    .district-row { display: flex; align-items: center; justify-content: space-between; height: 56px; padding: 0 16px; border-radius: 16px; border: 1px solid var(--lv-line); transition: all .2s; text-align: left; width: 100%; color: var(--lv-ink); }
+    .district-row:hover { border-color: var(--lv-pink); }
+    .district-row.active { border-color: var(--lv-pink); background: var(--lv-soft-pink); }
+    .district-row .nm { display: block; font-size: 14px; font-weight: 600; }
+    .district-row .mt { display: block; font-size: 12px; color: var(--lv-dim); }
+
+    .toast-wrap { position: fixed; left: 0; right: 0; bottom: 84px; z-index: 60; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; padding: 0 16px; }
+    .toast { max-width: 100%; background: var(--lv-ink); color: var(--lv-card); border-radius: 16px; padding: 10px 16px; font-size: 13px; font-weight: 600; box-shadow: var(--lv-shadow-toast); animation: lv-toast-in .25s ease-out; }
+    .toast .d { font-size: 11px; color: var(--lv-toast-d); font-weight: 400; margin-top: 2px; }
+    @keyframes lv-toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .toast.hide { opacity: 0; transform: translateY(8px); transition: all .25s; }
+
+    /* Код */
+    .code { margin-top: 14px; background: var(--lv-surface); border: 1px solid var(--lv-line); border-radius: 14px; padding: 14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; line-height: 1.6; color: var(--lv-ink); overflow-x: auto; white-space: pre; }
+    .code .c { color: var(--lv-dim); }
+
+    /* Лого-дуэт */
+    .logo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+    @media (max-width: 720px) { .logo-duo { grid-template-columns: 1fr; } }
+    .logo-tile { border-radius: 16px; border: 1px solid var(--lv-line); display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .logo-tile.light { background: #ffffff; }
+    .logo-tile.dark { background: #171219; }
+    .logo-tile img { height: 40px; width: auto; }
+    .logo-tile .tag { position: absolute; }
+    .logo-cap { text-align: center; margin-top: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10.5px; color: var(--lv-dim); }
+
+    .gs-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--lv-hairline); font-size: 12px; color: var(--lv-dim); display: flex; gap: 8px; flex-wrap: wrap; justify-content: space-between; }
+    .gs-footer a { color: var(--lv-pink-dark); font-weight: 600; text-decoration: none; }
+    .gs-footer a:hover { text-decoration: underline; }
+
+    .lv-dot-demo { display: inline-flex; align-items: center; gap: 8px; }
+  </style>
+</head>
+<body>
+  <header class="gs-header">
+    <div class="gs-header-in">
+      <img class="gs-logo logo-light-img" src="data:image/svg+xml;base64,PHN2ZyBpZD0icmVzdWx0U3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDQzLjUyIDUxMiI+CiAgICAgICAgICAgICAgICAgICAgPGRlZnM+CiAgICAgICAgICAgICAgICAgICAgICAgIDxzdHlsZT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5jbHMtMSB7IGZpbGw6ICNmZmZmZmY7IH0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5jbHMtMSwgLmNscy0yLCAuY2xzLTMsIC5jbHMtNCwgLmNscy01LCAuY2xzLTYgeyBzdHJva2Utd2lkdGg6IDBweDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy03LCAuY2xzLTggeyBmaWxsOiBub25lOyBzdHJva2U6ICMyYjJiMmI7IHN0cm9rZS1taXRlcmxpbWl0OiAxMDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy0zIHsgZmlsbDogIzdlOTBjMjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy00IHsgZmlsbDogIzJiMmIyYjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy01IHsgZmlsbDogI2ZmZmZmZjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy02IHsgZmlsbDogI2Y2NGE4YTsgZmlsbC1ydWxlOiBldmVub2RkOyB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAuY2xzLTggeyBzdHJva2Utd2lkdGg6IDE1cHg7IH0KICAgICAgICAgICAgICAgICAgICAgICAgPC9zdHlsZT4KICAgICAgICAgICAgICAgICAgICA8L2RlZnM+CiAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJtMy4xNiw1NC42MUMzLjE2LDI0LjQ1LDI3LjYxLDAsNTcuNzcsMGg0MDIuNzdjMzAuMTYsMCw1NC42MSwyNC40NSw1NC42MSw1NC42MXY0MDIuNzdjMCwzMC4xNi0yNC40NSw1NC42MS01NC42MSw1NC42MUg1Ny43N2MtMzAuMTYsMC01NC42MS0yNC40NS01NC42MS01NC42MVY1NC42MVoiIGZpbGw9IiNmZmZmZmYiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ii8+CiAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy00IiBkPSJtMzc1LjI0LDEyNS43OGMxLjA4LjgzLDkuNjEsOC4wMiwzLjcsMTEuMTQtMy4wOSwxLjYzLTguNTIsMi4yNS0xMC41NywyLjc0LTQuMzMsMS4wNS0xMC4xOCwyLjgzLTEyLjU5LDUuODEsMS43NC0xNC41Ny0zLjM2LTI2LjUyLTMuMzYtMjYuNTIsNS41MS0uNzEsMTUuMjguODUsMjIuODIsNi44M1oiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Im0yOTkuMTksNzEuOGM3Mi4zNiwwLDUxLjUzLDcxLjgsNTMuNjYsMjMzLjU2LTMuNTgsNzMuOTYtNjMuNTMsMTAwLjUtMTAxLjQyLDEwMy4wMi00MS4xMSwxLjUxLTczLjM4LTE3LjI0LTczLjM4LTE3LjI0aC03My4wMmMtNC4wMiwwLTUuOTItNC45NC0yLjk0LTcuNjQsNi41MS01Ljg4LDE2LjEtMTQuMzUsMjcuMTktMjQuMDdsODYuNTQsMS4wMWMyMCwwLDM1LjA0LTQuMTcsNDYuMjQtMTAuNyw0NS43MS03Ljk0LDYwLjk1LTI2Ljg5LDYzLjAxLTY3LjE5LS42OC02MC4xMi03Ni4zLTUyLjcxLTc2LjMtNTIuNzEuMy03LjA2LjE4LTE1LjczLDAtMjUuMzMtLjItMTAuNTMtLjQ3LTIyLjItLjMyLTM0LjExLjU4LTQ2Ljg3LDcuNjEtOTcuNTgsNTAuNzQtOTguNlptOC41OCw1My43NmMwLTIuOTQtMi4zOC01LjMzLTUuMzMtNS4zM3MtNS4zMywyLjM5LTUuMzMsNS4zMywyLjM5LDUuMzMsNS4zMyw1LjMzLDUuMzMtMi4zOSw1LjMzLTUuMzNaIiBmaWxsPSIjN2U5MGMyIiBzdHlsZT0iZmlsbDogcmdiKDEyNiwgMTQ0LCAxOTQpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJtMzI1LjA3LDI4Mi41NWMtMi4wNiw0MC4zLTE3LjMsNTkuMjUtNjMuMDEsNjcuMTksMzMuODMtMTkuNzMsMzIuNjEtNjEuMDUsMjYuOTUtNzQuNTMtNy41NC0xNy45NC0zOC4yMS0yMi41NS01NC40LTYuOTgtMS4zMiwxLjExLTcuNjUsNi41NC0xNi45NSwxNC41NWwtLjEtLjEydi03OC4xNWgzMS4yMWMuMTgsOS42LjMsMTguMjcsMCwyNS4zMywwLDAsNzUuNjItNy40MSw3Ni4zLDUyLjcxWiIgZmlsbD0iI2ZmZmZmZiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsIDI1NSwgMjU1KTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNCIgZD0ibTI3OS4wNSw0MzkuODNzMzMuMDctMy43OSwyOC45OCwxMC45Yy00LjA5LDE0LjctMjcuOTUsNy4xOS00NS42OCw5LjAxLTE3LjczLDEuODMtMzkuMTEsMS45Ny0zOS4wNS0xMC44My4wNy0xMi44MSwzNy40OS04LjksMzcuNDktOC45bC0zLjQtMzAuNzQsMjMuMzgtLjgtMS43MiwzMS4zNloiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Im0yODkuMDEsMjc1LjIxYzUuNjYsMTMuNDgsNi44OCw1NC44LTI2Ljk1LDc0LjUzLTExLjIsNi41My0yNi4yNCwxMC43LTQ2LjI0LDEwLjdsLTg2LjU0LTEuMDFjMTIuODgtMTEuMjksMjcuOC0yNC4yNyw0Mi4yOS0zNi44MywxNy40LTE1LjA4LDM0LjE4LTI5LjU3LDQ2LjA5LTM5LjgyLDkuMy04LjAxLDE1LjYzLTEzLjQ0LDE2Ljk1LTE0LjU1LDE2LjE5LTE1LjU3LDQ2Ljg2LTEwLjk2LDU0LjQsNi45OFoiIGZpbGw9IiM3ZTkwYzIiIHN0eWxlPSJmaWxsOiByZ2IoMTI2LCAxNDQsIDE5NCk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Im0yNDguNzcsMjA0LjUxaC0zMS4yMXYzOC43MWgtMTEyLjc4Yy0yLjc0LTU4Ljk3LDE3LjQ4LTY4LjUzLDI2LjA5LTcwLjA5LDE2Ljc3LTMuMDMsODAuMjktMi43MywxMTcuNTgtMi43My0uMTUsMTEuOTEuMTIsMjMuNTguMzIsMzQuMTFaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJtMjE3LjU2LDI4Mi42NmwuMS4xMmMtMTEuOTEsMTAuMjUtMjguNjksMjQuNzQtNDYuMDksMzkuODIsMCwwLTEzLjA2LS4wOS00MC45Ni0uMDktMTguNTEsMC0xNi4zNy00OS40NC0xNi4zNC03OS4yOWgxMDMuMjl2MzkuNDRaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy04IiBkPSJtMTI5LjI3LDM1OS40M2guMDFsODYuNTQsMS4wMWMyMCwwLDM1LjA0LTQuMTcsNDYuMjQtMTAuNywzMy44My0xOS43MywzMi42MS02MS4wNSwyNi45NS03NC41My03LjU0LTE3Ljk0LTM4LjIxLTIyLjU1LTU0LjQtNi45OC0xLjMyLDEuMTEtNy42NSw2LjU0LTE2Ljk1LDE0LjU1LTExLjkxLDEwLjI1LTI4LjY5LDI0Ljc0LTQ2LjA5LDM5LjgyLTE0LjQ5LDEyLjU2LTI5LjQxLDI1LjU0LTQyLjI5LDM2LjgzLTExLjA5LDkuNzItMjAuNjgsMTguMTktMjcuMTksMjQuMDctMi45OCwyLjctMS4wOCw3LjY0LDIuOTQsNy42NGg3My4wMnMzMi4yNywxOC43NSw3My4zOCwxNy4yNGMzNy44OS0yLjUyLDk3Ljg0LTI5LjA2LDEwMS40Mi0xMDMuMDItMi4xMy0xNjEuNzYsMTguNy0yMzMuNTYtNTMuNjYtMjMzLjU2LTQzLjEzLDEuMDItNTAuMTYsNTEuNzMtNTAuNzQsOTguNi0uMTUsMTEuOTEuMTIsMjMuNTguMzIsMzQuMTEuMTgsOS42LjMsMTguMjcsMCwyNS4zMywwLDAsNzUuNjItNy40MSw3Ni4zLDUyLjcxLTIuMDYsNDAuMy0xNy4zLDU5LjI1LTYzLjAxLDY3LjE5IiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxjaXJjbGUgY2xhc3M9ImNscy04IiBjeD0iMzAyLjQ0IiBjeT0iMTI1LjU2IiByPSI1LjMzIiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNyIgZD0ibTM1Mi40MiwxMTguOTVjNS41MS0uNzEsMTUuMjguODUsMjIuODIsNi44MywxLjA4LjgzLDkuNjEsOC4wMiwzLjcsMTEuMTQtMy4wOSwxLjYzLTguNTIsMi4yNS0xMC41NywyLjc0LTQuMzMsMS4wNS0xMC4xOCwyLjgzLTEyLjU5LDUuODEsMS43NC0xNC41Ny0zLjM2LTI2LjUyLTMuMzYtMjYuNTJaIiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtOCIgZD0ibTI0OC40NSwxNzAuNGMtMzcuMjksMC0xMDAuODEtLjMtMTE3LjU4LDIuNzMtOC42MSwxLjU2LTI4LjgzLDExLjEyLTI2LjA5LDcwLjA5aDExMi42OSIgc3Ryb2tlPSIjMmIyYjJiIiBzdHlsZT0ic3Ryb2tlOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cG9seWxpbmUgY2xhc3M9ImNscy04IiBwb2ludHM9IjI0OC43NyAyMDQuNTEgMjE3LjU2IDIwNC41MSAyMTcuNTYgMjQzLjIyIDIxNy41NiAyODIuNjYiIHN0cm9rZT0iIzJiMmIyYiIgc3R5bGU9InN0cm9rZTogcmdiKDQzLCA0MywgNDMpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy04IiBkPSJtMTE0LjI3LDI0My4yMmMtLjAzLDI5Ljg1LTIuMTcsNzkuMjksMTYuMzQsNzkuMjksMjcuOSwwLDQwLjk2LjA5LDQwLjk2LjA5IiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJtOTkzLjQ0LDQzMy44OWgtMTE5Yy0zLjUtMTMtOS44NC0zMS4xMi0xOS01NC4zOC05LjE3LTIzLjI1LTE5LjA5LTQ3LjEyLTI5Ljc1LTcxLjYyLTEwLjY3LTI0LjUtMTkuODQtNDUuNDEtMjcuNS02Mi43NWwtMTEuNzUtMjYtMTEuNzUsMjZjLTcuODQsMTcuMTctMTcsMzgtMjcuNSw2Mi41cy0yMC4zNCw0OC4zNC0yOS41LDcxLjVjLTkuMTcsMjMuMTctMTUuNSw0MS40Mi0xOSw1NC43NWgtMTE5LjVsMTUzLjUtMzUwLjc1LDEwNS43NS0zLjUsMTU1LDM1NC4yNVoiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0ibTE1MjcuOTMsNDMyLjY0Yy0xOS0uMzMtMzgtLjUtNTctLjUtMTQuMzQsMC0yOC41OS4wOS00Mi43NS4yNVY4Mi42NGgyMDdjMjIuNSwwLDQxLjgzLDQuMjksNTgsMTIuODgsMTYuMTYsOC41OSwyOC44MywxOS42MiwzOCwzMy4xMiw5LjE2LDEzLjUsMTQuMjEsMjQuODgsMTUuMTIsMzQuMTIuOTEsOS4yNSwxLjM4LDE1LjM4LDEuMzgsMTguMzgsMCwxMi4zNC0yLjc1LDI0LjI1LTguMjUsMzUuNzUtNi42NywxNC41LTE3Ljg0LDI2Ljg0LTMzLjUsMzcsMjQuNjYsMTMuNSwzOC44MywyNy45Miw0Mi41LDQzLjI1LDMuNjYsMTUuMzQsNS41LDI2LjUsNS41LDMzLjUsMCwxNy01LDM0LjA5LTE1LDUxLjI1LTguMzQsMTMuMzQtMTkuMjUsMjMuNjctMzIuNzUsMzEtMTMuNSw3LjM0LTI4LDEyLjQ2LTQzLjUsMTUuMzgtMTUuNSwyLjkyLTMwLjYzLDQuNDItNDUuMzgsNC41LTE0Ljc1LjA5LTI5LjU0LjEyLTQ0LjM4LjEybC00NS0uMjVabTEwNC42Mi0yMTYuMjVjNC43NS01LjE2LDcuMTItMTEuMTYsNy4xMi0xOHMtMi4zOC0xMi41OC03LjEyLTE3Ljc1Yy00Ljc1LTUuMTYtMTEuODgtNy43NS0yMS4zOC03Ljc1aC04MC4yNXY1MS4yNWg4MC4yNWM5LjUsMCwxNi42Mi0yLjU4LDIxLjM4LTcuNzVabS0uMTIsMTE4Ljc1YzQuODMtNSw3LjI1LTkuMTYsNy4yNS0xMi41di01LjI1YzAtNi0yLjI5LTExLjQ2LTYuODgtMTYuMzgtNC41OS00LjkxLTExLjc5LTcuMzgtMjEuNjItNy4zOGgtODAuMjV2NDloODAuMjVjOS4zMywwLDE2LjQxLTIuNSwyMS4yNS03LjVaIiBmaWxsPSIjMmIyYjJiIiBzdHlsZT0iZmlsbDogcmdiKDQzLCA0MywgNDMpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0yMTUwLjkzLDQzMy4zOWgtMTEybDYuMjUtMTgxLjc1LTE3OS4yNSwxODEuNzVoLTc2LjVWODMuMTRsMTA1Ljc1LTQuNXYxNzMuNWwxNTAtMTY5aDEwNS43NXYzNTAuMjVaIiBmaWxsPSIjMmIyYjJiIiBzdHlsZT0iZmlsbDogcmdiKDQzLCA0MywgNDMpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0xMzU4LjU2LDE2NS44OWMtMTYuNDItMjYuODMtMzguNDItNDguMjEtNjYtNjQuMTItMjcuNTktMTUuOTEtNTguMjEtMjMuODgtOTEuODctMjMuODhzLTY0LjA5LDcuOTYtOTEuNzUsMjMuODhjLTI3LjY3LDE1LjkyLTQ5LjcxLDM3LjI5LTY2LjEyLDY0LjEyLTE2LjQyLDI2Ljg0LTI0LjYyLDU2LjU5LTI0LjYyLDg5LjI1czguMjEsNjIuNDIsMjQuNjIsODkuMjVjMTYuNDEsMjYuODQsMzguNDYsNDguMjUsNjYuMTIsNjQuMjUsMjcuNjYsMTYsNTguMjUsMjQsOTEuNzUsMjRzNjQuMjktOCw5MS44Ny0yNGMyNy41OC0xNiw0OS41OC0zNy40MSw2Ni02NC4yNSwxNi40MS0yNi44MywyNC42Mi01Ni41OCwyNC42Mi04OS4yNXMtOC4yMS02Mi40MS0yNC42Mi04OS4yNVptLTY2Ljc0LDEwNS43NGwtOTAuNTQsOTAuNTRjLTU1LjU4LTUxLTgwLjE0LTc2LjMyLTk4Ljg4LTk5LjIyLTE1LjEyLTIyLjQ5LTEyLjc0LTUzLjI0LDcuMTUtNzMuMTIsMjIuNTktMjIuNTksNTkuMjEtMjIuNTksODEuOCwwbDkuMzQsOS4zNCw5LjM0LTkuMzRjMjIuNTktMjIuNTksNTkuMjEtMjIuNTksODEuOCwwLDIyLjU5LDIyLjU5LDIyLjU5LDU5LjIxLDAsODEuOFoiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Im0yMDQuNDEsMjE4LjA2Yy00LjA1LTYuNjMtOS40OS0xMS45MS0xNi4zLTE1Ljg0LTYuODEtMy45My0xNC4zOC01LjktMjIuNjktNS45cy0xNS44MywxLjk3LTIyLjY2LDUuOWMtNi44MywzLjkzLTEyLjI4LDkuMjEtMTYuMzMsMTUuODQtNC4wNSw2LjYzLTYuMDgsMTMuOTctNi4wOCwyMi4wNHMyLjAzLDE1LjQyLDYuMDgsMjIuMDRjNC4wNSw2LjYzLDkuNSwxMS45MiwxNi4zMywxNS44Nyw2LjgzLDMuOTUsMTQuMzksNS45MywyMi42Niw1LjkzczE1Ljg4LTEuOTgsMjIuNjktNS45M2M2LjgxLTMuOTUsMTIuMjUtOS4yNCwxNi4zLTE1Ljg3LDQuMDUtNi42Myw2LjA4LTEzLjk3LDYuMDgtMjIuMDRzLTIuMDMtMTUuNDEtNi4wOC0yMi4wNFoiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNiIgZD0ibTE4Ny45MiwyMjMuOThjLTUuNTgtNS41OC0xNC42Mi01LjU4LTIwLjIsMGwtMi4zMSwyLjMxLTIuMzEtMi4zMWMtNS41OC01LjU4LTE0LjYyLTUuNTgtMjAuMiwwLTQuOTEsNC45MS01LjUsMTIuNS0xLjc2LDE4LjA2LDQuNjMsNS42NiwxMC42OSwxMS45MSwyNC40MiwyNC41bDIyLjM2LTIyLjM2YzUuNTgtNS41OCw1LjU4LTE0LjYyLDAtMjAuMloiIGZpbGw9IiNmNjRhOGEiIHN0eWxlPSJmaWxsOiByZ2IoMjQ2LCA3NCwgMTM4KTsiLz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICA8L3N2Zz4=" alt="LOVII">
+      <img class="gs-logo logo-dark-img" src="data:image/svg+xml;base64,PHN2ZyBpZD0icmVzdWx0U3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDQzLjUyIDUxMiI+CiAgICAgICAgICAgICAgICAgICAgPGRlZnM+CiAgICAgICAgICAgICAgICAgICAgICAgIDxzdHlsZT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5jbHMtMSB7IGZpbGw6ICNmZmZmZmY7IH0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5jbHMtMSwgLmNscy0yLCAuY2xzLTMsIC5jbHMtNCwgLmNscy01LCAuY2xzLTYgeyBzdHJva2Utd2lkdGg6IDBweDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy03LCAuY2xzLTggeyBmaWxsOiBub25lOyBzdHJva2U6ICMyYjJiMmI7IHN0cm9rZS1taXRlcmxpbWl0OiAxMDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy0zIHsgZmlsbDogIzdlOTBjMjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy00IHsgZmlsbDogIzJiMmIyYjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy01IHsgZmlsbDogI2ZmZmZmZjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy02IHsgZmlsbDogI2Y2NGE4YTsgZmlsbC1ydWxlOiBldmVub2RkOyB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAuY2xzLTggeyBzdHJva2Utd2lkdGg6IDE1cHg7IH0KICAgICAgICAgICAgICAgICAgICAgICAgPC9zdHlsZT4KICAgICAgICAgICAgICAgICAgICA8L2RlZnM+CiAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJtMy4xNiw1NC42MUMzLjE2LDI0LjQ1LDI3LjYxLDAsNTcuNzcsMGg0MDIuNzdjMzAuMTYsMCw1NC42MSwyNC40NSw1NC42MSw1NC42MXY0MDIuNzdjMCwzMC4xNi0yNC40NSw1NC42MS01NC42MSw1NC42MUg1Ny43N2MtMzAuMTYsMC01NC42MS0yNC40NS01NC42MS01NC42MVY1NC42MVoiIGZpbGw9IiNmZmZmZmYiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ii8+CiAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy00IiBkPSJtMzc1LjI0LDEyNS43OGMxLjA4LjgzLDkuNjEsOC4wMiwzLjcsMTEuMTQtMy4wOSwxLjYzLTguNTIsMi4yNS0xMC41NywyLjc0LTQuMzMsMS4wNS0xMC4xOCwyLjgzLTEyLjU5LDUuODEsMS43NC0xNC41Ny0zLjM2LTI2LjUyLTMuMzYtMjYuNTIsNS41MS0uNzEsMTUuMjguODUsMjIuODIsNi44M1oiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Im0yOTkuMTksNzEuOGM3Mi4zNiwwLDUxLjUzLDcxLjgsNTMuNjYsMjMzLjU2LTMuNTgsNzMuOTYtNjMuNTMsMTAwLjUtMTAxLjQyLDEwMy4wMi00MS4xMSwxLjUxLTczLjM4LTE3LjI0LTczLjM4LTE3LjI0aC03My4wMmMtNC4wMiwwLTUuOTItNC45NC0yLjk0LTcuNjQsNi41MS01Ljg4LDE2LjEtMTQuMzUsMjcuMTktMjQuMDdsODYuNTQsMS4wMWMyMCwwLDM1LjA0LTQuMTcsNDYuMjQtMTAuNyw0NS43MS03Ljk0LDYwLjk1LTI2Ljg5LDYzLjAxLTY3LjE5LS42OC02MC4xMi03Ni4zLTUyLjcxLTc2LjMtNTIuNzEuMy03LjA2LjE4LTE1LjczLDAtMjUuMzMtLjItMTAuNTMtLjQ3LTIyLjItLjMyLTM0LjExLjU4LTQ2Ljg3LDcuNjEtOTcuNTgsNTAuNzQtOTguNlptOC41OCw1My43NmMwLTIuOTQtMi4zOC01LjMzLTUuMzMtNS4zM3MtNS4zMywyLjM5LTUuMzMsNS4zMywyLjM5LDUuMzMsNS4zMyw1LjMzLDUuMzMtMi4zOSw1LjMzLTUuMzNaIiBmaWxsPSIjN2U5MGMyIiBzdHlsZT0iZmlsbDogcmdiKDEyNiwgMTQ0LCAxOTQpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJtMzI1LjA3LDI4Mi41NWMtMi4wNiw0MC4zLTE3LjMsNTkuMjUtNjMuMDEsNjcuMTksMzMuODMtMTkuNzMsMzIuNjEtNjEuMDUsMjYuOTUtNzQuNTMtNy41NC0xNy45NC0zOC4yMS0yMi41NS01NC40LTYuOTgtMS4zMiwxLjExLTcuNjUsNi41NC0xNi45NSwxNC41NWwtLjEtLjEydi03OC4xNWgzMS4yMWMuMTgsOS42LjMsMTguMjcsMCwyNS4zMywwLDAsNzUuNjItNy40MSw3Ni4zLDUyLjcxWiIgZmlsbD0iI2ZmZmZmZiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsIDI1NSwgMjU1KTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNCIgZD0ibTI3OS4wNSw0MzkuODNzMzMuMDctMy43OSwyOC45OCwxMC45Yy00LjA5LDE0LjctMjcuOTUsNy4xOS00NS42OCw5LjAxLTE3LjczLDEuODMtMzkuMTEsMS45Ny0zOS4wNS0xMC44My4wNy0xMi44MSwzNy40OS04LjksMzcuNDktOC45bC0zLjQtMzAuNzQsMjMuMzgtLjgtMS43MiwzMS4zNloiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Im0yODkuMDEsMjc1LjIxYzUuNjYsMTMuNDgsNi44OCw1NC44LTI2Ljk1LDc0LjUzLTExLjIsNi41My0yNi4yNCwxMC43LTQ2LjI0LDEwLjdsLTg2LjU0LTEuMDFjMTIuODgtMTEuMjksMjcuOC0yNC4yNyw0Mi4yOS0zNi44MywxNy40LTE1LjA4LDM0LjE4LTI5LjU3LDQ2LjA5LTM5LjgyLDkuMy04LjAxLDE1LjYzLTEzLjQ0LDE2Ljk1LTE0LjU1LDE2LjE5LTE1LjU3LDQ2Ljg2LTEwLjk2LDU0LjQsNi45OFoiIGZpbGw9IiM3ZTkwYzIiIHN0eWxlPSJmaWxsOiByZ2IoMTI2LCAxNDQsIDE5NCk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Im0yNDguNzcsMjA0LjUxaC0zMS4yMXYzOC43MWgtMTEyLjc4Yy0yLjc0LTU4Ljk3LDE3LjQ4LTY4LjUzLDI2LjA5LTcwLjA5LDE2Ljc3LTMuMDMsODAuMjktMi43MywxMTcuNTgtMi43My0uMTUsMTEuOTEuMTIsMjMuNTguMzIsMzQuMTFaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJtMjE3LjU2LDI4Mi42NmwuMS4xMmMtMTEuOTEsMTAuMjUtMjguNjksMjQuNzQtNDYuMDksMzkuODIsMCwwLTEzLjA2LS4wOS00MC45Ni0uMDktMTguNTEsMC0xNi4zNy00OS40NC0xNi4zNC03OS4yOWgxMDMuMjl2MzkuNDRaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy04IiBkPSJtMTI5LjI3LDM1OS40M2guMDFsODYuNTQsMS4wMWMyMCwwLDM1LjA0LTQuMTcsNDYuMjQtMTAuNywzMy44My0xOS43MywzMi42MS02MS4wNSwyNi45NS03NC41My03LjU0LTE3Ljk0LTM4LjIxLTIyLjU1LTU0LjQtNi45OC0xLjMyLDEuMTEtNy42NSw2LjU0LTE2Ljk1LDE0LjU1LTExLjkxLDEwLjI1LTI4LjY5LDI0Ljc0LTQ2LjA5LDM5LjgyLTE0LjQ5LDEyLjU2LTI5LjQxLDI1LjU0LTQyLjI5LDM2LjgzLTExLjA5LDkuNzItMjAuNjgsMTguMTktMjcuMTksMjQuMDctMi45OCwyLjctMS4wOCw3LjY0LDIuOTQsNy42NGg3My4wMnMzMi4yNywxOC43NSw3My4zOCwxNy4yNGMzNy44OS0yLjUyLDk3Ljg0LTI5LjA2LDEwMS40Mi0xMDMuMDItMi4xMy0xNjEuNzYsMTguNy0yMzMuNTYtNTMuNjYtMjMzLjU2LTQzLjEzLDEuMDItNTAuMTYsNTEuNzMtNTAuNzQsOTguNi0uMTUsMTEuOTEuMTIsMjMuNTguMzIsMzQuMTEuMTgsOS42LjMsMTguMjcsMCwyNS4zMywwLDAsNzUuNjItNy40MSw3Ni4zLDUyLjcxLTIuMDYsNDAuMy0xNy4zLDU5LjI1LTYzLjAxLDY3LjE5IiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxjaXJjbGUgY2xhc3M9ImNscy04IiBjeD0iMzAyLjQ0IiBjeT0iMTI1LjU2IiByPSI1LjMzIiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNyIgZD0ibTM1Mi40MiwxMTguOTVjNS41MS0uNzEsMTUuMjguODUsMjIuODIsNi44MywxLjA4LjgzLDkuNjEsOC4wMiwzLjcsMTEuMTQtMy4wOSwxLjYzLTguNTIsMi4yNS0xMC41NywyLjc0LTQuMzMsMS4wNS0xMC4xOCwyLjgzLTEyLjU5LDUuODEsMS43NC0xNC41Ny0zLjM2LTI2LjUyLTMuMzYtMjYuNTJaIiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtOCIgZD0ibTI0OC40NSwxNzAuNGMtMzcuMjksMC0xMDAuODEtLjMtMTE3LjU4LDIuNzMtOC42MSwxLjU2LTI4LjgzLDExLjEyLTI2LjA5LDcwLjA5aDExMi42OSIgc3Ryb2tlPSIjMmIyYjJiIiBzdHlsZT0ic3Ryb2tlOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cG9seWxpbmUgY2xhc3M9ImNscy04IiBwb2ludHM9IjI0OC43NyAyMDQuNTEgMjE3LjU2IDIwNC41MSAyMTcuNTYgMjQzLjIyIDIxNy41NiAyODIuNjYiIHN0cm9rZT0iIzJiMmIyYiIgc3R5bGU9InN0cm9rZTogcmdiKDQzLCA0MywgNDMpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy04IiBkPSJtMTE0LjI3LDI0My4yMmMtLjAzLDI5Ljg1LTIuMTcsNzkuMjksMTYuMzQsNzkuMjksMjcuOSwwLDQwLjk2LjA5LDQwLjk2LjA5IiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJtOTkzLjQ0LDQzMy44OWgtMTE5Yy0zLjUtMTMtOS44NC0zMS4xMi0xOS01NC4zOC05LjE3LTIzLjI1LTE5LjA5LTQ3LjEyLTI5Ljc1LTcxLjYyLTEwLjY3LTI0LjUtMTkuODQtNDUuNDEtMjcuNS02Mi43NWwtMTEuNzUtMjYtMTEuNzUsMjZjLTcuODQsMTcuMTctMTcsMzgtMjcuNSw2Mi41cy0yMC4zNCw0OC4zNC0yOS41LDcxLjVjLTkuMTcsMjMuMTctMTUuNSw0MS40Mi0xOSw1NC43NWgtMTE5LjVsMTUzLjUtMzUwLjc1LDEwNS43NS0zLjUsMTU1LDM1NC4yNVoiIGZpbGw9IiNmZmZmZmYiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0ibTE1MjcuOTMsNDMyLjY0Yy0xOS0uMzMtMzgtLjUtNTctLjUtMTQuMzQsMC0yOC41OS4wOS00Mi43NS4yNVY4Mi42NGgyMDdjMjIuNSwwLDQxLjgzLDQuMjksNTgsMTIuODgsMTYuMTYsOC41OSwyOC44MywxOS42MiwzOCwzMy4xMiw5LjE2LDEzLjUsMTQuMjEsMjQuODgsMTUuMTIsMzQuMTIuOTEsOS4yNSwxLjM4LDE1LjM4LDEuMzgsMTguMzgsMCwxMi4zNC0yLjc1LDI0LjI1LTguMjUsMzUuNzUtNi42NywxNC41LTE3Ljg0LDI2Ljg0LTMzLjUsMzcsMjQuNjYsMTMuNSwzOC44MywyNy45Miw0Mi41LDQzLjI1LDMuNjYsMTUuMzQsNS41LDI2LjUsNS41LDMzLjUsMCwxNy01LDM0LjA5LTE1LDUxLjI1LTguMzQsMTMuMzQtMTkuMjUsMjMuNjctMzIuNzUsMzEtMTMuNSw3LjM0LTI4LDEyLjQ2LTQzLjUsMTUuMzgtMTUuNSwyLjkyLTMwLjYzLDQuNDItNDUuMzgsNC41LTE0Ljc1LjA5LTI5LjU0LjEyLTQ0LjM4LjEybC00NS0uMjVabTEwNC42Mi0yMTYuMjVjNC43NS01LjE2LDcuMTItMTEuMTYsNy4xMi0xOHMtMi4zOC0xMi41OC03LjEyLTE3Ljc1Yy00Ljc1LTUuMTYtMTEuODgtNy43NS0yMS4zOC03Ljc1aC04MC4yNXY1MS4yNWg4MC4yNWM5LjUsMCwxNi42Mi0yLjU4LDIxLjM4LTcuNzVabS0uMTIsMTE4Ljc1YzQuODMtNSw3LjI1LTkuMTYsNy4yNS0xMi41di01LjI1YzAtNi0yLjI5LTExLjQ2LTYuODgtMTYuMzgtNC41OS00LjkxLTExLjc5LTcuMzgtMjEuNjItNy4zOGgtODAuMjV2NDloODAuMjVjOS4zMywwLDE2LjQxLTIuNSwyMS4yNS03LjVaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0yMTUwLjkzLDQzMy4zOWgtMTEybDYuMjUtMTgxLjc1LTE3OS4yNSwxODEuNzVoLTc2LjVWODMuMTRsMTA1Ljc1LTQuNXYxNzMuNWwxNTAtMTY5aDEwNS43NXYzNTAuMjVaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0xMzU4LjU2LDE2NS44OWMtMTYuNDItMjYuODMtMzguNDItNDguMjEtNjYtNjQuMTItMjcuNTktMTUuOTEtNTguMjEtMjMuODgtOTEuODctMjMuODhzLTY0LjA5LDcuOTYtOTEuNzUsMjMuODhjLTI3LjY3LDE1LjkyLTQ5LjcxLDM3LjI5LTY2LjEyLDY0LjEyLTE2LjQyLDI2Ljg0LTI0LjYyLDU2LjU5LTI0LjYyLDg5LjI1czguMjEsNjIuNDIsMjQuNjIsODkuMjVjMTYuNDEsMjYuODQsMzguNDYsNDguMjUsNjYuMTIsNjQuMjUsMjcuNjYsMTYsNTguMjUsMjQsOTEuNzUsMjRzNjQuMjktOCw5MS44Ny0yNGMyNy41OC0xNiw0OS41OC0zNy40MSw2Ni02NC4yNSwxNi40MS0yNi44MywyNC42Mi01Ni41OCwyNC42Mi04OS4yNXMtOC4yMS02Mi40MS0yNC42Mi04OS4yNVptLTY2Ljc0LDEwNS43NGwtOTAuNTQsOTAuNTRjLTU1LjU4LTUxLTgwLjE0LTc2LjMyLTk4Ljg4LTk5LjIyLTE1LjEyLTIyLjQ5LTEyLjc0LTUzLjI0LDcuMTUtNzMuMTIsMjIuNTktMjIuNTksNTkuMjEtMjIuNTksODEuOCwwbDkuMzQsOS4zNCw5LjM0LTkuMzRjMjIuNTktMjIuNTksNTkuMjEtMjIuNTksODEuOCwwLDIyLjU5LDIyLjU5LDIyLjU5LDU5LjIxLDAsODEuOFoiIGZpbGw9IiNmZmZmZmYiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ii8+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Im0yMDQuNDEsMjE4LjA2Yy00LjA1LTYuNjMtOS40OS0xMS45MS0xNi4zLTE1Ljg0LTYuODEtMy45My0xNC4zOC01LjktMjIuNjktNS45cy0xNS44MywxLjk3LTIyLjY2LDUuOWMtNi44MywzLjkzLTEyLjI4LDkuMjEtMTYuMzMsMTUuODQtNC4wNSw2LjYzLTYuMDgsMTMuOTctNi4wOCwyMi4wNHMyLjAzLDE1LjQyLDYuMDgsMjIuMDRjNC4wNSw2LjYzLDkuNSwxMS45MiwxNi4zMywxNS44Nyw2LjgzLDMuOTUsMTQuMzksNS45MywyMi42Niw1LjkzczE1Ljg4LTEuOTgsMjIuNjktNS45M2M2LjgxLTMuOTUsMTIuMjUtOS4yNCwxNi4zLTE1Ljg3LDQuMDUtNi42Myw2LjA4LTEzLjk3LDYuMDgtMjIuMDRzLTIuMDMtMTUuNDEtNi4wOC0yMi4wNFoiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNiIgZD0ibTE4Ny45MiwyMjMuOThjLTUuNTgtNS41OC0xNC42Mi01LjU4LTIwLjIsMGwtMi4zMSwyLjMxLTIuMzEtMi4zMWMtNS41OC01LjU4LTE0LjYyLTUuNTgtMjAuMiwwLTQuOTEsNC45MS01LjUsMTIuNS0xLjc2LDE4LjA2LDQuNjMsNS42NiwxMC42OSwxMS45MSwyNC40MiwyNC41bDIyLjM2LTIyLjM2YzUuNTgtNS41OCw1LjU4LTE0LjYyLDAtMjAuMloiIGZpbGw9IiNmNjRhOGEiIHN0eWxlPSJmaWxsOiByZ2IoMjQ2LCA3NCwgMTM4KTsiLz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICA8L3N2Zz4=" alt="LOVII">
+      <div class="gs-head-right">
+        <span class="stat-pill tiffany">v1.0.0</span>
+        <button class="icon-btn" data-action="theme-toggle" aria-label="Сменить тему" title="Светлая/тёмная тема">
+          <svg class="theme-ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="theme-ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="gs-wrap">
+    <div class="gs-hero">
+      <span class="stat-pill pink">Дизайн-система LOVII</span>
+      <h1>Единый язык <span class="accent">Лови</span> для всех продуктов</h1>
+      <p class="lead">Живой гайд канонических токенов: <b>lovii.mobiap.com — источник истины</b>. Переключите тему в шапке — все образцы ниже собраны на тех же токенах, что и прод. Значения: <b>tokens/tokens.css</b> и <b>tokens/design-tokens.json</b>, правила: <b>docs/</b>.</p>
+      <div class="gs-hero-meta">
+        <span class="stat-pill tiffany">Канон: lovii.mobiap.com</span>
+        <span class="stat-pill gold">Обновлено: 2026-09-04</span>
+        <span class="stat-pill grey">Semver 1.0.0</span>
+      </div>
+    </div>
+
+    <!-- ================= Логотип ================= -->
+    <section class="gs-section" id="brand">
+      <span class="gs-kicker">Бренд</span>
+      <h2>Логотип</h2>
+      <p class="gs-sub">Оба варианта всегда в DOM, видимость переключает <code>[data-theme]</code> через CSS — без JS-состояния (docs/05). Канон тёмного: <code>assets/logo-dark.svg</code>, md5 <code>145731d8…</code>, идентичен <code>lovii-logo-black.svg</code>. Файл <code>lovii-logo-dark.svg</code> (высветленный) удалён из канона и не должен возвращаться.</p>
+      <div class="logo-duo">
+        <div>
+          <div class="logo-tile light"><img src="data:image/svg+xml;base64,PHN2ZyBpZD0icmVzdWx0U3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDQzLjUyIDUxMiI+CiAgICAgICAgICAgICAgICAgICAgPGRlZnM+CiAgICAgICAgICAgICAgICAgICAgICAgIDxzdHlsZT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5jbHMtMSB7IGZpbGw6ICNmZmZmZmY7IH0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5jbHMtMSwgLmNscy0yLCAuY2xzLTMsIC5jbHMtNCwgLmNscy01LCAuY2xzLTYgeyBzdHJva2Utd2lkdGg6IDBweDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy03LCAuY2xzLTggeyBmaWxsOiBub25lOyBzdHJva2U6ICMyYjJiMmI7IHN0cm9rZS1taXRlcmxpbWl0OiAxMDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy0zIHsgZmlsbDogIzdlOTBjMjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy00IHsgZmlsbDogIzJiMmIyYjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy01IHsgZmlsbDogI2ZmZmZmZjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy02IHsgZmlsbDogI2Y2NGE4YTsgZmlsbC1ydWxlOiBldmVub2RkOyB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAuY2xzLTggeyBzdHJva2Utd2lkdGg6IDE1cHg7IH0KICAgICAgICAgICAgICAgICAgICAgICAgPC9zdHlsZT4KICAgICAgICAgICAgICAgICAgICA8L2RlZnM+CiAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJtMy4xNiw1NC42MUMzLjE2LDI0LjQ1LDI3LjYxLDAsNTcuNzcsMGg0MDIuNzdjMzAuMTYsMCw1NC42MSwyNC40NSw1NC42MSw1NC42MXY0MDIuNzdjMCwzMC4xNi0yNC40NSw1NC42MS01NC42MSw1NC42MUg1Ny43N2MtMzAuMTYsMC01NC42MS0yNC40NS01NC42MS01NC42MVY1NC42MVoiIGZpbGw9IiNmZmZmZmYiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ii8+CiAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy00IiBkPSJtMzc1LjI0LDEyNS43OGMxLjA4LjgzLDkuNjEsOC4wMiwzLjcsMTEuMTQtMy4wOSwxLjYzLTguNTIsMi4yNS0xMC41NywyLjc0LTQuMzMsMS4wNS0xMC4xOCwyLjgzLTEyLjU5LDUuODEsMS43NC0xNC41Ny0zLjM2LTI2LjUyLTMuMzYtMjYuNTIsNS41MS0uNzEsMTUuMjguODUsMjIuODIsNi44M1oiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Im0yOTkuMTksNzEuOGM3Mi4zNiwwLDUxLjUzLDcxLjgsNTMuNjYsMjMzLjU2LTMuNTgsNzMuOTYtNjMuNTMsMTAwLjUtMTAxLjQyLDEwMy4wMi00MS4xMSwxLjUxLTczLjM4LTE3LjI0LTczLjM4LTE3LjI0aC03My4wMmMtNC4wMiwwLTUuOTItNC45NC0yLjk0LTcuNjQsNi41MS01Ljg4LDE2LjEtMTQuMzUsMjcuMTktMjQuMDdsODYuNTQsMS4wMWMyMCwwLDM1LjA0LTQuMTcsNDYuMjQtMTAuNyw0NS43MS03Ljk0LDYwLjk1LTI2Ljg5LDYzLjAxLTY3LjE5LS42OC02MC4xMi03Ni4zLTUyLjcxLTc2LjMtNTIuNzEuMy03LjA2LjE4LTE1LjczLDAtMjUuMzMtLjItMTAuNTMtLjQ3LTIyLjItLjMyLTM0LjExLjU4LTQ2Ljg3LDcuNjEtOTcuNTgsNTAuNzQtOTguNlptOC41OCw1My43NmMwLTIuOTQtMi4zOC01LjMzLTUuMzMtNS4zM3MtNS4zMywyLjM5LTUuMzMsNS4zMywyLjM5LDUuMzMsNS4zMyw1LjMzLDUuMzMtMi4zOSw1LjMzLTUuMzNaIiBmaWxsPSIjN2U5MGMyIiBzdHlsZT0iZmlsbDogcmdiKDEyNiwgMTQ0LCAxOTQpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJtMzI1LjA3LDI4Mi41NWMtMi4wNiw0MC4zLTE3LjMsNTkuMjUtNjMuMDEsNjcuMTksMzMuODMtMTkuNzMsMzIuNjEtNjEuMDUsMjYuOTUtNzQuNTMtNy41NC0xNy45NC0zOC4yMS0yMi41NS01NC40LTYuOTgtMS4zMiwxLjExLTcuNjUsNi41NC0xNi45NSwxNC41NWwtLjEtLjEydi03OC4xNWgzMS4yMWMuMTgsOS42LjMsMTguMjcsMCwyNS4zMywwLDAsNzUuNjItNy40MSw3Ni4zLDUyLjcxWiIgZmlsbD0iI2ZmZmZmZiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsIDI1NSwgMjU1KTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNCIgZD0ibTI3OS4wNSw0MzkuODNzMzMuMDctMy43OSwyOC45OCwxMC45Yy00LjA5LDE0LjctMjcuOTUsNy4xOS00NS42OCw5LjAxLTE3LjczLDEuODMtMzkuMTEsMS45Ny0zOS4wNS0xMC44My4wNy0xMi44MSwzNy40OS04LjksMzcuNDktOC45bC0zLjQtMzAuNzQsMjMuMzgtLjgtMS43MiwzMS4zNloiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Im0yODkuMDEsMjc1LjIxYzUuNjYsMTMuNDgsNi44OCw1NC44LTI2Ljk1LDc0LjUzLTExLjIsNi41My0yNi4yNCwxMC43LTQ2LjI0LDEwLjdsLTg2LjU0LTEuMDFjMTIuODgtMTEuMjksMjcuOC0yNC4yNyw0Mi4yOS0zNi44MywxNy40LTE1LjA4LDM0LjE4LTI5LjU3LDQ2LjA5LTM5LjgyLDkuMy04LjAxLDE1LjYzLTEzLjQ0LDE2Ljk1LTE0LjU1LDE2LjE5LTE1LjU3LDQ2Ljg2LTEwLjk2LDU0LjQsNi45OFoiIGZpbGw9IiM3ZTkwYzIiIHN0eWxlPSJmaWxsOiByZ2IoMTI2LCAxNDQsIDE5NCk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Im0yNDguNzcsMjA0LjUxaC0zMS4yMXYzOC43MWgtMTEyLjc4Yy0yLjc0LTU4Ljk3LDE3LjQ4LTY4LjUzLDI2LjA5LTcwLjA5LDE2Ljc3LTMuMDMsODAuMjktMi43MywxMTcuNTgtMi43My0uMTUsMTEuOTEuMTIsMjMuNTguMzIsMzQuMTFaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJtMjE3LjU2LDI4Mi42NmwuMS4xMmMtMTEuOTEsMTAuMjUtMjguNjksMjQuNzQtNDYuMDksMzkuODIsMCwwLTEzLjA2LS4wOS00MC45Ni0uMDktMTguNTEsMC0xNi4zNy00OS40NC0xNi4zNC03OS4yOWgxMDMuMjl2MzkuNDRaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy04IiBkPSJtMTI5LjI3LDM1OS40M2guMDFsODYuNTQsMS4wMWMyMCwwLDM1LjA0LTQuMTcsNDYuMjQtMTAuNywzMy44My0xOS43MywzMi42MS02MS4wNSwyNi45NS03NC41My03LjU0LTE3Ljk0LTM4LjIxLTIyLjU1LTU0LjQtNi45OC0xLjMyLDEuMTEtNy42NSw2LjU0LTE2Ljk1LDE0LjU1LTExLjkxLDEwLjI1LTI4LjY5LDI0Ljc0LTQ2LjA5LDM5LjgyLTE0LjQ5LDEyLjU2LTI5LjQxLDI1LjU0LTQyLjI5LDM2LjgzLTExLjA5LDkuNzItMjAuNjgsMTguMTktMjcuMTksMjQuMDctMi45OCwyLjctMS4wOCw3LjY0LDIuOTQsNy42NGg3My4wMnMzMi4yNywxOC43NSw3My4zOCwxNy4yNGMzNy44OS0yLjUyLDk3Ljg0LTI5LjA2LDEwMS40Mi0xMDMuMDItMi4xMy0xNjEuNzYsMTguNy0yMzMuNTYtNTMuNjYtMjMzLjU2LTQzLjEzLDEuMDItNTAuMTYsNTEuNzMtNTAuNzQsOTguNi0uMTUsMTEuOTEuMTIsMjMuNTguMzIsMzQuMTEuMTgsOS42LjMsMTguMjcsMCwyNS4zMywwLDAsNzUuNjItNy40MSw3Ni4zLDUyLjcxLTIuMDYsNDAuMy0xNy4zLDU5LjI1LTYzLjAxLDY3LjE5IiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxjaXJjbGUgY2xhc3M9ImNscy04IiBjeD0iMzAyLjQ0IiBjeT0iMTI1LjU2IiByPSI1LjMzIiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNyIgZD0ibTM1Mi40MiwxMTguOTVjNS41MS0uNzEsMTUuMjguODUsMjIuODIsNi44MywxLjA4LjgzLDkuNjEsOC4wMiwzLjcsMTEuMTQtMy4wOSwxLjYzLTguNTIsMi4yNS0xMC41NywyLjc0LTQuMzMsMS4wNS0xMC4xOCwyLjgzLTEyLjU5LDUuODEsMS43NC0xNC41Ny0zLjM2LTI2LjUyLTMuMzYtMjYuNTJaIiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtOCIgZD0ibTI0OC40NSwxNzAuNGMtMzcuMjksMC0xMDAuODEtLjMtMTE3LjU4LDIuNzMtOC42MSwxLjU2LTI4LjgzLDExLjEyLTI2LjA5LDcwLjA5aDExMi42OSIgc3Ryb2tlPSIjMmIyYjJiIiBzdHlsZT0ic3Ryb2tlOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cG9seWxpbmUgY2xhc3M9ImNscy04IiBwb2ludHM9IjI0OC43NyAyMDQuNTEgMjE3LjU2IDIwNC41MSAyMTcuNTYgMjQzLjIyIDIxNy41NiAyODIuNjYiIHN0cm9rZT0iIzJiMmIyYiIgc3R5bGU9InN0cm9rZTogcmdiKDQzLCA0MywgNDMpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy04IiBkPSJtMTE0LjI3LDI0My4yMmMtLjAzLDI5Ljg1LTIuMTcsNzkuMjksMTYuMzQsNzkuMjksMjcuOSwwLDQwLjk2LjA5LDQwLjk2LjA5IiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJtOTkzLjQ0LDQzMy44OWgtMTE5Yy0zLjUtMTMtOS44NC0zMS4xMi0xOS01NC4zOC05LjE3LTIzLjI1LTE5LjA5LTQ3LjEyLTI5Ljc1LTcxLjYyLTEwLjY3LTI0LjUtMTkuODQtNDUuNDEtMjcuNS02Mi43NWwtMTEuNzUtMjYtMTEuNzUsMjZjLTcuODQsMTcuMTctMTcsMzgtMjcuNSw2Mi41cy0yMC4zNCw0OC4zNC0yOS41LDcxLjVjLTkuMTcsMjMuMTctMTUuNSw0MS40Mi0xOSw1NC43NWgtMTE5LjVsMTUzLjUtMzUwLjc1LDEwNS43NS0zLjUsMTU1LDM1NC4yNVoiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0ibTE1MjcuOTMsNDMyLjY0Yy0xOS0uMzMtMzgtLjUtNTctLjUtMTQuMzQsMC0yOC41OS4wOS00Mi43NS4yNVY4Mi42NGgyMDdjMjIuNSwwLDQxLjgzLDQuMjksNTgsMTIuODgsMTYuMTYsOC41OSwyOC44MywxOS42MiwzOCwzMy4xMiw5LjE2LDEzLjUsMTQuMjEsMjQuODgsMTUuMTIsMzQuMTIuOTEsOS4yNSwxLjM4LDE1LjM4LDEuMzgsMTguMzgsMCwxMi4zNC0yLjc1LDI0LjI1LTguMjUsMzUuNzUtNi42NywxNC41LTE3Ljg0LDI2Ljg0LTMzLjUsMzcsMjQuNjYsMTMuNSwzOC44MywyNy45Miw0Mi41LDQzLjI1LDMuNjYsMTUuMzQsNS41LDI2LjUsNS41LDMzLjUsMCwxNy01LDM0LjA5LTE1LDUxLjI1LTguMzQsMTMuMzQtMTkuMjUsMjMuNjctMzIuNzUsMzEtMTMuNSw3LjM0LTI4LDEyLjQ2LTQzLjUsMTUuMzgtMTUuNSwyLjkyLTMwLjYzLDQuNDItNDUuMzgsNC41LTE0Ljc1LjA5LTI5LjU0LjEyLTQ0LjM4LjEybC00NS0uMjVabTEwNC42Mi0yMTYuMjVjNC43NS01LjE2LDcuMTItMTEuMTYsNy4xMi0xOHMtMi4zOC0xMi41OC03LjEyLTE3Ljc1Yy00Ljc1LTUuMTYtMTEuODgtNy43NS0yMS4zOC03Ljc1aC04MC4yNXY1MS4yNWg4MC4yNWM5LjUsMCwxNi42Mi0yLjU4LDIxLjM4LTcuNzVabS0uMTIsMTE4Ljc1YzQuODMtNSw3LjI1LTkuMTYsNy4yNS0xMi41di01LjI1YzAtNi0yLjI5LTExLjQ2LTYuODgtMTYuMzgtNC41OS00LjkxLTExLjc5LTcuMzgtMjEuNjItNy4zOGgtODAuMjV2NDloODAuMjVjOS4zMywwLDE2LjQxLTIuNSwyMS4yNS03LjVaIiBmaWxsPSIjMmIyYjJiIiBzdHlsZT0iZmlsbDogcmdiKDQzLCA0MywgNDMpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0yMTUwLjkzLDQzMy4zOWgtMTEybDYuMjUtMTgxLjc1LTE3OS4yNSwxODEuNzVoLTc2LjVWODMuMTRsMTA1Ljc1LTQuNXYxNzMuNWwxNTAtMTY5aDEwNS43NXYzNTAuMjVaIiBmaWxsPSIjMmIyYjJiIiBzdHlsZT0iZmlsbDogcmdiKDQzLCA0MywgNDMpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0xMzU4LjU2LDE2NS44OWMtMTYuNDItMjYuODMtMzguNDItNDguMjEtNjYtNjQuMTItMjcuNTktMTUuOTEtNTguMjEtMjMuODgtOTEuODctMjMuODhzLTY0LjA5LDcuOTYtOTEuNzUsMjMuODhjLTI3LjY3LDE1LjkyLTQ5LjcxLDM3LjI5LTY2LjEyLDY0LjEyLTE2LjQyLDI2Ljg0LTI0LjYyLDU2LjU5LTI0LjYyLDg5LjI1czguMjEsNjIuNDIsMjQuNjIsODkuMjVjMTYuNDEsMjYuODQsMzguNDYsNDguMjUsNjYuMTIsNjQuMjUsMjcuNjYsMTYsNTguMjUsMjQsOTEuNzUsMjRzNjQuMjktOCw5MS44Ny0yNGMyNy41OC0xNiw0OS41OC0zNy40MSw2Ni02NC4yNSwxNi40MS0yNi44MywyNC42Mi01Ni41OCwyNC42Mi04OS4yNXMtOC4yMS02Mi40MS0yNC42Mi04OS4yNVptLTY2Ljc0LDEwNS43NGwtOTAuNTQsOTAuNTRjLTU1LjU4LTUxLTgwLjE0LTc2LjMyLTk4Ljg4LTk5LjIyLTE1LjEyLTIyLjQ5LTEyLjc0LTUzLjI0LDcuMTUtNzMuMTIsMjIuNTktMjIuNTksNTkuMjEtMjIuNTksODEuOCwwbDkuMzQsOS4zNCw5LjM0LTkuMzRjMjIuNTktMjIuNTksNTkuMjEtMjIuNTksODEuOCwwLDIyLjU5LDIyLjU5LDIyLjU5LDU5LjIxLDAsODEuOFoiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Im0yMDQuNDEsMjE4LjA2Yy00LjA1LTYuNjMtOS40OS0xMS45MS0xNi4zLTE1Ljg0LTYuODEtMy45My0xNC4zOC01LjktMjIuNjktNS45cy0xNS44MywxLjk3LTIyLjY2LDUuOWMtNi44MywzLjkzLTEyLjI4LDkuMjEtMTYuMzMsMTUuODQtNC4wNSw2LjYzLTYuMDgsMTMuOTctNi4wOCwyMi4wNHMyLjAzLDE1LjQyLDYuMDgsMjIuMDRjNC4wNSw2LjYzLDkuNSwxMS45MiwxNi4zMywxNS44Nyw2LjgzLDMuOTUsMTQuMzksNS45MywyMi42Niw1LjkzczE1Ljg4LTEuOTgsMjIuNjktNS45M2M2LjgxLTMuOTUsMTIuMjUtOS4yNCwxNi4zLTE1Ljg3LDQuMDUtNi42Myw2LjA4LTEzLjk3LDYuMDgtMjIuMDRzLTIuMDMtMTUuNDEtNi4wOC0yMi4wNFoiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNiIgZD0ibTE4Ny45MiwyMjMuOThjLTUuNTgtNS41OC0xNC42Mi01LjU4LTIwLjIsMGwtMi4zMSwyLjMxLTIuMzEtMi4zMWMtNS41OC01LjU4LTE0LjYyLTUuNTgtMjAuMiwwLTQuOTEsNC45MS01LjUsMTIuNS0xLjc2LDE4LjA2LDQuNjMsNS42NiwxMC42OSwxMS45MSwyNC40MiwyNC41bDIyLjM2LTIyLjM2YzUuNTgtNS41OCw1LjU4LTE0LjYyLDAtMjAuMloiIGZpbGw9IiNmNjRhOGEiIHN0eWxlPSJmaWxsOiByZ2IoMjQ2LCA3NCwgMTM4KTsiLz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICA8L3N2Zz4=" alt="LOVII light"></div>
+          <div class="logo-cap">lovii-logo-light.svg · светлая тема</div>
+        </div>
+        <div>
+          <div class="logo-tile dark"><img src="data:image/svg+xml;base64,PHN2ZyBpZD0icmVzdWx0U3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNDQzLjUyIDUxMiI+CiAgICAgICAgICAgICAgICAgICAgPGRlZnM+CiAgICAgICAgICAgICAgICAgICAgICAgIDxzdHlsZT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5jbHMtMSB7IGZpbGw6ICNmZmZmZmY7IH0KICAgICAgICAgICAgICAgICAgICAgICAgICAgIC5jbHMtMSwgLmNscy0yLCAuY2xzLTMsIC5jbHMtNCwgLmNscy01LCAuY2xzLTYgeyBzdHJva2Utd2lkdGg6IDBweDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy03LCAuY2xzLTggeyBmaWxsOiBub25lOyBzdHJva2U6ICMyYjJiMmI7IHN0cm9rZS1taXRlcmxpbWl0OiAxMDsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy0zIHsgZmlsbDogIzdlOTBjMjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy00IHsgZmlsbDogIzJiMmIyYjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy01IHsgZmlsbDogI2ZmZmZmZjsgfQogICAgICAgICAgICAgICAgICAgICAgICAgICAgLmNscy02IHsgZmlsbDogI2Y2NGE4YTsgZmlsbC1ydWxlOiBldmVub2RkOyB9CiAgICAgICAgICAgICAgICAgICAgICAgICAgICAuY2xzLTggeyBzdHJva2Utd2lkdGg6IDE1cHg7IH0KICAgICAgICAgICAgICAgICAgICAgICAgPC9zdHlsZT4KICAgICAgICAgICAgICAgICAgICA8L2RlZnM+CiAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJtMy4xNiw1NC42MUMzLjE2LDI0LjQ1LDI3LjYxLDAsNTcuNzcsMGg0MDIuNzdjMzAuMTYsMCw1NC42MSwyNC40NSw1NC42MSw1NC42MXY0MDIuNzdjMCwzMC4xNi0yNC40NSw1NC42MS01NC42MSw1NC42MUg1Ny43N2MtMzAuMTYsMC01NC42MS0yNC40NS01NC42MS01NC42MVY1NC42MVoiIGZpbGw9IiNmZmZmZmYiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ii8+CiAgICAgICAgICAgICAgICAgICAgPGc+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy00IiBkPSJtMzc1LjI0LDEyNS43OGMxLjA4LjgzLDkuNjEsOC4wMiwzLjcsMTEuMTQtMy4wOSwxLjYzLTguNTIsMi4yNS0xMC41NywyLjc0LTQuMzMsMS4wNS0xMC4xOCwyLjgzLTEyLjU5LDUuODEsMS43NC0xNC41Ny0zLjM2LTI2LjUyLTMuMzYtMjYuNTIsNS41MS0uNzEsMTUuMjguODUsMjIuODIsNi44M1oiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Im0yOTkuMTksNzEuOGM3Mi4zNiwwLDUxLjUzLDcxLjgsNTMuNjYsMjMzLjU2LTMuNTgsNzMuOTYtNjMuNTMsMTAwLjUtMTAxLjQyLDEwMy4wMi00MS4xMSwxLjUxLTczLjM4LTE3LjI0LTczLjM4LTE3LjI0aC03My4wMmMtNC4wMiwwLTUuOTItNC45NC0yLjk0LTcuNjQsNi41MS01Ljg4LDE2LjEtMTQuMzUsMjcuMTktMjQuMDdsODYuNTQsMS4wMWMyMCwwLDM1LjA0LTQuMTcsNDYuMjQtMTAuNyw0NS43MS03Ljk0LDYwLjk1LTI2Ljg5LDYzLjAxLTY3LjE5LS42OC02MC4xMi03Ni4zLTUyLjcxLTc2LjMtNTIuNzEuMy03LjA2LjE4LTE1LjczLDAtMjUuMzMtLjItMTAuNTMtLjQ3LTIyLjItLjMyLTM0LjExLjU4LTQ2Ljg3LDcuNjEtOTcuNTgsNTAuNzQtOTguNlptOC41OCw1My43NmMwLTIuOTQtMi4zOC01LjMzLTUuMzMtNS4zM3MtNS4zMywyLjM5LTUuMzMsNS4zMywyLjM5LDUuMzMsNS4zMyw1LjMzLDUuMzMtMi4zOSw1LjMzLTUuMzNaIiBmaWxsPSIjN2U5MGMyIiBzdHlsZT0iZmlsbDogcmdiKDEyNiwgMTQ0LCAxOTQpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJtMzI1LjA3LDI4Mi41NWMtMi4wNiw0MC4zLTE3LjMsNTkuMjUtNjMuMDEsNjcuMTksMzMuODMtMTkuNzMsMzIuNjEtNjEuMDUsMjYuOTUtNzQuNTMtNy41NC0xNy45NC0zOC4yMS0yMi41NS01NC40LTYuOTgtMS4zMiwxLjExLTcuNjUsNi41NC0xNi45NSwxNC41NWwtLjEtLjEydi03OC4xNWgzMS4yMWMuMTgsOS42LjMsMTguMjcsMCwyNS4zMywwLDAsNzUuNjItNy40MSw3Ni4zLDUyLjcxWiIgZmlsbD0iI2ZmZmZmZiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsIDI1NSwgMjU1KTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNCIgZD0ibTI3OS4wNSw0MzkuODNzMzMuMDctMy43OSwyOC45OCwxMC45Yy00LjA5LDE0LjctMjcuOTUsNy4xOS00NS42OCw5LjAxLTE3LjczLDEuODMtMzkuMTEsMS45Ny0zOS4wNS0xMC44My4wNy0xMi44MSwzNy40OS04LjksMzcuNDktOC45bC0zLjQtMzAuNzQsMjMuMzgtLjgtMS43MiwzMS4zNloiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Im0yODkuMDEsMjc1LjIxYzUuNjYsMTMuNDgsNi44OCw1NC44LTI2Ljk1LDc0LjUzLTExLjIsNi41My0yNi4yNCwxMC43LTQ2LjI0LDEwLjdsLTg2LjU0LTEuMDFjMTIuODgtMTEuMjksMjcuOC0yNC4yNyw0Mi4yOS0zNi44MywxNy40LTE1LjA4LDM0LjE4LTI5LjU3LDQ2LjA5LTM5LjgyLDkuMy04LjAxLDE1LjYzLTEzLjQ0LDE2Ljk1LTE0LjU1LDE2LjE5LTE1LjU3LDQ2Ljg2LTEwLjk2LDU0LjQsNi45OFoiIGZpbGw9IiM3ZTkwYzIiIHN0eWxlPSJmaWxsOiByZ2IoMTI2LCAxNDQsIDE5NCk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Im0yNDguNzcsMjA0LjUxaC0zMS4yMXYzOC43MWgtMTEyLjc4Yy0yLjc0LTU4Ljk3LDE3LjQ4LTY4LjUzLDI2LjA5LTcwLjA5LDE2Ljc3LTMuMDMsODAuMjktMi43MywxMTcuNTgtMi43My0uMTUsMTEuOTEuMTIsMjMuNTguMzIsMzQuMTFaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJtMjE3LjU2LDI4Mi42NmwuMS4xMmMtMTEuOTEsMTAuMjUtMjguNjksMjQuNzQtNDYuMDksMzkuODIsMCwwLTEzLjA2LS4wOS00MC45Ni0uMDktMTguNTEsMC0xNi4zNy00OS40NC0xNi4zNC03OS4yOWgxMDMuMjl2MzkuNDRaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy04IiBkPSJtMTI5LjI3LDM1OS40M2guMDFsODYuNTQsMS4wMWMyMCwwLDM1LjA0LTQuMTcsNDYuMjQtMTAuNywzMy44My0xOS43MywzMi42MS02MS4wNSwyNi45NS03NC41My03LjU0LTE3Ljk0LTM4LjIxLTIyLjU1LTU0LjQtNi45OC0xLjMyLDEuMTEtNy42NSw2LjU0LTE2Ljk1LDE0LjU1LTExLjkxLDEwLjI1LTI4LjY5LDI0Ljc0LTQ2LjA5LDM5LjgyLTE0LjQ5LDEyLjU2LTI5LjQxLDI1LjU0LTQyLjI5LDM2LjgzLTExLjA5LDkuNzItMjAuNjgsMTguMTktMjcuMTksMjQuMDctMi45OCwyLjctMS4wOCw3LjY0LDIuOTQsNy42NGg3My4wMnMzMi4yNywxOC43NSw3My4zOCwxNy4yNGMzNy44OS0yLjUyLDk3Ljg0LTI5LjA2LDEwMS40Mi0xMDMuMDItMi4xMy0xNjEuNzYsMTguNy0yMzMuNTYtNTMuNjYtMjMzLjU2LTQzLjEzLDEuMDItNTAuMTYsNTEuNzMtNTAuNzQsOTguNi0uMTUsMTEuOTEuMTIsMjMuNTguMzIsMzQuMTEuMTgsOS42LjMsMTguMjcsMCwyNS4zMywwLDAsNzUuNjItNy40MSw3Ni4zLDUyLjcxLTIuMDYsNDAuMy0xNy4zLDU5LjI1LTYzLjAxLDY3LjE5IiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxjaXJjbGUgY2xhc3M9ImNscy04IiBjeD0iMzAyLjQ0IiBjeT0iMTI1LjU2IiByPSI1LjMzIiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNyIgZD0ibTM1Mi40MiwxMTguOTVjNS41MS0uNzEsMTUuMjguODUsMjIuODIsNi44MywxLjA4LjgzLDkuNjEsOC4wMiwzLjcsMTEuMTQtMy4wOSwxLjYzLTguNTIsMi4yNS0xMC41NywyLjc0LTQuMzMsMS4wNS0xMC4xOCwyLjgzLTEyLjU5LDUuODEsMS43NC0xNC41Ny0zLjM2LTI2LjUyLTMuMzYtMjYuNTJaIiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtOCIgZD0ibTI0OC40NSwxNzAuNGMtMzcuMjksMC0xMDAuODEtLjMtMTE3LjU4LDIuNzMtOC42MSwxLjU2LTI4LjgzLDExLjEyLTI2LjA5LDcwLjA5aDExMi42OSIgc3Ryb2tlPSIjMmIyYjJiIiBzdHlsZT0ic3Ryb2tlOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8cG9seWxpbmUgY2xhc3M9ImNscy04IiBwb2ludHM9IjI0OC43NyAyMDQuNTEgMjE3LjU2IDIwNC41MSAyMTcuNTYgMjQzLjIyIDIxNy41NiAyODIuNjYiIHN0cm9rZT0iIzJiMmIyYiIgc3R5bGU9InN0cm9rZTogcmdiKDQzLCA0MywgNDMpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy04IiBkPSJtMTE0LjI3LDI0My4yMmMtLjAzLDI5Ljg1LTIuMTcsNzkuMjksMTYuMzQsNzkuMjksMjcuOSwwLDQwLjk2LjA5LDQwLjk2LjA5IiBzdHJva2U9IiMyYjJiMmIiIHN0eWxlPSJzdHJva2U6IHJnYig0MywgNDMsIDQzKTsiLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDwvZz4KICAgICAgICAgICAgICAgICAgICA8Zz4KICAgICAgICAgICAgICAgICAgICAgICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJtOTkzLjQ0LDQzMy44OWgtMTE5Yy0zLjUtMTMtOS44NC0zMS4xMi0xOS01NC4zOC05LjE3LTIzLjI1LTE5LjA5LTQ3LjEyLTI5Ljc1LTcxLjYyLTEwLjY3LTI0LjUtMTkuODQtNDUuNDEtMjcuNS02Mi43NWwtMTEuNzUtMjYtMTEuNzUsMjZjLTcuODQsMTcuMTctMTcsMzgtMjcuNSw2Mi41cy0yMC4zNCw0OC4zNC0yOS41LDcxLjVjLTkuMTcsMjMuMTctMTUuNSw0MS40Mi0xOSw1NC43NWgtMTE5LjVsMTUzLjUtMzUwLjc1LDEwNS43NS0zLjUsMTU1LDM1NC4yNVoiIGZpbGw9IiNmZmZmZmYiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMiIgZD0ibTE1MjcuOTMsNDMyLjY0Yy0xOS0uMzMtMzgtLjUtNTctLjUtMTQuMzQsMC0yOC41OS4wOS00Mi43NS4yNVY4Mi42NGgyMDdjMjIuNSwwLDQxLjgzLDQuMjksNTgsMTIuODgsMTYuMTYsOC41OSwyOC44MywxOS42MiwzOCwzMy4xMiw5LjE2LDEzLjUsMTQuMjEsMjQuODgsMTUuMTIsMzQuMTIuOTEsOS4yNSwxLjM4LDE1LjM4LDEuMzgsMTguMzgsMCwxMi4zNC0yLjc1LDI0LjI1LTguMjUsMzUuNzUtNi42NywxNC41LTE3Ljg0LDI2Ljg0LTMzLjUsMzcsMjQuNjYsMTMuNSwzOC44MywyNy45Miw0Mi41LDQzLjI1LDMuNjYsMTUuMzQsNS41LDI2LjUsNS41LDMzLjUsMCwxNy01LDM0LjA5LTE1LDUxLjI1LTguMzQsMTMuMzQtMTkuMjUsMjMuNjctMzIuNzUsMzEtMTMuNSw3LjM0LTI4LDEyLjQ2LTQzLjUsMTUuMzgtMTUuNSwyLjkyLTMwLjYzLDQuNDItNDUuMzgsNC41LTE0Ljc1LjA5LTI5LjU0LjEyLTQ0LjM4LjEybC00NS0uMjVabTEwNC42Mi0yMTYuMjVjNC43NS01LjE2LDcuMTItMTEuMTYsNy4xMi0xOHMtMi4zOC0xMi41OC03LjEyLTE3Ljc1Yy00Ljc1LTUuMTYtMTEuODgtNy43NS0yMS4zOC03Ljc1aC04MC4yNXY1MS4yNWg4MC4yNWM5LjUsMCwxNi42Mi0yLjU4LDIxLjM4LTcuNzVabS0uMTIsMTE4Ljc1YzQuODMtNSw3LjI1LTkuMTYsNy4yNS0xMi41di01LjI1YzAtNi0yLjI5LTExLjQ2LTYuODgtMTYuMzgtNC41OS00LjkxLTExLjc5LTcuMzgtMjEuNjItNy4zOGgtODAuMjV2NDloODAuMjVjOS4zMywwLDE2LjQxLTIuNSwyMS4yNS03LjVaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0yMTUwLjkzLDQzMy4zOWgtMTEybDYuMjUtMTgxLjc1LTE3OS4yNSwxODEuNzVoLTc2LjVWODMuMTRsMTA1Ljc1LTQuNXYxNzMuNWwxNTAtMTY5aDEwNS43NXYzNTAuMjVaIiBmaWxsPSIjZmZmZmZmIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMjU1LCAyNTUpOyIvPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Im0xMzU4LjU2LDE2NS44OWMtMTYuNDItMjYuODMtMzguNDItNDguMjEtNjYtNjQuMTItMjcuNTktMTUuOTEtNTguMjEtMjMuODgtOTEuODctMjMuODhzLTY0LjA5LDcuOTYtOTEuNzUsMjMuODhjLTI3LjY3LDE1LjkyLTQ5LjcxLDM3LjI5LTY2LjEyLDY0LjEyLTE2LjQyLDI2Ljg0LTI0LjYyLDU2LjU5LTI0LjYyLDg5LjI1czguMjEsNjIuNDIsMjQuNjIsODkuMjVjMTYuNDEsMjYuODQsMzguNDYsNDguMjUsNjYuMTIsNjQuMjUsMjcuNjYsMTYsNTguMjUsMjQsOTEuNzUsMjRzNjQuMjktOCw5MS44Ny0yNGMyNy41OC0xNiw0OS41OC0zNy40MSw2Ni02NC4yNSwxNi40MS0yNi44MywyNC42Mi01Ni41OCwyNC42Mi04OS4yNXMtOC4yMS02Mi40MS0yNC42Mi04OS4yNVptLTY2Ljc0LDEwNS43NGwtOTAuNTQsOTAuNTRjLTU1LjU4LTUxLTgwLjE0LTc2LjMyLTk4Ljg4LTk5LjIyLTE1LjEyLTIyLjQ5LTEyLjc0LTUzLjI0LDcuMTUtNzMuMTIsMjIuNTktMjIuNTksNTkuMjEtMjIuNTksODEuOCwwbDkuMzQsOS4zNCw5LjM0LTkuMzRjMjIuNTktMjIuNTksNTkuMjEtMjIuNTksODEuOCwwLDIyLjU5LDIyLjU5LDIyLjU5LDU5LjIxLDAsODEuOFoiIGZpbGw9IiNmZmZmZmYiIHN0eWxlPSJmaWxsOiByZ2IoMjU1LCAyNTUsIDI1NSk7Ii8+CiAgICAgICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICAgICAgICAgIDxnPgogICAgICAgICAgICAgICAgICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Im0yMDQuNDEsMjE4LjA2Yy00LjA1LTYuNjMtOS40OS0xMS45MS0xNi4zLTE1Ljg0LTYuODEtMy45My0xNC4zOC01LjktMjIuNjktNS45cy0xNS44MywxLjk3LTIyLjY2LDUuOWMtNi44MywzLjkzLTEyLjI4LDkuMjEtMTYuMzMsMTUuODQtNC4wNSw2LjYzLTYuMDgsMTMuOTctNi4wOCwyMi4wNHMyLjAzLDE1LjQyLDYuMDgsMjIuMDRjNC4wNSw2LjYzLDkuNSwxMS45MiwxNi4zMywxNS44Nyw2LjgzLDMuOTUsMTQuMzksNS45MywyMi42Niw1LjkzczE1Ljg4LTEuOTgsMjIuNjktNS45M2M2LjgxLTMuOTUsMTIuMjUtOS4yNCwxNi4zLTE1Ljg3LDQuMDUtNi42Myw2LjA4LTEzLjk3LDYuMDgtMjIuMDRzLTIuMDMtMTUuNDEtNi4wOC0yMi4wNFoiIGZpbGw9IiMyYjJiMmIiIHN0eWxlPSJmaWxsOiByZ2IoNDMsIDQzLCA0Myk7Ii8+CiAgICAgICAgICAgICAgICAgICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtNiIgZD0ibTE4Ny45MiwyMjMuOThjLTUuNTgtNS41OC0xNC42Mi01LjU4LTIwLjIsMGwtMi4zMSwyLjMxLTIuMzEtMi4zMWMtNS41OC01LjU4LTE0LjYyLTUuNTgtMjAuMiwwLTQuOTEsNC45MS01LjUsMTIuNS0xLjc2LDE4LjA2LDQuNjMsNS42NiwxMC42OSwxMS45MSwyNC40MiwyNC41bDIyLjM2LTIyLjM2YzUuNTgtNS41OCw1LjU4LTE0LjYyLDAtMjAuMloiIGZpbGw9IiNmNjRhOGEiIHN0eWxlPSJmaWxsOiByZ2IoMjQ2LCA3NCwgMTM4KTsiLz4KICAgICAgICAgICAgICAgICAgICA8L2c+CiAgICAgICAgICAgICAgICA8L3N2Zz4=" alt="LOVII dark"></div>
+          <div class="logo-cap">logo-dark.svg · тёмная тема · md5 145731d8…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Цвет ================= -->
+    <section class="gs-section" id="color">
+      <span class="gs-kicker">Токены</span>
+      <h2>Цвет</h2>
+      <p class="gs-sub">Три акцента на тёплой нейтральной базе. Акценты не меняются между темами — темы перекрашивают только поверхности, текст и бордеры. В коде — только <code>var(--lv-*)</code>.</p>
+
+      <div class="sw-title">Брендовые (не зависят от темы)</div>
+      <div class="sw-grid" id="sw-brand"></div>
+
+      <div class="duo" style="margin-top:18px">
+        <div class="gs-card gs-panel">
+          <h3><span class="dot" style="background:#f7f2f4;border:1px solid var(--lv-line)"></span>Светлая тема</h3>
+          <div class="sw-grid" id="sw-light" style="margin-top:2px"></div>
+        </div>
+        <div class="gs-card gs-panel">
+          <h3><span class="dot" style="background:#171219"></span>Тёмная тема</h3>
+          <div class="sw-grid" id="sw-dark" style="margin-top:2px"></div>
+        </div>
+      </div>
+      <p class="gs-sub" style="margin-top:10px">Правило soft-пар: <code>soft-pink→pink-dark</code>, <code>soft-tiffany→tiffany-text</code>, <code>soft-gold→gold-text</code>, <code>grey-soft→#999</code>. Текст на градиентах — только <code>on-brand</code>.</p>
+    </section>
+
+    <!-- ================= Типографика ================= -->
+    <section class="gs-section" id="type">
+      <span class="gs-kicker">Токены</span>
+      <h2>Типографика</h2>
+      <p class="gs-sub">Один шрифт — <b>Inter</b> (400–800). Заголовочный вес — 800. Никаких других семейств и весов.</p>
+      <div class="gs-card gs-panel" style="margin-top:14px">
+        <div class="type-row"><div class="type-meta">h1-hero · 26px · 800 · 1.22<br>≥640px — 32px · ls −0.01em</div><div class="type-demo" style="font-size:26px;line-height:1.22;font-weight:800;letter-spacing:-.01em">Всё нужное в шаговой доступности</div></div>
+        <div class="type-row"><div class="type-meta">h1-screen · 18px · 800</div><div class="type-demo" style="font-size:18px;font-weight:800">Магазин у дома</div></div>
+        <div class="type-row"><div class="type-meta">h2-section · 16px · 800</div><div class="type-demo" style="font-size:16px;font-weight:800">Акции рядом</div></div>
+        <div class="type-row"><div class="type-meta">name · 14px · 700 · 1.35</div><div class="type-demo" style="font-size:14px;font-weight:700">Свежая выпечка из пекарни на углу</div></div>
+        <div class="type-row"><div class="type-meta">body · 14px · 400 · 1.6 · dim</div><div class="type-demo" style="font-size:14px;line-height:1.6;color:var(--lv-dim)">Покажем точки и товары в шаговой доступности: наличие в каждой точке и минуты пешком.</div></div>
+        <div class="type-row"><div class="type-meta">control · 13px · 600</div><div class="type-demo" style="font-size:13px;font-weight:600">Все категории</div></div>
+        <div class="type-row"><div class="type-meta">secondary · 12px · 600</div><div class="type-demo" style="font-size:12px;font-weight:600;color:var(--lv-dim)">7 минут пешком · до 18:00</div></div>
+        <div class="type-row"><div class="type-meta">meta · 11px · 600</div><div class="type-demo" style="font-size:11px;font-weight:600;color:var(--lv-dim)">Обновлено сегодня в 14:20</div></div>
+        <div class="type-row"><div class="type-meta">kicker · 10.5px · 800 · caps · +0.1em</div><div class="type-demo"><span style="font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lv-pink-dark)">Лояльность</span></div></div>
+        <div class="type-row"><div class="type-meta">price · 16px · 800</div><div class="type-demo"><span style="font-size:16px;font-weight:800">249 ₽</span> <span style="font-size:12px;color:var(--lv-dim);text-decoration:line-through;margin-left:6px">320 ₽</span></div></div>
+        <div class="type-row"><div class="type-meta">kpi · 19px · 800 · ls −0.02em</div><div class="type-demo" style="font-size:19px;font-weight:800;letter-spacing:-.02em">128 заказов</div></div>
+      </div>
+    </section>
+
+    <!-- ================= Радиусы и тени ================= -->
+    <section class="gs-section" id="shape">
+      <span class="gs-kicker">Форма</span>
+      <h2>Радиусы и тени</h2>
+      <p class="gs-sub">Контролы — всегда капсулы <code>999px</code>, карточки — <code>16px</code>. Тень — сигнал интерактивности: покой <code>soft</code>, наведение <code>lift</code>. Наведите на карточки ниже.</p>
+      <div class="shape-row">
+        <div class="shape" style="border-radius:999px">999 pill</div>
+        <div class="shape" style="border-radius:24px">24 sheet</div>
+        <div class="shape" style="border-radius:20px">20 premium</div>
+        <div class="shape" style="border-radius:16px">16 card</div>
+        <div class="shape" style="border-radius:14px">14 tab</div>
+        <div class="shape" style="border-radius:12px">12 tile</div>
+      </div>
+      <div class="btn-row">
+        <div class="shadow-card" style="box-shadow:var(--lv-shadow-soft)">shadow-soft<span class="mono">0 1px 3px rgba(26,26,26,.06)</span></div>
+        <div class="shadow-card" style="box-shadow:var(--lv-shadow-lift)">shadow-lift<span class="mono">0 12px 32px −12px rgba(201,42,106,.22)</span></div>
+        <div class="shadow-card" style="box-shadow:var(--lv-shadow-nav)">shadow-nav<span class="mono">0 12px 32px −12px rgba(26,26,26,.28)</span></div>
+        <div class="shadow-card" style="box-shadow:var(--lv-shadow-toast)">shadow-toast<span class="mono">0 12px 32px −12px rgba(201,42,106,.35)</span></div>
+      </div>
+    </section>
+
+    <!-- ================= Кнопки ================= -->
+    <section class="gs-section" id="buttons">
+      <span class="gs-kicker">Компонент</span>
+      <h2>Кнопки</h2>
+      <p class="gs-sub">Градиент 135° только у primary-CTA. Hover — shadow-lift, нажатие — scale .95. Состояния проверяются живьём: наведите и зажмите.</p>
+      <div class="gs-card gs-panel" style="margin-top:14px">
+        <div class="btn-row">
+          <button class="cta-btn">Добавить · 36</button>
+          <button class="cta-btn big">Оформить заказ · 48</button>
+          <button class="cta-btn sm">Подробнее · 32</button>
+        </div>
+        <div class="btn-row">
+          <button class="cta-btn plain">Вторичная · plain</button>
+          <button class="ghost-btn">Призрак · 40</button>
+          <button class="ghost-btn sm">Призрак · 32</button>
+          <span class="link-btn">Смотреть все <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+        </div>
+        <div class="btn-row">
+          <button class="cta-btn disabled">Недоступно · 50%</button>
+          <button class="pill-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--lv-pink)"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Район</button>
+          <button class="icon-btn" aria-label="Корзина"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Пилюли и статусы ================= -->
+    <section class="gs-section" id="pills">
+      <span class="gs-kicker">Компонент</span>
+      <h2>Пилюли, статусы, бейджи</h2>
+      <p class="gs-sub">Только парные заливки (soft → *-text). Точка статуса — <code>.lv-dot</code> с пульсом 1.4s.</p>
+      <div class="gs-card gs-panel" style="margin-top:14px">
+        <div class="pill-row">
+          <span class="stat-pill pink">Хит продаж</span>
+          <span class="stat-pill tiffany">Открыто до 21:00</span>
+          <span class="stat-pill gold">Премиум</span>
+          <span class="stat-pill grey">Закрыто</span>
+        </div>
+        <div class="pill-row">
+          <span class="walk-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>7 минут пешком</span>
+          <span class="open-pill on"><span class="dot"></span>Открыто</span>
+          <span class="open-pill off"><span class="dot"></span>Закрыто</span>
+          <span class="badge-pill badge-hit">Хит</span>
+          <span class="badge-pill badge-new">Новинка</span>
+          <span class="badge-pill badge-sale">−20%</span>
+          <span class="badge-pill badge-eco">Эко</span>
+        </div>
+        <div class="pill-row">
+          <span class="status-pill" style="background:var(--lv-soft-pink);color:var(--lv-pink-dark)">Сборка · <span class="lv-dot" style="background:var(--lv-pink)"></span></span>
+          <span class="status-pill" style="background:var(--lv-soft-tiffany);color:var(--lv-tiffany-text)">Готов · <span class="lv-dot" style="background:var(--lv-tiffany)"></span></span>
+          <span class="st-chip" style="background:var(--lv-soft-gold);color:var(--lv-gold-text)">На модерации</span>
+          <span class="st-chip" style="background:var(--lv-grey-soft);color:#999">Приостановлен</span>
+        </div>
+        <div class="glass-demo">
+          <div class="kicker">Карта лояльности</div>
+          <div class="big">Кэшбэк <span class="g">до 15%</span> в точках района</div>
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+            <span class="glass-chip"><span class="g">★</span> 240 баллов</span>
+            <span class="glass-chip"><span class="t">●</span> Tiffany-статус</span>
+            <span class="glass-chip">Glass 10% white</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Формы ================= -->
+    <section class="gs-section" id="forms">
+      <span class="gs-kicker">Компонент</span>
+      <h2>Поля и поиск</h2>
+      <p class="gs-sub">Инпуты 44px, радиус 14–999px, фокус — <code>ring-field</code> (4px розовая ореола) или <code>ring-search</code> у поиска. Кликните в поля.</p>
+      <div class="gs-card gs-panel" style="margin-top:14px">
+        <div class="search-bar" style="max-width:480px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" placeholder="Найти товар или точку рядом">
+        </div>
+        <div class="form-grid" style="max-width:640px">
+          <label class="f-field"><span class="lb">Название точки</span><input type="text" placeholder="Пекарня «Колос»"></label>
+          <label class="f-field"><span class="lb">Телефон</span><input type="tel" placeholder="+7 900 000-00-00"></label>
+          <label class="f-field"><span class="lb">Роль</span><select><option>Клиент</option><option>Бизнес</option><option>Партнёр</option></select></label>
+          <label class="f-field"><span class="lb">Комментарий</span><textarea placeholder="Что нужно знать курьеру?"></textarea></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Карточки ================= -->
+    <section class="gs-section" id="cards">
+      <span class="gs-kicker">Компонент</span>
+      <h2>Карточки</h2>
+      <p class="gs-sub">Hover: подъём на 2px + shadow-lift + scale эмодзи 1.1. Тон-подложки категорий — канонные плитки 135°.</p>
+      <div class="cards-grid">
+        <button class="btn-card">
+          <div class="cover tile-pink"><span class="em">🥐</span><span class="badge-pill badge-hit" style="position:absolute;top:8px;left:8px">Хит</span></div>
+          <div class="card-body"><div class="card-name">Пекарня «Колос»</div><div class="card-sub">Выпечка · 7 мин</div>
+            <div class="card-foot"><span class="rating">★ 4.9</span><span class="walk-pill">Пешком</span></div>
+          </div>
+        </button>
+        <button class="btn-card">
+          <div class="cover tile-tiffany"><span class="em">🥑</span><span class="badge-pill badge-new" style="position:absolute;top:8px;left:8px">Новинка</span></div>
+          <div class="card-body"><div class="card-name">Авокадо Хасс</div><div class="card-sub">Молочная лавка</div>
+            <div class="card-foot"><span style="font-size:16px;font-weight:800">189 ₽</span><span style="font-size:12px;color:var(--lv-dim);text-decoration:line-through">240 ₽</span></div>
+          </div>
+        </button>
+        <div class="promo-card tone-pink">
+          <span class="promo-mini">● Успей до вечера</span>
+          <div class="promo-title">Кофе + круассан = 199 ₽</div>
+          <div class="promo-desc">Кофейня «Дым» · 5 минут пешком</div>
+        </div>
+        <div style="display:grid;gap:12px;align-content:start">
+          <div class="kpi accent"><div class="l">Заказы за неделю</div><div class="v">128</div><div class="d"><span class="delta-up">▲ +12%</span><span style="font-size:11px;color:var(--lv-dim);font-weight:500">к прошлой неделе</span></div></div>
+          <div class="kpi"><div class="l">Средний чек</div><div class="v">640 ₽</div><div class="d"><span class="delta-down">▼ −3%</span><span style="font-size:11px;color:var(--lv-dim);font-weight:500">нужно внимание</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Навигация ================= -->
+    <section class="gs-section" id="nav">
+      <span class="gs-kicker">Каркас</span>
+      <h2>Навигация</h2>
+      <p class="gs-sub">5 точек, активная — розовая с индикатором сверху 32×2px. На ≥900px превращается в плавающую капсулу (bottom 20px, shadow-nav).</p>
+      <div class="nav-demo">
+        <div class="app-nav-in">
+          <button class="nav-btn active"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg></span>Главная</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>Поиск</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>Корзина</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>Заказы</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Профиль</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Поведение ================= -->
+    <section class="gs-section" id="behavior">
+      <span class="gs-kicker">Поведение</span>
+      <h2>Шиты, тосты, движение</h2>
+      <p class="gs-sub">Шит: <code>cubic-bezier(.32,.72,0,1)</code> 0.3s, оверлей 0.25s, Escape закрывает. Тост — инвертированная пара ink↔card.</p>
+      <div class="btn-row">
+        <button class="cta-btn" data-action="open-sheet">Открыть шит выбора района</button>
+        <button class="ghost-btn" data-action="show-toast">Показать тост</button>
+        <button class="ghost-btn sm" data-action="replay-enter">Повторить вход .lv-enter</button>
+      </div>
+      <div class="gs-card gs-panel lv-enter-target" style="margin-top:14px;max-width:480px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="lv-dot" style="background:var(--lv-tiffany)"></span>
+          <span style="font-size:13px;font-weight:600">Пульс точки 1.4s · парение декора .lv-float 5s · вход контента 0.35s ease-out</span>
+        </div>
+      </div>
+      <div class="code"><span class="c">&lt;!-- Anti-FOUC: в &lt;head&gt; ДО CSS. Канон docs/05-theming --&gt;</span>
+(function () {
+  try {
+    var t = localStorage.getItem('lovii_theme');           <span class="c">// ключ канона</span>
+    if (t !== 'dark' && t !== 'light') {
+      t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.theme = t;            <span class="c">// только &lt;html&gt;</span>
+  } catch (e) { document.documentElement.dataset.theme = 'light'; }
+})();</div>
+    </section>
+
+    <footer class="gs-footer">
+      <span>LOVII Design System · v1.0.0 · канон: lovii.mobiap.com</span>
+      <span><a href="https://github.com/bestdeejay-design/lovii-design">репозиторий</a> · <a href="https://lovii.mobiap.com">витрина</a> · <a href="https://bestdeejay-design.github.io/lovii-site/">посадка</a></span>
+    </footer>
+  </main>
+
+  <!-- Шит выбора района (демо) -->
+  <div class="sheet-overlay" id="sheet-overlay"></div>
+  <div class="sheet" id="demo-sheet" role="dialog" aria-modal="true" aria-label="Выбор района">
+    <div class="sheet-head">
+      <h3>Где вы сейчас?</h3>
+      <p>Покажем точки и товары в шаговой доступности</p>
+    </div>
+    <div class="sheet-body">
+      <button class="district-row active"><span><span class="nm">Центральный</span><span class="mt">24 точки · 5 мин</span></span><span class="stat-pill pink">Выбран</span></button>
+      <button class="district-row"><span><span class="nm">Северный</span><span class="mt">18 точек · 9 мин</span></span></button>
+      <button class="district-row"><span><span class="nm">Парковый</span><span class="mt">11 точек · 12 мин</span></span></button>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toast-wrap"></div>
+
+  <script>
+    /* ============ Механика темы — канон docs/05-theming ============ */
+    const THEME_KEY = 'lovii_theme';
+    const THEME_META = { light: '#f64a8a', dark: '#171219' };
+    function currentTheme() {
+      return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    }
+    function applyTheme(t) {
+      document.documentElement.dataset.theme = t;
+      const meta = document.getElementById('meta-theme');
+      if (meta) meta.setAttribute('content', THEME_META[t]);
+    }
+    function toggleTheme() {
+      const t = currentTheme() === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+      applyTheme(t);
+      toast(t === 'dark' ? 'Тёмная тема включена' : 'Светлая тема включена');
+    }
+
+    /* ============ Свотчи палитры ============ */
+    const BRAND = [
+      ['--lv-pink', '#f64a8a'], ['--lv-pink-dark', '#c92a6a'], ['--lv-tiffany', '#0abab5'],
+      ['--lv-gold', '#d4a854'], ['--lv-sand', '#e8d5b7'],
+      ['--lv-gradient-brand', null, 'gradient'], ['--lv-gradient-ink', null, 'gradient'],
+    ];
+    const LIGHT = [
+      ['--lv-ink', '#1a1a1a'], ['--lv-dim', '#888888'],
+      ['--lv-bg', '#f7f2f4'], ['--lv-page', '#ffffff'], ['--lv-card', '#ffffff'], ['--lv-surface', '#f8f8f8'],
+      ['--lv-line', '#f0e8ec'], ['--lv-line-2', '#f7f2f5'], ['--lv-hairline', 'rgba(26,26,26,.08)'],
+      ['--lv-soft-pink', 'rgba(246,74,138,.12)'], ['--lv-soft-tiffany', 'rgba(10,186,181,.12)'], ['--lv-soft-gold', 'rgba(212,168,84,.16)'],
+      ['--lv-sand-soft', '#f6ecdf'], ['--lv-grey-soft', '#f1f1f1'],
+      ['--lv-gold-text', '#8a6a25'], ['--lv-tiffany-text', '#07726f'], ['--lv-green-text', '#4a7a2a'], ['--lv-green-soft', '#eef7e6'],
+      ['--lv-hero-top', '#fdf1f6'], ['--lv-kpi-soft', '#fff5f8'],
+    ];
+    const DARK = [
+      ['--lv-ink', '#f3ebf0'], ['--lv-dim', '#a798a6'],
+      ['--lv-bg', '#171219'], ['--lv-page', '#171219'], ['--lv-card', '#211b26'], ['--lv-surface', '#2b2331'],
+      ['--lv-line', '#372d3e'], ['--lv-line-2', '#2e2535'], ['--lv-hairline', 'rgba(255,255,255,.12)'],
+      ['--lv-soft-pink', 'rgba(246,74,138,.12)'], ['--lv-soft-tiffany', 'rgba(10,186,181,.12)'], ['--lv-soft-gold', 'rgba(212,168,84,.16)'],
+      ['--lv-sand-soft', '#38302a'], ['--lv-grey-soft', '#2e2535'],
+      ['--lv-gold-text', '#e2c88c'], ['--lv-tiffany-text', '#6fd9d4'], ['--lv-green-text', '#a8d686'], ['--lv-green-soft', 'rgba(110,180,80,.16)'],
+      ['--lv-hero-top', '#1e1524'], ['--lv-kpi-soft', '#2b1f2b'],
+    ];
+    function swatch(el, list) {
+      el.innerHTML = list.map(([name, hex, kind]) => `
+        <div class="sw">
+          <div class="chip" style="background:${kind === 'gradient' ? `var(${name})` : hex}"></div>
+          <div class="info"><div class="nm">${name}</div><div class="hx">${hex || 'gradient'}</div></div>
+        </div>`).join('');
+    }
+    swatch(document.getElementById('sw-brand'), BRAND);
+    swatch(document.getElementById('sw-light'), LIGHT);
+    swatch(document.getElementById('sw-dark'), DARK);
+
+    /* ============ Шит ============ */
+    const overlay = document.getElementById('sheet-overlay');
+    const sheet = document.getElementById('demo-sheet');
+    function openSheet() { overlay.classList.add('open'); sheet.classList.add('open'); }
+    function closeSheet() { overlay.classList.remove('open'); sheet.classList.remove('open'); }
+    overlay.addEventListener('click', closeSheet);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });
+    sheet.querySelectorAll('.district-row').forEach((row) => {
+      row.addEventListener('click', () => {
+        sheet.querySelectorAll('.district-row').forEach((r) => r.classList.remove('active'));
+        row.classList.add('active');
+        closeSheet();
+        toast('Район выбран: ' + row.querySelector('.nm').textContent, 'Покажем точки в шаговой доступности');
+      });
+    });
+
+    /* ============ Тосты ============ */
+    function toast(text, d) {
+      const wrap = document.getElementById('toast-wrap');
+      const el = document.createElement('div');
+      el.className = 'toast';
+      el.innerHTML = text + (d ? `<span class="d">${d}</span>` : '');
+      wrap.appendChild(el);
+      setTimeout(() => { el.classList.add('hide'); setTimeout(() => el.remove(), 260); }, 2400);
+    }
+
+    /* ============ Кнопки действий ============ */
+    document.querySelector('[data-action="theme-toggle"]').addEventListener('click', toggleTheme);
+    document.querySelector('[data-action="open-sheet"]').addEventListener('click', openSheet);
+    document.querySelector('[data-action="show-toast"]').addEventListener('click', () => toast('Товар добавлен в корзину', 'Молочная лавка · самовывоз через 15 минут'));
+    document.querySelector('[data-action="replay-enter"]').addEventListener('click', () => {
+      const t = document.querySelector('.lv-enter-target');
+      t.classList.remove('lv-enter'); void t.offsetWidth; t.classList.add('lv-enter');
+    });
+  </script>
+</body>
+</html>

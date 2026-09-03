@@ -1,0 +1,92 @@
+
+  <script>
+    /* ============ Механика темы — канон docs/05-theming ============ */
+    const THEME_KEY = 'lovii_theme';
+    const THEME_META = { light: '#f64a8a', dark: '#171219' };
+    function currentTheme() {
+      return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+    }
+    function applyTheme(t) {
+      document.documentElement.dataset.theme = t;
+      const meta = document.getElementById('meta-theme');
+      if (meta) meta.setAttribute('content', THEME_META[t]);
+    }
+    function toggleTheme() {
+      const t = currentTheme() === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+      applyTheme(t);
+      toast(t === 'dark' ? 'Тёмная тема включена' : 'Светлая тема включена');
+    }
+
+    /* ============ Свотчи палитры ============ */
+    const BRAND = [
+      ['--lv-pink', '#f64a8a'], ['--lv-pink-dark', '#c92a6a'], ['--lv-tiffany', '#0abab5'],
+      ['--lv-gold', '#d4a854'], ['--lv-sand', '#e8d5b7'],
+      ['--lv-gradient-brand', null, 'gradient'], ['--lv-gradient-ink', null, 'gradient'],
+    ];
+    const LIGHT = [
+      ['--lv-ink', '#1a1a1a'], ['--lv-dim', '#888888'],
+      ['--lv-bg', '#f7f2f4'], ['--lv-page', '#ffffff'], ['--lv-card', '#ffffff'], ['--lv-surface', '#f8f8f8'],
+      ['--lv-line', '#f0e8ec'], ['--lv-line-2', '#f7f2f5'], ['--lv-hairline', 'rgba(26,26,26,.08)'],
+      ['--lv-soft-pink', 'rgba(246,74,138,.12)'], ['--lv-soft-tiffany', 'rgba(10,186,181,.12)'], ['--lv-soft-gold', 'rgba(212,168,84,.16)'],
+      ['--lv-sand-soft', '#f6ecdf'], ['--lv-grey-soft', '#f1f1f1'],
+      ['--lv-gold-text', '#8a6a25'], ['--lv-tiffany-text', '#07726f'], ['--lv-green-text', '#4a7a2a'], ['--lv-green-soft', '#eef7e6'],
+      ['--lv-hero-top', '#fdf1f6'], ['--lv-kpi-soft', '#fff5f8'],
+    ];
+    const DARK = [
+      ['--lv-ink', '#f3ebf0'], ['--lv-dim', '#a798a6'],
+      ['--lv-bg', '#171219'], ['--lv-page', '#171219'], ['--lv-card', '#211b26'], ['--lv-surface', '#2b2331'],
+      ['--lv-line', '#372d3e'], ['--lv-line-2', '#2e2535'], ['--lv-hairline', 'rgba(255,255,255,.12)'],
+      ['--lv-soft-pink', 'rgba(246,74,138,.12)'], ['--lv-soft-tiffany', 'rgba(10,186,181,.12)'], ['--lv-soft-gold', 'rgba(212,168,84,.16)'],
+      ['--lv-sand-soft', '#38302a'], ['--lv-grey-soft', '#2e2535'],
+      ['--lv-gold-text', '#e2c88c'], ['--lv-tiffany-text', '#6fd9d4'], ['--lv-green-text', '#a8d686'], ['--lv-green-soft', 'rgba(110,180,80,.16)'],
+      ['--lv-hero-top', '#1e1524'], ['--lv-kpi-soft', '#2b1f2b'],
+    ];
+    function swatch(el, list) {
+      el.innerHTML = list.map(([name, hex, kind]) => `
+        <div class="sw">
+          <div class="chip" style="background:${kind === 'gradient' ? `var(${name})` : hex}"></div>
+          <div class="info"><div class="nm">${name}</div><div class="hx">${hex || 'gradient'}</div></div>
+        </div>`).join('');
+    }
+    swatch(document.getElementById('sw-brand'), BRAND);
+    swatch(document.getElementById('sw-light'), LIGHT);
+    swatch(document.getElementById('sw-dark'), DARK);
+
+    /* ============ Шит ============ */
+    const overlay = document.getElementById('sheet-overlay');
+    const sheet = document.getElementById('demo-sheet');
+    function openSheet() { overlay.classList.add('open'); sheet.classList.add('open'); }
+    function closeSheet() { overlay.classList.remove('open'); sheet.classList.remove('open'); }
+    overlay.addEventListener('click', closeSheet);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSheet(); });
+    sheet.querySelectorAll('.district-row').forEach((row) => {
+      row.addEventListener('click', () => {
+        sheet.querySelectorAll('.district-row').forEach((r) => r.classList.remove('active'));
+        row.classList.add('active');
+        closeSheet();
+        toast('Район выбран: ' + row.querySelector('.nm').textContent, 'Покажем точки в шаговой доступности');
+      });
+    });
+
+    /* ============ Тосты ============ */
+    function toast(text, d) {
+      const wrap = document.getElementById('toast-wrap');
+      const el = document.createElement('div');
+      el.className = 'toast';
+      el.innerHTML = text + (d ? `<span class="d">${d}</span>` : '');
+      wrap.appendChild(el);
+      setTimeout(() => { el.classList.add('hide'); setTimeout(() => el.remove(), 260); }, 2400);
+    }
+
+    /* ============ Кнопки действий ============ */
+    document.querySelector('[data-action="theme-toggle"]').addEventListener('click', toggleTheme);
+    document.querySelector('[data-action="open-sheet"]').addEventListener('click', openSheet);
+    document.querySelector('[data-action="show-toast"]').addEventListener('click', () => toast('Товар добавлен в корзину', 'Молочная лавка · самовывоз через 15 минут'));
+    document.querySelector('[data-action="replay-enter"]').addEventListener('click', () => {
+      const t = document.querySelector('.lv-enter-target');
+      t.classList.remove('lv-enter'); void t.offsetWidth; t.classList.add('lv-enter');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,224 @@
+{
+  "$name": "lovii-design-tokens",
+  "$version": "1.0.0",
+  "$updated": "2026-09-04",
+  "$description": "Канонические дизайн-токены LOVII «Лови». Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css). Формат: упрощённый W3C Design Tokens (поля $value, $type, $desc).",
+  "$canonical": {
+    "demo": "https://lovii.mobiap.com",
+    "site": "https://bestdeejay-design.github.io/lovii-site/",
+    "repos": {
+      "designSystem": "bestdeejay-design/lovii-design",
+      "demo": "bestdeejay-design/lovii_demo",
+      "site": "bestdeejay-design/lovii-site"
+    }
+  },
+  "$usage": "В коде использовать только токены из tokens/tokens.css (namespace --lv-*). Хардкод значений запрещён. При расхождении репозитория с этим файлом репозиторий приводится к токену, а не наоборот.",
+
+  "color": {
+    "brand": {
+      "pink": { "$value": "#f64a8a", "$type": "color", "$desc": "Primary-акцент. CTA, активные чипы, ссылки, фокус, meta theme-color светлой темы." },
+      "pinkDark": { "$value": "#c92a6a", "$type": "color", "$desc": "Hover CTA, конец брендового градиента, текст/иконки на soft-pink заливках." },
+      "tiffany": { "$value": "#0abab5", "$type": "color", "$desc": "Secondary-акцент: «рядом/пешком», «в наличии», успех." },
+      "gold": { "$value": "#d4a854", "$type": "color", "$desc": "Tertiary-акцент: премиум, лояльность, рейтинг (звёзды)." },
+      "sand": { "$value": "#e8d5b7", "$type": "color", "$desc": "Тёплый песочный: бордеры/текст золотой группы на тёмном." }
+    },
+    "onBrand": { "$value": "#ffffff", "$type": "color", "$desc": "Текст и иконки НА брендовом градиенте. Единственный разрешённый чистый белый в тексте." },
+    "gradient": {
+      "brand": { "$value": "linear-gradient(135deg, #f64a8a 0%, #c92a6a 100%)", "$type": "gradient", "$desc": "Брендовый: CTA-кнопки, активные чипы, бейджи, фон карточек лояльности/итогов. Всегда 135deg." },
+      "ink": { "$value": "linear-gradient(150deg, #262023 0%, #1a1a1a 55%, #2b1219 100%)", "$type": "gradient", "$desc": "Чернильный: премиум-карточки (профиль, лояльность). Всегда 150deg." },
+      "tiffany": { "$value": "linear-gradient(90deg, #0abab5, #078d89)", "$type": "gradient", "$desc": "Прогресс-бары tiffany-тона." },
+      "gold": { "$value": "linear-gradient(90deg, #d4a854, #b98d3e)", "$type": "gradient", "$desc": "Прогресс-бары gold-тона." }
+    },
+    "badge": {
+      "hit": { "$value": "#fde8f1", "$type": "color", "$desc": "Бейдж «Хит» — фиксированная светлая подложка, текст pinkDark." },
+      "new": { "$value": "#e0f7f6", "$type": "color", "$desc": "Бейдж «Новинка» / «Открыто» / stock-ok — текст tiffanyText." },
+      "sale": { "$value": "#f7edda", "$type": "color", "$desc": "Бейдж «Скидка» / stock-low — текст goldText." }
+    },
+    "tile": {
+      "pink": { "$value": "linear-gradient(135deg, #fde8f1, #fbf0f5)", "$type": "gradient", "$desc": "Подложка-плитка категории pink." },
+      "tiffany": { "$value": "linear-gradient(135deg, #e0f7f6, #eefcfb)", "$type": "gradient", "$desc": "Подложка-плитка категории tiffany." },
+      "gold": { "$value": "linear-gradient(135deg, #f7edda, #fbf5ea)", "$type": "gradient", "$desc": "Подложка-плитка категории gold." },
+      "sand": { "$value": "linear-gradient(135deg, #f3e9dc, #faf4ec)", "$type": "gradient", "$desc": "Подложка-плитка категории sand." },
+      "ink": { "$value": "linear-gradient(135deg, #f4f4f4, #fafafa)", "$type": "gradient", "$desc": "Подложка-плитка категории ink (нейтральная)." }
+    },
+    "theme": {
+      "light": {
+        "ink": { "$value": "#1a1a1a", "$type": "color", "$desc": "Основной текст." },
+        "dim": { "$value": "#888888", "$type": "color", "$desc": "Вторичный текст, подписи, placeholder." },
+        "bg": { "$value": "#f7f2f4", "$type": "color", "$desc": "Фон вокруг капсулы приложения (body)." },
+        "page": { "$value": "#ffffff", "$type": "color", "$desc": "Фон страницы посадки." },
+        "card": { "$value": "#ffffff", "$type": "color", "$desc": "Карточки, шиты, навигация." },
+        "surface": { "$value": "#f8f8f8", "$type": "color", "$desc": "Заливка контролов: пилюли, инпуты, сегменты, треки." },
+        "glass": { "$value": "rgba(255, 255, 255, 0.85)", "$type": "color", "$desc": "Стеклянный хедер/навигация + backdrop-blur(14px)." },
+        "line": { "$value": "#f0e8ec", "$type": "color", "$desc": "Бордер карточек (тёплый розоватый)." },
+        "line2": { "$value": "#f7f2f5", "$type": "color", "$desc": "Разделитель строк внутри карточки (светлее line)." },
+        "hairline": { "$value": "rgba(26, 26, 26, 0.08)", "$type": "color", "$desc": "Тонкая линия (юр.блок)." },
+        "softPink": { "$value": "rgba(246, 74, 138, 0.12)", "$type": "color", "$desc": "Розовая soft-заливка: плашки, тоновые карточки, qty." },
+        "mistPink": { "$value": "rgba(246, 74, 138, 0.06)", "$type": "color", "$desc": "Едва заметная розовая подложка." },
+        "softTiffany": { "$value": "rgba(10, 186, 181, 0.12)", "$type": "color", "$desc": "Тиффани-заливка: «пешком», «открыто», успех." },
+        "softGold": { "$value": "rgba(212, 168, 84, 0.16)", "$type": "color", "$desc": "Золотая заливка: рейтинг, статусы модерации." },
+        "sandSoft": { "$value": "#f6ecdf", "$type": "color", "$desc": "Песочная нейтральная заливка." },
+        "greySoft": { "$value": "#f1f1f1", "$type": "color", "$desc": "Серая заливка: выключенные статусы, чипы off." },
+        "goldText": { "$value": "#8a6a25", "$type": "color", "$desc": "Текст на softGold/badge-sale. Пара к softGold." },
+        "tiffanyText": { "$value": "#07726f", "$type": "color", "$desc": "Текст на softTiffany/badge-new. Пара к softTiffany." },
+        "greenText": { "$value": "#4a7a2a", "$type": "color", "$desc": "Текст на greenSoft (эко-бейджи)." },
+        "greenSoft": { "$value": "#eef7e6", "$type": "color", "$desc": "Зелёная эко-заливка." },
+        "heroTop": { "$value": "#fdf1f6", "$type": "color", "$desc": "Верх hero-градиента (180deg к card)." },
+        "kpiSoft": { "$value": "#fff5f8", "$type": "color", "$desc": "Фон акцентного KPI (150deg к card)." },
+        "toastD": { "$value": "rgba(255, 255, 255, 0.7)", "$type": "color", "$desc": "Подпись-детали на тосте (тост = ink на card)." },
+        "scrollThumb": { "$value": "rgba(26, 26, 26, 0.15)", "$type": "color", "$desc": "Тонкий скроллбар." }
+      },
+      "dark": {
+        "ink": { "$value": "#f3ebf0", "$type": "color", "$desc": "Тёплый светлый (сливочный) текст." },
+        "dim": { "$value": "#a798a6", "$type": "color", "$desc": "Вторичный текст." },
+        "bg": { "$value": "#171219", "$type": "color", "$desc": "Фон страницы; также meta theme-color тёмной темы." },
+        "page": { "$value": "#171219", "$type": "color", "$desc": "= bg." },
+        "card": { "$value": "#211b26", "$type": "color", "$desc": "Карточки, шиты." },
+        "surface": { "$value": "#2b2331", "$type": "color", "$desc": "Заливка контролов." },
+        "glass": { "$value": "rgba(30, 23, 34, 0.86)", "$type": "color", "$desc": "Стекло хедера/навигации." },
+        "line": { "$value": "#372d3e", "$type": "color", "$desc": "Бордер карточек." },
+        "line2": { "$value": "#2e2535", "$type": "color", "$desc": "Разделитель строк." },
+        "hairline": { "$value": "rgba(255, 255, 255, 0.12)", "$type": "color", "$desc": "Тонкая линия." },
+        "softPink": { "$value": "rgba(246, 74, 138, 0.12)", "$type": "color", "$desc": "Канон демки. В lovii-site — 0.2 (богаче на тёмном); см. docs/06-application §Расхождения." },
+        "mistPink": { "$value": "rgba(246, 74, 138, 0.06)", "$type": "color", "$desc": "В lovii-site — 0.1." },
+        "softTiffany": { "$value": "rgba(10, 186, 181, 0.12)", "$type": "color", "$desc": "В lovii-site — 0.18." },
+        "softGold": { "$value": "rgba(212, 168, 84, 0.16)", "$type": "color", "$desc": "В lovii-site — 0.2." },
+        "sandSoft": { "$value": "#38302a", "$type": "color", "$desc": "Песочная заливка тёмной темы." },
+        "greySoft": { "$value": "#2e2535", "$type": "color", "$desc": "Серая заливка тёмной темы." },
+        "goldText": { "$value": "#e2c88c", "$type": "color", "$desc": "Текст на softGold." },
+        "tiffanyText": { "$value": "#6fd9d4", "$type": "color", "$desc": "Текст на softTiffany." },
+        "greenText": { "$value": "#a8d686", "$type": "color", "$desc": "Текст на greenSoft." },
+        "greenSoft": { "$value": "rgba(110, 180, 80, 0.16)", "$type": "color", "$desc": "Эко-заливка." },
+        "heroTop": { "$value": "#1e1524", "$type": "color", "$desc": "Верх hero-градиента." },
+        "kpiSoft": { "$value": "#2b1f2b", "$type": "color", "$desc": "Фон акцентного KPI." },
+        "toastD": { "$value": "rgba(26, 26, 26, 0.55)", "$type": "color", "$desc": "Подпись на тосте." },
+        "scrollThumb": { "$value": "rgba(255, 255, 255, 0.18)", "$type": "color", "$desc": "Скроллбар." }
+      }
+    }
+  },
+
+  "typography": {
+    "family": { "$value": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif", "$type": "fontFamily", "$desc": "Google Fonts Inter, weights 400;500;600;700;800, display=swap. Подключать с preconnect." },
+    "weight": {
+      "regular": { "$value": 400, "$desc": "Тело текста, подписи тостов." },
+      "medium": { "$value": 500, "$desc": "Пилюли-контролы, nav-подписи, шаги инструкции." },
+      "semibold": { "$value": 600, "$desc": "Чипы, stat-pill, link-btn, подписи строк." },
+      "bold": { "$value": 700, "$desc": "Имена, заголовки 16px, кнопки, значения." },
+      "extrabold": { "$value": 800, "$desc": "Все заголовки h1/h2, цены, KPI. Основной заголовочный вес." }
+    },
+    "size": {
+      "h1Hero": { "$value": "26px", "$desc": "Hero h1. line-height 1.22, tracking -0.01em, weight 800. ≥640px — 32px." },
+      "h1Page": { "$value": "20px", "$desc": "Заголовок страницы (корзина). 800." },
+      "h1Screen": { "$value": "18px", "$desc": "Заголовок экрана точки/дашборда/шита. 800." },
+      "h2Section": { "$value": "16px", "$desc": "Заголовок секции. 800. Подзаголовок-«sub»: 14px/600/dim." },
+      "titlePromo": { "$value": "16px", "$desc": "Заголовок промо-карточки. 800, lh 1.3." },
+      "name": { "$value": "14px", "$desc": "Имена товаров/точек. 700, lh 1.35." },
+      "body": { "$value": "14px", "$desc": "Основной текст, описания, lead. lh 1.6, цвет dim." },
+      "control": { "$value": "13px", "$desc": "Чипы, кнопки cta, табы, сегменты. 600-700." },
+      "secondary": { "$value": "12px", "$desc": "Плашки статусов 28px, подсказки, crumb, old-price." },
+      "meta": { "$value": "11px", "$desc": "walk-pill, метаданные, status-pill, теги." },
+      "badge": { "$value": "10px", "$desc": "Бейджи на обложках, count-badge. 700-800." },
+      "kicker": { "$value": "10.5px", "$desc": "Uppercase-надзаголовки. 800, tracking +0.1em, uppercase." },
+      "price": { "$value": "16px", "$desc": "Цена в карточке. 800. На странице товара — 24px." },
+      "kpi": { "$value": "19px", "$desc": "Значение KPI. 800, tracking -0.02em." }
+    },
+    "leading": {
+      "tight": { "$value": 1.22, "$desc": "Hero h1." },
+      "title": { "$value": 1.3, "$desc": "Крупные заголовки/названия." },
+      "name": { "$value": 1.35, "$desc": "Имена в карточках." },
+      "body": { "$value": 1.6, "$desc": "Описания, lead, абзацы." }
+    },
+    "tracking": {
+      "tight": { "$value": "-0.01em", "$desc": "Крупные h1 (hero 26-32px)." },
+      "tighter": { "$value": "-0.02em", "$desc": "KPI, лого, roi-card big." },
+      "wide": { "$value": "0.06em", "$desc": "Uppercase-бейджи 9.5-10px." },
+      "wider": { "$value": "0.1em", "$desc": "Kicker 10.5px uppercase." },
+      "widest": { "$value": "0.12em", "$desc": "Kicker на брендовом градиенте." }
+    }
+  },
+
+  "space": {
+    "padX": { "$value": "16px", "$desc": "Боковой отступ экрана/секции. Константа." },
+    "sectionTop": { "$value": "20px", "$desc": "Отступ секции сверху. Блок↔блок = 24px (20px секция + 4px хвост контента)." },
+    "headGap": { "$value": "12px", "$desc": "Заголовок секции ↔ контент (каталог — 16px)." },
+    "gap": { "$enum": ["4px", "6px", "8px", "10px", "12px", "14px", "16px"], "$desc": "Шкала гэпов флексов/гридов. Шаг по факту использования, не строгая геометрическая прогрессия." },
+    "cardPad": { "$value": "12px", "$desc": "Внутренний паддинг компакт-карточек (store-body, prod-body, avail-card). Крупные карточки (promo, sum, order) — 16px; премиум (loyalty, prof-head) — 20px." },
+    "listGap": { "$value": "10-16px", "$desc": "Межкарточные: лента 12px, грид товаров 12px, списки 10-16px." }
+  },
+
+  "layout": {
+    "container": { "$value": "480px", "$desc": "Мобильная капсула приложения (тень 0 0 60px rgba(26,26,26,.08)); ≥640px разворачивается на 100%." },
+    "containerWide": { "$value": "1120px", "$desc": "Общий поток контента ≥640px." },
+    "containerNarrow": { "$value": "760px", "$desc": "Линейные экраны: товар, поиск, корзина, заказы, профиль, чат." },
+    "headerH": { "$value": "56px", "$desc": "Шапка витрины (sticky, glass, blur 14px). Подшапка 48px." },
+    "navH": { "$value": "64px", "$desc": "Нижняя навигация; ≥900px — плавающая капсула 60px, view padding-bottom 96px." },
+    "controlH": { "$enum": ["20px", "22px", "24px", "28px", "32px", "36px", "40px", "44px", "48px"], "$desc": "Высоты: бейдж 20-24, статус-чип 22-24, мелкие пилюли 28, чипы/сегменты 32-36, ghost 40, инпуты 44, большая CTA 48." },
+    "safeArea": { "$value": "env(safe-area-inset-bottom)", "$desc": "Нижняя навигация и чат-инпут. viewport-fit=cover обязателен." }
+  },
+
+  "radius": {
+    "pill": { "$value": "999px", "$desc": "Все контролы-капсулы: кнопки, чипы, пилюли, бейджи, инпуты-поиск. Основной радиус системы." },
+    "sheet": { "$value": "24px", "$desc": "Bottom-sheet (только верхние углы), премиум-карточки (loyalty, prof-head, pd-cover)." },
+    "premium": { "$value": "20px", "$desc": "apply-head, roi-card." },
+    "card": { "$value": "16px", "$desc": "Все карточки, тосты, district-row. Второй по частоте." },
+    "tab": { "$value": "14px", "$desc": "hero-tab, status-banner, fin-total." },
+    "tile": { "$value": "12px", "$desc": "Квадратные иконки-плитки (em-tile 48, avail-emoji, f-field инпуты, dash-note)." },
+    "msgTail": { "$value": "6px", "$desc": "Уголок хвоста сообщения чата (остальные углы 16px)." }
+  },
+
+  "shadow": {
+    "soft": { "$value": "0 1px 3px rgba(26, 26, 26, 0.06)", "$desc": "Покой карточек." },
+    "lift": { "$value": "0 12px 32px -12px rgba(201, 42, 106, 0.22)", "$desc": "Hover карточек, активные чипы/табы. Розовый — только с розовым следом." },
+    "nav": { "$value": "0 12px 32px -12px rgba(26, 26, 26, 0.28)", "$desc": "Десктоп-капсула навигации." },
+    "stuck": { "$value": "0 12px 16px -16px rgba(26, 26, 26, 0.28)", "$desc": "Липкая плашка чипов в прилипшем состоянии." },
+    "toast": { "$value": "0 12px 32px -12px rgba(201, 42, 106, 0.35)", "$desc": "Тосты, fin-total." },
+    "float": { "$value": "0 2px 8px rgba(26, 26, 26, 0.1)", "$desc": "Плавающие кнопки поверх обложек (fav-btn)." },
+    "app": { "$value": "0 0 60px rgba(26, 26, 26, 0.08)", "$desc": "Мобильная капсула приложения." },
+    "ringSearch": { "$value": "0 0 0 2px rgba(246, 74, 138, 0.4)", "$desc": "Фокус поисковой строки." },
+    "ringField": { "$value": "0 0 0 4px rgba(246, 74, 138, 0.1)", "$desc": "Фокус форм-полей." }
+  },
+
+  "motion": {
+    "hover": { "$value": "0.2s", "$desc": "Стандартный transition (background/color/all). ease по умолчанию." },
+    "fast": { "$value": "0.15s", "$desc": "Transform-нажатия (quick, fav-btn: scale .97/.9)." },
+    "enter": { "$value": "0.35s ease-out", "$desc": "Появление контента: opacity 0→1 + translateY(10px)→0. Каскад lovii-site: +0.06s шаг." },
+    "sheet": { "$value": "0.3s cubic-bezier(0.32, 0.72, 0, 1)", "$desc": "Bottom-sheet transform." },
+    "overlay": { "$value": "0.25s", "$desc": "Оверлей opacity, toast in/hide." },
+    "collapse": { "$value": "0.32s ease", "$desc": "Сворачивание hero: grid-template-rows 1fr↔0fr." },
+    "float": { "$value": "5s ease-in-out infinite", "$desc": "Парение декора, амплитуда 8px." },
+    "pulseDot": { "$value": "1.4s ease-in-out infinite", "$desc": "Пульс статусной точки (scale 1→0.8, opacity 1→0.45)." },
+    "press": { "$value": "scale(0.96)", "$desc": "Активное нажатие чипов/кнопок (cta .95, quick .97, cat-chip .96)." },
+    "reducedMotion": { "$value": true, "$desc": "ОБЯЗАТЕЛЬНО: @media (prefers-reduced-motion: reduce) отключает анимации." }
+  },
+
+  "iconography": {
+    "style": { "$value": "outline", "$desc": "Lucide-стиль: viewBox 0 0 24 24, fill none, stroke currentColor, stroke-width 2, round caps/joins." },
+    "sizes": { "$enum": ["12px", "14px", "15px", "16px", "18px", "20px", "22px"], "$desc": "12-14 внутри плашек, 16 стандарт, 18-20 кнопки, 22 навигация." },
+    "emoji": { "$desc": "Контентные образы (товары, точки, категории) — эмодзи: 36px карточки, 60-72px обложки, 40-46px empty-состояния." },
+    "color": { "$desc": "currentColor; брендовые иконки — pink; на soft-плашках — парный *-text." }
+  },
+
+  "breakpoint": {
+    "base": { "$value": "<640px", "$desc": "Мобильный: капсула 480px, сетки 1-2 колонки." },
+    "micro": { "$value": "≤360px", "$desc": "Лого 28px; ≤400px — сжатие пилюли района (chev скрыт, lbl 64px)." },
+    "tablet": { "$value": "≥640px", "$desc": "Full width, товары 3 колонки, hero h1 32px, hero-grid 2 колонки, seg 480px." },
+    "desktop": { "$value": "≥900px", "$desc": "Навигация — плавающая капсула (bottom 20px), view padding-bottom 96px." },
+    "wide": { "$value": "≥1024px", "$desc": "Товары 4 колонки." }
+  },
+
+  "theming": {
+    "attribute": { "$value": "data-theme", "$enum": ["light", "dark"], "$desc": "Атрибут на <html>. Отсутствие = light (compat)." },
+    "storageKey": { "$value": "lovii_theme", "$desc": "localStorage. Валидация: только 'dark'|'light', иначе системная." },
+    "antiFouc": { "$desc": "ИНЛАЙН-скрипт в <head> ДО CSS: явный выбор → системная → light фолбэк. См. docs/05-theming." },
+    "metaThemeColor": { "light": "#f64a8a", "dark": "#171219", "$desc": "Обновляется при смене темы (id=meta-theme)." },
+    "logoSwitch": { "$desc": "Оба логотипа в DOM; CSS: .logo-dark-img display:none → block в dark; .logo-light-img — наоборот. Канон тёмного: assets/logo-dark.svg (lovii_demo, md5 145731d888e5d913ce85de3a9789d097), идентичен lovii-logo-black.svg." },
+    "iconSwitch": { "$desc": "Луна в светлой / солнце в тёмной — та же CSS-механика без JS-состояния." }
+  },
+
+  "accessibility": {
+    "focusVisible": { "$value": "outline 2px solid var(--lv-pink); outline-offset 2px", "$desc": "Единый розовый фокус. Форм-поля — ring-field." },
+    "contrast": { "$desc": "dim на card — вторичный; текст на soft-заливках — только парные *-text; на градиентах — on-brand." },
+    "touchTarget": { "$value": "≥36px", "$desc": "Минимальная контрол-высота 36px (иконки-кнопки). Нав-кнопки и инпуты 44px+." },
+    "reducedMotion": { "$value": true, "$desc": "См. motion.reducedMotion." }
+  }
+}

@@ -1,0 +1,284 @@
+  <header class="gs-header">
+    <div class="gs-header-in">
+      <img class="gs-logo logo-light-img" src="data:image/svg+xml;base64,%%LOGO_LIGHT_B64%%" alt="LOVII">
+      <img class="gs-logo logo-dark-img" src="data:image/svg+xml;base64,%%LOGO_DARK_B64%%" alt="LOVII">
+      <div class="gs-head-right">
+        <span class="stat-pill tiffany">v1.0.0</span>
+        <button class="icon-btn" data-action="theme-toggle" aria-label="Сменить тему" title="Светлая/тёмная тема">
+          <svg class="theme-ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          <svg class="theme-ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="gs-wrap">
+    <div class="gs-hero">
+      <span class="stat-pill pink">Дизайн-система LOVII</span>
+      <h1>Единый язык <span class="accent">Лови</span> для всех продуктов</h1>
+      <p class="lead">Живой гайд канонических токенов: <b>lovii.mobiap.com — источник истины</b>. Переключите тему в шапке — все образцы ниже собраны на тех же токенах, что и прод. Значения: <b>tokens/tokens.css</b> и <b>tokens/design-tokens.json</b>, правила: <b>docs/</b>.</p>
+      <div class="gs-hero-meta">
+        <span class="stat-pill tiffany">Канон: lovii.mobiap.com</span>
+        <span class="stat-pill gold">Обновлено: 2026-09-04</span>
+        <span class="stat-pill grey">Semver 1.0.0</span>
+      </div>
+    </div>
+
+    <!-- ================= Логотип ================= -->
+    <section class="gs-section" id="brand">
+      <span class="gs-kicker">Бренд</span>
+      <h2>Логотип</h2>
+      <p class="gs-sub">Оба варианта всегда в DOM, видимость переключает <code>[data-theme]</code> через CSS — без JS-состояния (docs/05). Канон тёмного: <code>assets/logo-dark.svg</code>, md5 <code>145731d8…</code>, идентичен <code>lovii-logo-black.svg</code>. Файл <code>lovii-logo-dark.svg</code> (высветленный) удалён из канона и не должен возвращаться.</p>
+      <div class="logo-duo">
+        <div>
+          <div class="logo-tile light"><img src="data:image/svg+xml;base64,%%LOGO_LIGHT_B64%%" alt="LOVII light"></div>
+          <div class="logo-cap">lovii-logo-light.svg · светлая тема</div>
+        </div>
+        <div>
+          <div class="logo-tile dark"><img src="data:image/svg+xml;base64,%%LOGO_DARK_B64%%" alt="LOVII dark"></div>
+          <div class="logo-cap">logo-dark.svg · тёмная тема · md5 145731d8…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Цвет ================= -->
+    <section class="gs-section" id="color">
+      <span class="gs-kicker">Токены</span>
+      <h2>Цвет</h2>
+      <p class="gs-sub">Три акцента на тёплой нейтральной базе. Акценты не меняются между темами — темы перекрашивают только поверхности, текст и бордеры. В коде — только <code>var(--lv-*)</code>.</p>
+
+      <div class="sw-title">Брендовые (не зависят от темы)</div>
+      <div class="sw-grid" id="sw-brand"></div>
+
+      <div class="duo" style="margin-top:18px">
+        <div class="gs-card gs-panel">
+          <h3><span class="dot" style="background:#f7f2f4;border:1px solid var(--lv-line)"></span>Светлая тема</h3>
+          <div class="sw-grid" id="sw-light" style="margin-top:2px"></div>
+        </div>
+        <div class="gs-card gs-panel">
+          <h3><span class="dot" style="background:#171219"></span>Тёмная тема</h3>
+          <div class="sw-grid" id="sw-dark" style="margin-top:2px"></div>
+        </div>
+      </div>
+      <p class="gs-sub" style="margin-top:10px">Правило soft-пар: <code>soft-pink→pink-dark</code>, <code>soft-tiffany→tiffany-text</code>, <code>soft-gold→gold-text</code>, <code>grey-soft→#999</code>. Текст на градиентах — только <code>on-brand</code>.</p>
+    </section>
+
+    <!-- ================= Типографика ================= -->
+    <section class="gs-section" id="type">
+      <span class="gs-kicker">Токены</span>
+      <h2>Типографика</h2>
+      <p class="gs-sub">Один шрифт — <b>Inter</b> (400–800). Заголовочный вес — 800. Никаких других семейств и весов.</p>
+      <div class="gs-card gs-panel" style="margin-top:14px">
+        <div class="type-row"><div class="type-meta">h1-hero · 26px · 800 · 1.22<br>≥640px — 32px · ls −0.01em</div><div class="type-demo" style="font-size:26px;line-height:1.22;font-weight:800;letter-spacing:-.01em">Всё нужное в шаговой доступности</div></div>
+        <div class="type-row"><div class="type-meta">h1-screen · 18px · 800</div><div class="type-demo" style="font-size:18px;font-weight:800">Магазин у дома</div></div>
+        <div class="type-row"><div class="type-meta">h2-section · 16px · 800</div><div class="type-demo" style="font-size:16px;font-weight:800">Акции рядом</div></div>
+        <div class="type-row"><div class="type-meta">name · 14px · 700 · 1.35</div><div class="type-demo" style="font-size:14px;font-weight:700">Свежая выпечка из пекарни на углу</div></div>
+        <div class="type-row"><div class="type-meta">body · 14px · 400 · 1.6 · dim</div><div class="type-demo" style="font-size:14px;line-height:1.6;color:var(--lv-dim)">Покажем точки и товары в шаговой доступности: наличие в каждой точке и минуты пешком.</div></div>
+        <div class="type-row"><div class="type-meta">control · 13px · 600</div><div class="type-demo" style="font-size:13px;font-weight:600">Все категории</div></div>
+        <div class="type-row"><div class="type-meta">secondary · 12px · 600</div><div class="type-demo" style="font-size:12px;font-weight:600;color:var(--lv-dim)">7 минут пешком · до 18:00</div></div>
+        <div class="type-row"><div class="type-meta">meta · 11px · 600</div><div class="type-demo" style="font-size:11px;font-weight:600;color:var(--lv-dim)">Обновлено сегодня в 14:20</div></div>
+        <div class="type-row"><div class="type-meta">kicker · 10.5px · 800 · caps · +0.1em</div><div class="type-demo"><span style="font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lv-pink-dark)">Лояльность</span></div></div>
+        <div class="type-row"><div class="type-meta">price · 16px · 800</div><div class="type-demo"><span style="font-size:16px;font-weight:800">249 ₽</span> <span style="font-size:12px;color:var(--lv-dim);text-decoration:line-through;margin-left:6px">320 ₽</span></div></div>
+        <div class="type-row"><div class="type-meta">kpi · 19px · 800 · ls −0.02em</div><div class="type-demo" style="font-size:19px;font-weight:800;letter-spacing:-.02em">128 заказов</div></div>
+      </div>
+    </section>
+
+    <!-- ================= Радиусы и тени ================= -->
+    <section class="gs-section" id="shape">
+      <span class="gs-kicker">Форма</span>
+      <h2>Радиусы и тени</h2>
+      <p class="gs-sub">Контролы — всегда капсулы <code>999px</code>, карточки — <code>16px</code>. Тень — сигнал интерактивности: покой <code>soft</code>, наведение <code>lift</code>. Наведите на карточки ниже.</p>
+      <div class="shape-row">
+        <div class="shape" style="border-radius:999px">999 pill</div>
+        <div class="shape" style="border-radius:24px">24 sheet</div>
+        <div class="shape" style="border-radius:20px">20 premium</div>
+        <div class="shape" style="border-radius:16px">16 card</div>
+        <div class="shape" style="border-radius:14px">14 tab</div>
+        <div class="shape" style="border-radius:12px">12 tile</div>
+      </div>
+      <div class="btn-row">
+        <div class="shadow-card" style="box-shadow:var(--lv-shadow-soft)">shadow-soft<span class="mono">0 1px 3px rgba(26,26,26,.06)</span></div>
+        <div class="shadow-card" style="box-shadow:var(--lv-shadow-lift)">shadow-lift<span class="mono">0 12px 32px −12px rgba(201,42,106,.22)</span></div>
+        <div class="shadow-card" style="box-shadow:var(--lv-shadow-nav)">shadow-nav<span class="mono">0 12px 32px −12px rgba(26,26,26,.28)</span></div>
+        <div class="shadow-card" style="box-shadow:var(--lv-shadow-toast)">shadow-toast<span class="mono">0 12px 32px −12px rgba(201,42,106,.35)</span></div>
+      </div>
+    </section>
+
+    <!-- ================= Кнопки ================= -->
+    <section class="gs-section" id="buttons">
+      <span class="gs-kicker">Компонент</span>
+      <h2>Кнопки</h2>
+      <p class="gs-sub">Градиент 135° только у primary-CTA. Hover — shadow-lift, нажатие — scale .95. Состояния проверяются живьём: наведите и зажмите.</p>
+      <div class="gs-card gs-panel" style="margin-top:14px">
+        <div class="btn-row">
+          <button class="cta-btn">Добавить · 36</button>
+          <button class="cta-btn big">Оформить заказ · 48</button>
+          <button class="cta-btn sm">Подробнее · 32</button>
+        </div>
+        <div class="btn-row">
+          <button class="cta-btn plain">Вторичная · plain</button>
+          <button class="ghost-btn">Призрак · 40</button>
+          <button class="ghost-btn sm">Призрак · 32</button>
+          <span class="link-btn">Смотреть все <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+        </div>
+        <div class="btn-row">
+          <button class="cta-btn disabled">Недоступно · 50%</button>
+          <button class="pill-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;color:var(--lv-pink)"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Район</button>
+          <button class="icon-btn" aria-label="Корзина"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Пилюли и статусы ================= -->
+    <section class="gs-section" id="pills">
+      <span class="gs-kicker">Компонент</span>
+      <h2>Пилюли, статусы, бейджи</h2>
+      <p class="gs-sub">Только парные заливки (soft → *-text). Точка статуса — <code>.lv-dot</code> с пульсом 1.4s.</p>
+      <div class="gs-card gs-panel" style="margin-top:14px">
+        <div class="pill-row">
+          <span class="stat-pill pink">Хит продаж</span>
+          <span class="stat-pill tiffany">Открыто до 21:00</span>
+          <span class="stat-pill gold">Премиум</span>
+          <span class="stat-pill grey">Закрыто</span>
+        </div>
+        <div class="pill-row">
+          <span class="walk-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>7 минут пешком</span>
+          <span class="open-pill on"><span class="dot"></span>Открыто</span>
+          <span class="open-pill off"><span class="dot"></span>Закрыто</span>
+          <span class="badge-pill badge-hit">Хит</span>
+          <span class="badge-pill badge-new">Новинка</span>
+          <span class="badge-pill badge-sale">−20%</span>
+          <span class="badge-pill badge-eco">Эко</span>
+        </div>
+        <div class="pill-row">
+          <span class="status-pill" style="background:var(--lv-soft-pink);color:var(--lv-pink-dark)">Сборка · <span class="lv-dot" style="background:var(--lv-pink)"></span></span>
+          <span class="status-pill" style="background:var(--lv-soft-tiffany);color:var(--lv-tiffany-text)">Готов · <span class="lv-dot" style="background:var(--lv-tiffany)"></span></span>
+          <span class="st-chip" style="background:var(--lv-soft-gold);color:var(--lv-gold-text)">На модерации</span>
+          <span class="st-chip" style="background:var(--lv-grey-soft);color:#999">Приостановлен</span>
+        </div>
+        <div class="glass-demo">
+          <div class="kicker">Карта лояльности</div>
+          <div class="big">Кэшбэк <span class="g">до 15%</span> в точках района</div>
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+            <span class="glass-chip"><span class="g">★</span> 240 баллов</span>
+            <span class="glass-chip"><span class="t">●</span> Tiffany-статус</span>
+            <span class="glass-chip">Glass 10% white</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Формы ================= -->
+    <section class="gs-section" id="forms">
+      <span class="gs-kicker">Компонент</span>
+      <h2>Поля и поиск</h2>
+      <p class="gs-sub">Инпуты 44px, радиус 14–999px, фокус — <code>ring-field</code> (4px розовая ореола) или <code>ring-search</code> у поиска. Кликните в поля.</p>
+      <div class="gs-card gs-panel" style="margin-top:14px">
+        <div class="search-bar" style="max-width:480px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" placeholder="Найти товар или точку рядом">
+        </div>
+        <div class="form-grid" style="max-width:640px">
+          <label class="f-field"><span class="lb">Название точки</span><input type="text" placeholder="Пекарня «Колос»"></label>
+          <label class="f-field"><span class="lb">Телефон</span><input type="tel" placeholder="+7 900 000-00-00"></label>
+          <label class="f-field"><span class="lb">Роль</span><select><option>Клиент</option><option>Бизнес</option><option>Партнёр</option></select></label>
+          <label class="f-field"><span class="lb">Комментарий</span><textarea placeholder="Что нужно знать курьеру?"></textarea></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Карточки ================= -->
+    <section class="gs-section" id="cards">
+      <span class="gs-kicker">Компонент</span>
+      <h2>Карточки</h2>
+      <p class="gs-sub">Hover: подъём на 2px + shadow-lift + scale эмодзи 1.1. Тон-подложки категорий — канонные плитки 135°.</p>
+      <div class="cards-grid">
+        <button class="btn-card">
+          <div class="cover tile-pink"><span class="em">🥐</span><span class="badge-pill badge-hit" style="position:absolute;top:8px;left:8px">Хит</span></div>
+          <div class="card-body"><div class="card-name">Пекарня «Колос»</div><div class="card-sub">Выпечка · 7 мин</div>
+            <div class="card-foot"><span class="rating">★ 4.9</span><span class="walk-pill">Пешком</span></div>
+          </div>
+        </button>
+        <button class="btn-card">
+          <div class="cover tile-tiffany"><span class="em">🥑</span><span class="badge-pill badge-new" style="position:absolute;top:8px;left:8px">Новинка</span></div>
+          <div class="card-body"><div class="card-name">Авокадо Хасс</div><div class="card-sub">Молочная лавка</div>
+            <div class="card-foot"><span style="font-size:16px;font-weight:800">189 ₽</span><span style="font-size:12px;color:var(--lv-dim);text-decoration:line-through">240 ₽</span></div>
+          </div>
+        </button>
+        <div class="promo-card tone-pink">
+          <span class="promo-mini">● Успей до вечера</span>
+          <div class="promo-title">Кофе + круассан = 199 ₽</div>
+          <div class="promo-desc">Кофейня «Дым» · 5 минут пешком</div>
+        </div>
+        <div style="display:grid;gap:12px;align-content:start">
+          <div class="kpi accent"><div class="l">Заказы за неделю</div><div class="v">128</div><div class="d"><span class="delta-up">▲ +12%</span><span style="font-size:11px;color:var(--lv-dim);font-weight:500">к прошлой неделе</span></div></div>
+          <div class="kpi"><div class="l">Средний чек</div><div class="v">640 ₽</div><div class="d"><span class="delta-down">▼ −3%</span><span style="font-size:11px;color:var(--lv-dim);font-weight:500">нужно внимание</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Навигация ================= -->
+    <section class="gs-section" id="nav">
+      <span class="gs-kicker">Каркас</span>
+      <h2>Навигация</h2>
+      <p class="gs-sub">5 точек, активная — розовая с индикатором сверху 32×2px. На ≥900px превращается в плавающую капсулу (bottom 20px, shadow-nav).</p>
+      <div class="nav-demo">
+        <div class="app-nav-in">
+          <button class="nav-btn active"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M9 22V12h6v10"/></svg></span>Главная</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>Поиск</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>Корзина</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg></span>Заказы</button>
+          <button class="nav-btn"><span class="top-ind"></span><span class="nav-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Профиль</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= Поведение ================= -->
+    <section class="gs-section" id="behavior">
+      <span class="gs-kicker">Поведение</span>
+      <h2>Шиты, тосты, движение</h2>
+      <p class="gs-sub">Шит: <code>cubic-bezier(.32,.72,0,1)</code> 0.3s, оверлей 0.25s, Escape закрывает. Тост — инвертированная пара ink↔card.</p>
+      <div class="btn-row">
+        <button class="cta-btn" data-action="open-sheet">Открыть шит выбора района</button>
+        <button class="ghost-btn" data-action="show-toast">Показать тост</button>
+        <button class="ghost-btn sm" data-action="replay-enter">Повторить вход .lv-enter</button>
+      </div>
+      <div class="gs-card gs-panel lv-enter-target" style="margin-top:14px;max-width:480px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span class="lv-dot" style="background:var(--lv-tiffany)"></span>
+          <span style="font-size:13px;font-weight:600">Пульс точки 1.4s · парение декора .lv-float 5s · вход контента 0.35s ease-out</span>
+        </div>
+      </div>
+      <div class="code"><span class="c">&lt;!-- Anti-FOUC: в &lt;head&gt; ДО CSS. Канон docs/05-theming --&gt;</span>
+(function () {
+  try {
+    var t = localStorage.getItem('lovii_theme');           <span class="c">// ключ канона</span>
+    if (t !== 'dark' && t !== 'light') {
+      t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.theme = t;            <span class="c">// только &lt;html&gt;</span>
+  } catch (e) { document.documentElement.dataset.theme = 'light'; }
+})();</div>
+    </section>
+
+    <footer class="gs-footer">
+      <span>LOVII Design System · v1.0.0 · канон: lovii.mobiap.com</span>
+      <span><a href="https://github.com/bestdeejay-design/lovii-design">репозиторий</a> · <a href="https://lovii.mobiap.com">витрина</a> · <a href="https://bestdeejay-design.github.io/lovii-site/">посадка</a></span>
+    </footer>
+  </main>
+
+  <!-- Шит выбора района (демо) -->
+  <div class="sheet-overlay" id="sheet-overlay"></div>
+  <div class="sheet" id="demo-sheet" role="dialog" aria-modal="true" aria-label="Выбор района">
+    <div class="sheet-head">
+      <h3>Где вы сейчас?</h3>
+      <p>Покажем точки и товары в шаговой доступности</p>
+    </div>
+    <div class="sheet-body">
+      <button class="district-row active"><span><span class="nm">Центральный</span><span class="mt">24 точки · 5 мин</span></span><span class="stat-pill pink">Выбран</span></button>
+      <button class="district-row"><span><span class="nm">Северный</span><span class="mt">18 точек · 9 мин</span></span></button>
+      <button class="district-row"><span><span class="nm">Парковый</span><span class="mt">11 точек · 12 мин</span></span></button>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toast-wrap"></div>

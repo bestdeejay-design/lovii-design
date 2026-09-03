@@ -1,0 +1,215 @@
+/* ============================================================
+   LOVII «Лови» — канонические дизайн-токены v1.0.0
+   Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css)
+   Репо дизайн-системы: bestdeejay-design/lovii-design
+
+   Как подключать:
+     <link rel="stylesheet" href="tokens/tokens.css">
+   Как использовать: только var(--lv-*). Хардкод цветов/теней запрещён.
+
+   Совместимость (маппинг легаси-имён):
+     lovii_demo  css/lovii.css : --pink, --bg, --card, --soft-pink …
+     lovii-site  globals.css   : --color-lovii-* (Tailwind), --lv-* (частично)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. БРЕНДОВЫЕ ЦВЕТА — не зависят от темы
+   ------------------------------------------------------------ */
+:root {
+  --lv-pink: #f64a8a;          /* primary-акцент: CTA, ссылки, фокус */
+  --lv-pink-dark: #c92a6a;     /* hover CTA, конец градиента, текст на soft-pink */
+  --lv-tiffany: #0abab5;       /* secondary-акцент: «рядом», «в наличии», успех */
+  --lv-gold: #d4a854;          /* tertiary: премиум, рейтинг, лояльность */
+  --lv-sand: #e8d5b7;          /* золотой акцент-бордер/текст на тёмном */
+
+  /* Градиенты */
+  --lv-gradient-brand: linear-gradient(135deg, #f64a8a 0%, #c92a6a 100%);
+  --lv-gradient-ink: linear-gradient(150deg, #262023 0%, #1a1a1a 55%, #2b1219 100%);
+  --lv-gradient-tiffany: linear-gradient(90deg, #0abab5, #078d89);
+  --lv-gradient-gold: linear-gradient(90deg, #d4a854, #b98d3e);
+
+  /* Подложки-плитки категорий (только светлая подача) */
+  --lv-tile-pink: linear-gradient(135deg, #fde8f1, #fbf0f5);
+  --lv-tile-tiffany: linear-gradient(135deg, #e0f7f6, #eefcfb);
+  --lv-tile-gold: linear-gradient(135deg, #f7edda, #fbf5ea);
+  --lv-tile-sand: linear-gradient(135deg, #f3e9dc, #faf4ec);
+  --lv-tile-ink: linear-gradient(135deg, #f4f4f4, #fafafa);
+
+  /* Плашки-бейджи на обложках (фиксированные светлые подложки) */
+  --lv-badge-hit: #fde8f1;
+  --lv-badge-new: #e0f7f6;
+  --lv-badge-sale: #f7edda;
+
+  /* Типографика */
+  --lv-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Механика тем */
+  --lv-theme-key: 'lovii_theme';      /* localStorage ключ */
+  --lv-meta-light: #f64a8a;           /* meta theme-color для светлой */
+  --lv-meta-dark: #171219;            /* meta theme-color для тёмной */
+
+  /* Каркас */
+  --lv-header-h: 56px;                /* шапка приложения-витрины */
+  --lv-subheader-h: 48px;             /* подшапка «назад» */
+  --lv-nav-h: 64px;                   /* нижняя навигация (десктоп-капсула 60px) */
+  --lv-container: 480px;              /* мобильная капсула приложения */
+  --lv-container-wide: 1120px;        /* общий поток ≥640px */
+  --lv-container-narrow: 760px;       /* линейные экраны ≥640px */
+  --lv-pad-x: 16px;                   /* боковой отступ экрана */
+}
+
+/* ------------------------------------------------------------
+   2. СВЕТЛАЯ ТЕМА (по умолчанию; [data-theme="light"])
+   ------------------------------------------------------------ */
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Текст */
+  --lv-ink: #1a1a1a;                  /* основной текст */
+  --lv-dim: #888888;                  /* вторичный текст */
+
+  /* Поверхности */
+  --lv-bg: #f7f2f4;                   /* фон вокруг капсулы приложения */
+  --lv-page: #ffffff;                 /* фон страницы (посадка) */
+  --lv-card: #ffffff;                 /* карточки */
+  --lv-surface: #f8f8f8;              /* заливка контролов: пилюли, инпуты, сегменты */
+  --lv-glass: rgba(255, 255, 255, .85);  /* стеклянный хедер/навигация */
+  --lv-on-brand: #ffffff;             /* текст НА брендовом градиенте */
+
+  /* Бордеры и разделители */
+  --lv-line: #f0e8ec;                 /* бордер карточек */
+  --lv-line-2: #f7f2f5;               /* разделитель строк внутри карточки */
+  --lv-hairline: rgba(26, 26, 26, .08);   /* тонкая линия (юр.блок) */
+
+  /* Soft-заливки акцентов (плашки статусов, тоновые карточки) */
+  --lv-soft-pink: rgba(246, 74, 138, .12);
+  --lv-mist-pink: rgba(246, 74, 138, .06);
+  --lv-soft-tiffany: rgba(10, 186, 181, .12);
+  --lv-soft-gold: rgba(212, 168, 84, .16);
+  --lv-sand-soft: #f6ecdf;
+  --lv-grey-soft: #f1f1f1;
+
+  /* Читаемые тексты на soft-заливках (пары: soft → text) */
+  --lv-gold-text: #8a6a25;
+  --lv-tiffany-text: #07726f;
+  --lv-green-text: #4a7a2a;
+  --lv-green-soft: #eef7e6;
+
+  /* Спец-поверхности */
+  --lv-hero-top: #fdf1f6;             /* верх hero-градиента */
+  --lv-kpi-soft: #fff5f8;             /* фон акцентного KPI */
+  --lv-ch-ink-a: #3a3a3a;             /* чернильная пара A (чаты/декор) */
+  --lv-ch-ink-b: #1a1a1a;             /* чернильная пара B */
+  --lv-toast-d: rgba(255, 255, 255, .7);  /* подпись на тосте */
+
+  /* Тени */
+  --lv-shadow-soft: 0 1px 3px rgba(26, 26, 26, .06);
+  --lv-shadow-lift: 0 12px 32px -12px rgba(201, 42, 106, .22);
+  --lv-shadow-nav: 0 12px 32px -12px rgba(26, 26, 26, .28);
+  --lv-shadow-stuck: 0 12px 16px -16px rgba(26, 26, 26, .28);
+  --lv-shadow-toast: 0 12px 32px -12px rgba(201, 42, 106, .35);
+  --lv-shadow-float: 0 2px 8px rgba(26, 26, 26, .1);
+  --lv-shadow-app: 0 0 60px rgba(26, 26, 26, .08);
+  --lv-ring-search: 0 0 0 2px rgba(246, 74, 138, .4);
+  --lv-ring-field: 0 0 0 4px rgba(246, 74, 138, .1);
+
+  /* Скроллбар */
+  --lv-scroll-thumb: rgba(26, 26, 26, .15);
+}
+
+/* ------------------------------------------------------------
+   3. ТЁМНАЯ ТЕМА — [data-theme="dark"] на <html>
+   Тёмно-сливовые поверхности, тёплый светлый текст.
+   Брендовые pink/tiffany/gold НЕ меняются.
+   ------------------------------------------------------------ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --lv-ink: #f3ebf0;
+  --lv-dim: #a798a6;
+
+  --lv-bg: #171219;
+  --lv-page: #171219;
+  --lv-card: #211b26;
+  --lv-surface: #2b2331;
+  --lv-glass: rgba(30, 23, 34, .86);
+  --lv-on-brand: #ffffff;
+
+  --lv-line: #372d3e;
+  --lv-line-2: #2e2535;
+  --lv-hairline: rgba(255, 255, 255, .12);
+
+  --lv-soft-pink: rgba(246, 74, 138, .12);   /* канон демки; см. docs/06 — расхождение с lovii-site (.2) */
+  --lv-mist-pink: rgba(246, 74, 138, .06);
+  --lv-soft-tiffany: rgba(10, 186, 181, .12);
+  --lv-soft-gold: rgba(212, 168, 84, .16);
+  --lv-sand-soft: #38302a;
+  --lv-grey-soft: #2e2535;
+
+  --lv-gold-text: #e2c88c;
+  --lv-tiffany-text: #6fd9d4;
+  --lv-green-text: #a8d686;
+  --lv-green-soft: rgba(110, 180, 80, .16);
+
+  --lv-hero-top: #1e1524;
+  --lv-kpi-soft: #2b1f2b;
+  --lv-ch-ink-a: #c9b6c4;
+  --lv-ch-ink-b: #9c8496;
+  --lv-toast-d: rgba(26, 26, 26, .55);
+
+  --lv-shadow-soft: 0 1px 3px rgba(26, 26, 26, .06);   /* канон демки; lovii-site использует rgba(0,0,0,.45) */
+  --lv-shadow-lift: 0 12px 32px -12px rgba(201, 42, 106, .22);
+  --lv-shadow-nav: 0 12px 32px -12px rgba(26, 26, 26, .28);
+  --lv-shadow-stuck: 0 12px 16px -16px rgba(26, 26, 26, .28);
+  --lv-shadow-toast: 0 12px 32px -12px rgba(201, 42, 106, .35);
+  --lv-shadow-float: 0 2px 8px rgba(26, 26, 26, .1);
+  --lv-shadow-app: 0 0 60px rgba(26, 26, 26, .08);
+  --lv-ring-search: 0 0 0 2px rgba(246, 74, 138, .4);
+  --lv-ring-field: 0 0 0 4px rgba(246, 74, 138, .1);
+
+  --lv-scroll-thumb: rgba(255, 255, 255, .18);
+}
+
+/* ------------------------------------------------------------
+   4. БАЗОВЫЕ СТИЛИ (опционально — можно не подключать)
+   ------------------------------------------------------------ */
+body {
+  font-family: var(--lv-font);
+  background: var(--lv-bg);
+  color: var(--lv-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button { font-family: inherit; border: 0; background: none; padding: 0; cursor: pointer; color: inherit; font-size: inherit; }
+input, textarea, select { font-family: inherit; }
+
+/* Фокус с клавиатуры — всегда розовый брендовый */
+:focus-visible { outline: 2px solid var(--lv-pink); outline-offset: 2px; border-radius: 8px; }
+
+/* Уважение к reduce motion — обязательное a11y-правило */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   5. ДВИЖЕНИЕ (ключевые кадры канона)
+   ------------------------------------------------------------ */
+@keyframes lv-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes lv-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes lv-pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.8); } }
+
+.lv-enter { animation: lv-enter .35s ease-out both; }
+.lv-float { animation: lv-float 5s ease-in-out infinite; }
+.lv-dot { width: 6px; height: 6px; border-radius: 999px; display: inline-block; animation: lv-pulse-dot 1.4s ease-in-out infinite; }
+
+/* Ленты-карусели: карточки растворяются у краёв */
+.lv-edge-fade {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+}
