@@ -2,7 +2,38 @@
   <script>
     /* ============ Механика темы — канон docs/05-theming ============ */
     const THEME_KEY = 'lovii_theme';
-    const THEME_META = { light: '#f64a8a', dark: '#171219' };
+
+    /* ============ Канон — единственный источник значений ============
+       Свотчи, демо-точки тем и meta theme-color читают значения прямо из
+       инлайннутого tokens.css (см. шапку страницы). Копировать значения
+       токенов в этот файл запрещено — железное правило 13 (AGENTS.md),
+       страж: python3 tools/check-sync.py. */
+    const TOKEN_CSS = (function () {
+      for (const st of document.querySelectorAll('style')) {
+        if (st.textContent.indexOf('--lv-bg:') !== -1) return st.textContent;
+      }
+      return '';
+    })();
+
+    function parseTokenBuckets(css) {
+      const buckets = { light: {}, dark: {} };
+      const text = css.replace(/\/\*[\s\S]*?\*\//g, '');
+      const blockRe = /([^{}]+)\{([^{}]*)\}/g;
+      let b;
+      while ((b = blockRe.exec(text))) {
+        const sel = b[1];
+        const bucket = sel.indexOf('data-theme="dark"') !== -1 ? 'dark' : (sel.indexOf(':root') !== -1 ? 'light' : null);
+        if (!bucket) continue;
+        const declRe = /(--lv-[a-z0-9-]+)\s*:\s*([^;]+);/g;
+        let d;
+        while ((d = declRe.exec(b[2]))) buckets[bucket][d[1]] = d[2].trim();
+      }
+      return buckets;
+    }
+    const TOK = parseTokenBuckets(TOKEN_CSS);
+    function tokVal(bucket, name) { return (TOK[bucket] && TOK[bucket][name]) || TOK.light[name] || ''; }
+
+    const THEME_META = { light: tokVal('light', '--lv-meta-light'), dark: tokVal('light', '--lv-meta-dark') };
     function currentTheme() {
       return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
     }
@@ -18,40 +49,43 @@
       toast(t === 'dark' ? 'Тёмная тема включена' : 'Светлая тема включена');
     }
 
-    /* ============ Свотчи палитры ============ */
-    const BRAND = [
-      ['--lv-pink', '#f64a8a'], ['--lv-pink-dark', '#c92a6a'], ['--lv-tiffany', '#0abab5'],
-      ['--lv-gold', '#d4a854'], ['--lv-sand', '#e8d5b7'],
-      ['--lv-gradient-brand', null, 'gradient'], ['--lv-gradient-ink', null, 'gradient'],
+    /* ============ Свотчи палитры ============
+       Здесь заданы только ИМЕНА (API токенов). Значения парсятся из канона:
+       брендовые и светлая тема — из :root, тёмная — из [data-theme="dark"]. */
+    const BRAND_NAMES = [
+      '--lv-pink', '--lv-pink-dark', '--lv-tiffany', '--lv-gold', '--lv-sand',
+      '--lv-gradient-brand', '--lv-gradient-ink',
     ];
-    const LIGHT = [
-      ['--lv-ink', '#1a1a1a'], ['--lv-dim', '#888888'],
-      ['--lv-bg', '#f7f2f4'], ['--lv-page', '#ffffff'], ['--lv-card', '#ffffff'], ['--lv-surface', '#f8f8f8'],
-      ['--lv-line', '#f0e8ec'], ['--lv-line-2', '#f7f2f5'], ['--lv-hairline', 'rgba(26,26,26,.08)'],
-      ['--lv-soft-pink', 'rgba(246,74,138,.12)'], ['--lv-soft-tiffany', 'rgba(10,186,181,.12)'], ['--lv-soft-gold', 'rgba(212,168,84,.16)'],
-      ['--lv-sand-soft', '#f6ecdf'], ['--lv-grey-soft', '#f1f1f1'],
-      ['--lv-gold-text', '#8a6a25'], ['--lv-tiffany-text', '#07726f'], ['--lv-green-text', '#4a7a2a'], ['--lv-green-soft', '#eef7e6'],
-      ['--lv-hero-top', '#fdf1f6'], ['--lv-kpi-soft', '#fff5f8'],
+    const THEME_NAMES = [
+      '--lv-ink', '--lv-dim',
+      '--lv-bg', '--lv-page', '--lv-card', '--lv-surface', '--lv-glass', '--lv-on-brand',
+      '--lv-line', '--lv-line-2', '--lv-hairline',
+      '--lv-soft-pink', '--lv-mist-pink', '--lv-soft-tiffany', '--lv-soft-gold',
+      '--lv-sand-soft', '--lv-grey-soft',
+      '--lv-gold-text', '--lv-tiffany-text', '--lv-green-text', '--lv-green-soft',
+      '--lv-hero-top', '--lv-kpi-soft',
     ];
-    const DARK = [
-      ['--lv-ink', '#f3ebf0'], ['--lv-dim', '#a798a6'],
-      ['--lv-bg', '#171219'], ['--lv-page', '#171219'], ['--lv-card', '#211b26'], ['--lv-surface', '#2b2331'],
-      ['--lv-line', '#372d3e'], ['--lv-line-2', '#2e2535'], ['--lv-hairline', 'rgba(255,255,255,.12)'],
-      ['--lv-soft-pink', 'rgba(246,74,138,.12)'], ['--lv-soft-tiffany', 'rgba(10,186,181,.12)'], ['--lv-soft-gold', 'rgba(212,168,84,.16)'],
-      ['--lv-sand-soft', '#38302a'], ['--lv-grey-soft', '#2e2535'],
-      ['--lv-gold-text', '#e2c88c'], ['--lv-tiffany-text', '#6fd9d4'], ['--lv-green-text', '#a8d686'], ['--lv-green-soft', 'rgba(110,180,80,.16)'],
-      ['--lv-hero-top', '#1e1524'], ['--lv-kpi-soft', '#2b1f2b'],
-    ];
-    function swatch(el, list) {
-      el.innerHTML = list.map(([name, hex, kind]) => `
+    function swatch(el, names, bucket) {
+      el.innerHTML = names.map((name) => {
+        const v = tokVal(bucket, name);
+        const grad = v.indexOf('gradient(') !== -1;
+        return `
         <div class="sw">
-          <div class="chip" style="background:${kind === 'gradient' ? `var(${name})` : hex}"></div>
-          <div class="info"><div class="nm">${name}</div><div class="hx">${hex || 'gradient'}</div></div>
-        </div>`).join('');
+          <div class="chip" style="background:${v || 'transparent'}"></div>
+          <div class="info"><div class="nm">${name}</div><div class="hx">${grad ? 'gradient' : v}</div></div>
+        </div>`;
+      }).join('');
     }
-    swatch(document.getElementById('sw-brand'), BRAND);
-    swatch(document.getElementById('sw-light'), LIGHT);
-    swatch(document.getElementById('sw-dark'), DARK);
+    swatch(document.getElementById('sw-brand'), BRAND_NAMES, 'light');
+    swatch(document.getElementById('sw-light'), THEME_NAMES, 'light');
+    swatch(document.getElementById('sw-dark'), THEME_NAMES, 'dark');
+
+    /* Демо-точки тем: фон приходит из канона (data-token-dot="тема:--lv-имя") */
+    document.querySelectorAll('[data-token-dot]').forEach((el) => {
+      const scope = el.getAttribute('data-token-dot').split(':');
+      const v = tokVal(scope[0], scope[1]);
+      if (v) el.style.background = v;
+    });
 
     /* ============ Шит ============ */
     const overlay = document.getElementById('sheet-overlay');

@@ -4,7 +4,7 @@
 
 Документация написана для **людей и ИИ-агентов**: у каждого раздела есть значения, правила Do/Don't и чек-лист приёмки.
 
-**Version 1.4.0** · канон: lovii.mobiap.com · обновлено 2026-09-04 · [CHANGELOG](CHANGELOG.md)
+**Version 1.4.1** · канон: lovii.mobiap.com · обновлено 2026-09-04 · [CHANGELOG](CHANGELOG.md)
 
 ---
 

@@ -85,6 +85,7 @@ function toggleTheme() {
 
 - Всегда анти-FOUC до CSS; всегда `try/catch`.
 - Всегда обновлять meta theme-color вместе с data-theme.
+- `THEME_META` — контролируемый дубль канона: значения якорены токенами `--lv-meta-light` / `--lv-meta-dark` и сверяются стражем `tools/check-sync.py` (v1.4.1). В style-guide, где tokens.css инлайнится, meta берётся из канона парсером (`tokVal('light', '--lv-meta-light')`) — копировать hex туда запрещено (AGENTS пр.13).
 - Тестировать: холодный старт в обеих темах, системная тема, приватный режим, PWA-старт.
 - SW/PWA: при изменении набора темовых ассетов поднимать версию кэша.
 

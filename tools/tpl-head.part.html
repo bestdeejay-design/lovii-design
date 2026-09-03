@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>LOVII — Дизайн-система · style guide</title>
+  <!-- TOKEN-PIN: meta не принимает var(); якорь канона --lv-meta-light, страж tools/check-sync.py -->
   <meta name="theme-color" id="meta-theme" content="#f64a8a">
   <script>
     /* Тема до отрисовки: явный выбор → системная. Канон docs/05-theming */
@@ -96,7 +97,7 @@
 
     /* Кнопки */
     .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; align-items: center; }
-    .cta-btn { height: 36px; padding: 0 16px; border-radius: 999px; color: var(--lv-on-brand); font-size: 12px; font-weight: 700; transition: all .2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background-image: linear-gradient(135deg, #f64a8a 0%, #c92a6a 100%); }
+    .cta-btn { height: 36px; padding: 0 16px; border-radius: 999px; color: var(--lv-on-brand); font-size: 12px; font-weight: 700; transition: all .2s; display: inline-flex; align-items: center; justify-content: center; gap: 6px; background-image: var(--lv-gradient-brand); }
     .cta-btn:hover { box-shadow: var(--lv-shadow-lift); }
     .cta-btn:active { transform: scale(.95); }
     .cta-btn.big { height: 48px; font-size: 14px; padding: 0 24px; }
@@ -117,22 +118,22 @@
     .walk-pill { display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 8px; border-radius: 999px; background: var(--lv-soft-tiffany); color: var(--lv-tiffany-text); font-size: 11px; font-weight: 600; }
     .open-pill { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
     .open-pill .dot { width: 6px; height: 6px; border-radius: 999px; }
-    .open-pill.on { background: #e0f7f6; color: var(--lv-tiffany-text); }
+    .open-pill.on { background: var(--lv-badge-new); color: var(--lv-tiffany-text); }
     .open-pill.on .dot { background: var(--lv-tiffany); }
     .open-pill.off { background: var(--lv-grey-soft); color: #999; }
     .open-pill.off .dot { background: #bbb; }
     .badge-pill { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
-    .badge-hit { background: #fde8f1; color: var(--lv-pink-dark); }
-    .badge-new { background: #e0f7f6; color: var(--lv-tiffany-text); }
-    .badge-sale { background: #f7edda; color: var(--lv-gold-text); }
+    .badge-hit { background: var(--lv-badge-hit); color: var(--lv-pink-dark); }
+    .badge-new { background: var(--lv-badge-new); color: var(--lv-tiffany-text); }
+    .badge-sale { background: var(--lv-badge-sale); color: var(--lv-gold-text); }
     .badge-eco { background: var(--lv-green-soft); color: var(--lv-green-text); }
     .status-pill { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px; font-size: 11px; font-weight: 700; }
     .st-chip { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 10.5px; font-weight: 700; }
-    .glass-demo { margin-top: 14px; border-radius: 24px; padding: 20px; color: #fff; background-image: linear-gradient(150deg, #262023 0%, #1a1a1a 55%, #2b1219 100%); position: relative; overflow: hidden; }
+    .glass-demo { margin-top: 14px; border-radius: 24px; padding: 20px; color: var(--lv-on-brand); background-image: var(--lv-gradient-ink); position: relative; overflow: hidden; }
     .glass-demo .kicker { font-size: 10.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); }
     .glass-demo .big { margin-top: 6px; font-size: 18px; font-weight: 800; }
     .glass-demo .big .g { color: var(--lv-gold); }
-    .glass-chip { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 12px; border-radius: 999px; background: rgba(255,255,255,.1); font-size: 12px; font-weight: 600; color: #fff; }
+    .glass-chip { display: inline-flex; align-items: center; gap: 4px; height: 28px; padding: 0 12px; border-radius: 999px; background: rgba(255,255,255,.1); font-size: 12px; font-weight: 600; color: var(--lv-on-brand); }
     .glass-chip .g { color: var(--lv-gold); }
     .glass-chip .t { color: var(--lv-tiffany); }
 
@@ -159,9 +160,9 @@
     .btn-card:hover .em { transform: scale(1.1); }
     .cover .em { width: 38px; height: 38px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .star-ico { display: inline-block; width: 12px; height: 12px; fill: var(--lv-gold); vertical-align: -1px; }
-    .cover.tile-pink { background: linear-gradient(135deg, #fde8f1, #fbf0f5); }
-    .cover.tile-tiffany { background: linear-gradient(135deg, #e0f7f6, #eefcfb); }
-    .cover.tile-gold { background: linear-gradient(135deg, #f7edda, #fbf5ea); }
+    .cover.tile-pink { background: var(--lv-tile-pink); }
+    .cover.tile-tiffany { background: var(--lv-tile-tiffany); }
+    .cover.tile-gold { background: var(--lv-tile-gold); }
     .card-body { padding: 12px; }
     .card-name { font-size: 14px; font-weight: 700; }
     .card-sub { font-size: 12px; color: var(--lv-dim); margin-top: 2px; }
@@ -220,8 +221,8 @@
     .logo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
     @media (max-width: 720px) { .logo-duo { grid-template-columns: 1fr; } }
     .logo-tile { border-radius: 16px; border: 1px solid var(--lv-line); display: flex; align-items: center; justify-content: center; padding: 24px; }
-    .logo-tile.light { background: #ffffff; }
-    .logo-tile.dark { background: #171219; }
+    .logo-tile.light { background: #ffffff; } /* TOKEN-PIN: пин светлой подложки демо логотипа (= --lv-page), от темы не зависит */
+    .logo-tile.dark { background: #171219; } /* TOKEN-PIN: пин тёмной подложки демо логотипа (= dark --lv-bg) */
     .logo-tile img { height: 40px; width: auto; }
     .logo-tile .tag { position: absolute; }
     .logo-cap { text-align: center; margin-top: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10.5px; color: var(--lv-dim); }

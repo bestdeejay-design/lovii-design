@@ -3,7 +3,7 @@
       <img class="gs-logo logo-light-img" src="data:image/svg+xml;base64,%%LOGO_LIGHT_B64%%" alt="LOVII">
       <img class="gs-logo logo-dark-img" src="data:image/svg+xml;base64,%%LOGO_DARK_B64%%" alt="LOVII">
       <div class="gs-head-right">
-        <span class="stat-pill tiffany">v1.4.0</span>
+        <span class="stat-pill tiffany">v1.4.1</span>
         <button class="icon-btn" data-action="theme-toggle" aria-label="Сменить тему" title="Светлая/тёмная тема">
           <svg class="theme-ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
           <svg class="theme-ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
@@ -20,7 +20,7 @@
       <div class="gs-hero-meta">
         <span class="stat-pill tiffany">Канон: lovii.mobiap.com</span>
         <span class="stat-pill gold">Обновлено: 2026-09-04</span>
-        <span class="stat-pill grey">Semver 1.0.0</span>
+        <span class="stat-pill grey">Версия v1.4.1</span>
       </div>
     </div>
 
@@ -45,18 +45,18 @@
     <section class="gs-section" id="color">
       <span class="gs-kicker">Токены</span>
       <h2>Цвет</h2>
-      <p class="gs-sub">Три акцента на тёплой нейтральной базе. Акценты не меняются между темами — темы перекрашивают только поверхности, текст и бордеры. В коде — только <code>var(--lv-*)</code>.</p>
+      <p class="gs-sub">Три акцента на тёплой нейтральной базе. Акценты не меняются между темами — темы перекрашивают только поверхности, текст и бордеры. В коде — только <code>var(--lv-*)</code>. Таблицы ниже читают значения прямо из <code>tokens.css</code> — копий значений в гайде нет, рассинхрон исключён (v1.4.1).</p>
 
       <div class="sw-title">Брендовые (не зависят от темы)</div>
       <div class="sw-grid" id="sw-brand"></div>
 
       <div class="duo" style="margin-top:18px">
         <div class="gs-card gs-panel">
-          <h3><span class="dot" style="background:#f7f2f4;border:1px solid var(--lv-line)"></span>Светлая тема</h3>
+          <h3><span class="dot" data-token-dot="light:--lv-bg" style="border:1px solid var(--lv-line)"></span>Светлая тема</h3>
           <div class="sw-grid" id="sw-light" style="margin-top:2px"></div>
         </div>
         <div class="gs-card gs-panel">
-          <h3><span class="dot" style="background:#171219"></span>Тёмная тема</h3>
+          <h3><span class="dot" data-token-dot="dark:--lv-bg"></span>Тёмная тема</h3>
           <div class="sw-grid" id="sw-dark" style="margin-top:2px"></div>
         </div>
       </div>
