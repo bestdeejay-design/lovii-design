@@ -51,6 +51,8 @@
 | Поверхности | `--lv-surface` | `#2b2331` |
 | Поверхности | `--lv-glass` | `rgba(30,23,34,.86)` |
 | Бордеры | `--lv-line` / `--lv-line-2` / `--lv-hairline` | `#372d3e` / `#2e2535` / `rgba(255,255,255,.12)` |
+| Soft-заливки | `--lv-soft-pink` / `--lv-mist-pink` | `rgba(246,74,138,.20)` / `.10` (v1.2) |
+| Soft-заливки | `--lv-soft-tiffany` / `--lv-soft-gold` | `rgba(10,186,181,.18)` / `rgba(212,168,84,.20)` (v1.2) |
 | Тексты-пары | `--lv-gold-text` / `--lv-tiffany-text` | `#e2c88c` / `#6fd9d4` |
 | Тексты-пары | `--lv-green-text` / `--lv-green-soft` | `#a8d686` / `rgba(110,180,80,.16)` |
 | Спец | `--lv-hero-top` / `--lv-kpi-soft` | `#1e1524` / `#2b1f2b` |

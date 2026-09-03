@@ -147,10 +147,11 @@
   --lv-line-2: #2e2535;
   --lv-hairline: rgba(255, 255, 255, .12);
 
-  --lv-soft-pink: rgba(246, 74, 138, .12);   /* канон демки; см. docs/06 — расхождение с lovii-site (.2) */
-  --lv-mist-pink: rgba(246, 74, 138, .06);
-  --lv-soft-tiffany: rgba(10, 186, 181, .12);
-  --lv-soft-gold: rgba(212, 168, 84, .16);
+  /* v1.2: альфы подняты (решение по docs/06 #1–#2) — на тёмном .12 читались слабо */
+  --lv-soft-pink: rgba(246, 74, 138, .20);
+  --lv-mist-pink: rgba(246, 74, 138, .10);
+  --lv-soft-tiffany: rgba(10, 186, 181, .18);
+  --lv-soft-gold: rgba(212, 168, 84, .20);
   --lv-sand-soft: #38302a;
   --lv-grey-soft: #2e2535;
 
@@ -165,9 +166,10 @@
   --lv-ch-ink-b: #9c8496;
   --lv-toast-d: rgba(26, 26, 26, .55);
 
-  --lv-shadow-soft: 0 1px 3px rgba(26, 26, 26, .06);   /* канон демки; lovii-site использует rgba(0,0,0,.45) */
-  --lv-shadow-lift: 0 12px 32px -12px rgba(201, 42, 106, .22);
-  --lv-shadow-nav: 0 12px 32px -12px rgba(26, 26, 26, .28);
+  /* v1.2: тени глубже (решение по docs/06 #3) — «сливовая» тень на тёмном не видна */
+  --lv-shadow-soft: 0 1px 3px rgba(0, 0, 0, .45);
+  --lv-shadow-lift: 0 12px 32px -12px rgba(0, 0, 0, .55);
+  --lv-shadow-nav: 0 12px 32px -12px rgba(0, 0, 0, .55);
   --lv-shadow-stuck: 0 12px 16px -16px rgba(26, 26, 26, .28);
   --lv-shadow-toast: 0 12px 32px -12px rgba(201, 42, 106, .35);
   --lv-shadow-float: 0 2px 8px rgba(26, 26, 26, .1);

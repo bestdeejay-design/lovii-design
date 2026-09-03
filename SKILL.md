@@ -87,7 +87,9 @@ img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; 
 html[data-theme="light"] img.logo-dark-img { display:none; }
 html[data-theme="dark"]  img.logo-light-img { display:none; }
 ```
-Остальные компоненты — бери готовыми из `docs/07-patterns.md` (§1–§13), не пиши с нуля.
+Навигация ДС: на любой странице ДС подключай `<script src="assets/nav.js" defer></script>` перед `</body>` — кнопка «☰» + шит-меню между хабом, гайдом и референсами (docs/07 §14).
+
+Остальные компоненты — бери готовыми из `docs/07-patterns.md` (§1–§14), не пиши с нуля.
 
 ## Процедура работы
 

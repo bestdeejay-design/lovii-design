@@ -3,6 +3,18 @@
 Все значимые изменения дизайн-системы LOVII. Формат — Keep a Changelog, версионирование — SemVer.
 Изменение значений токенов: backward-compatible — MINOR, ломающее — MAJOR, правки правил/опечаток — PATCH.
 
+## [1.2.0] — 2026-09-04
+
+### Changed
+- **Решение по расхождениям docs/06 #1–#3 (dark-тема)**: значения lovii-site приняты в канон по A/B-тесту — dark `soft-pink/tiffany/gold` → `.20/.18/.20`, dark `mist-pink` → `.10`, dark тени `soft/lift/nav` → `rgba(0,0,0,.45/.55/.55)`. Светлая тема не тронута. lovii-site уже соответствует; lovii_demo — очередь на разноску в ближайшем стилевом цикле (с бампом `?v=N` и SW CACHE).
+- `tokens/design-tokens.json` §shadow: добавлены поля `$dark` для soft/lift/nav; `$version` → 1.2.0.
+- `docs/02-color.md`: в тёмную палитру добавлены soft-заливки (v1.2).
+
+### Added
+- **Сквозная навигация** `assets/nav.js`: кнопка «☰» в хедере (или плавающая) + шит-меню между хабом, style-guide и всеми референсами; активный пункт подсвечен; канон шита docs/07 §9. Подключена на всех страницах ДС, включая style-guide (пересобран).
+- **Хаб GitHub Pages** `index.html`: посадочная страница со ссылками на гайд, референсы и документацию; сайт: https://bestdeejay-design.github.io/lovii-design/
+- `docs/07-patterns.md` §14 «Навигация ДС (nav.js)»; чек-лист §10 дополнен пунктом nav.js.
+
 ## [1.1.0] — 2026-09-04
 
 ### Added

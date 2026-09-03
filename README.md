@@ -4,7 +4,7 @@
 
 Документация написана для **людей и ИИ-агентов**: у каждого раздела есть значения, правила Do/Don't и чек-лист приёмки.
 
-**Version 1.1.0** · канон: lovii.mobiap.com · обновлено 2026-09-04 · [CHANGELOG](CHANGELOG.md)
+**Version 1.2.0** · канон: lovii.mobiap.com · обновлено 2026-09-04 · [CHANGELOG](CHANGELOG.md)
 
 ---
 
@@ -24,6 +24,8 @@ document.documentElement.dataset.theme=t;}catch(e){document.documentElement.data
 /* 3. Использовать ТОЛЬКО токены */
 .btn { background-image: var(--lv-gradient-brand); border-radius: 999px; color: var(--lv-on-brand); }
 ```
+
+**Смотреть вживую:** <https://bestdeejay-design.github.io/lovii-design/> — хаб → живой гайд → референсы; на всех страницах сквозное меню «☰» в шапке (assets/nav.js), обе темы.
 
 ИИ-агентам и контрибьюторам: начать с [AGENTS.md](AGENTS.md) → [docs/01-principles.md](docs/01-principles.md) → [docs/checklist.md](docs/checklist.md).
 
@@ -46,7 +48,8 @@ document.documentElement.dataset.theme=t;}catch(e){document.documentElement.data
 | `docs/checklist.md` | Чек-лист приёмки вёрстки перед деплоем |
 | `AGENTS.md` | Правила для ИИ-агентов, работающих с любым репо LOVII |
 | `SKILL.md` | Скил «дизайн-система LOVII» для агента-дизайнера (готов к установке) |
-| `assets/` | Канонические логотипы (light + dark, md5 зафиксирован) |
+| `assets/` | Канонические логотипы (light + dark, md5 зафиксирован) + `nav.js` — сквозная навигация страниц ДС |
+| `index.html` | Хаб для GitHub Pages: ссылки на гайд и все референсы |
 | `tools/` | Сборщик style-guide (`build-style-guide.py` + шаблон) |
 
 ## Канон и иерархия
@@ -63,7 +66,7 @@ document.documentElement.dataset.theme=t;}catch(e){document.documentElement.data
 
 - **v1.0 (готова)** — токены: цвет, типографика, пространство/форма/движение, темы, применение
 - **v1.1 (готова)** — библиотека паттернов (docs/07), рецепты агента (docs/08), референс-экраны всех 5 ролей (examples/), скил v2
-- **v1.2** — решение по таблице расхождений (dark-альфы soft-токенов, dark-тени)
+- **v1.2 (готова)** — решение по расхождениям: dark-альфы soft-токенов .20/.18/.20, mist .10, dark-тени rgba(0,0,0,.45/.55) — значения lovii-site приняты в канон (A/B-тест, docs/06). Разноска в демку — в ближайшем стилевом цикле
 - **v2** — компоненты: анатомия кнопок/чипов/карточек/шитов, состояния
 - **v3** — UX-паттерны: якоря и scroll, адаптив, PWA-установка, hash-роутинг
 - **v4** — бренд и тон: голос, тексты, юр.блок, иллюстрации

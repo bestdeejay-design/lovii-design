@@ -1,6 +1,6 @@
 {
   "$name": "lovii-design-tokens",
-  "$version": "1.1.0",
+  "$version": "1.2.0",
   "$updated": "2026-09-04",
   "$description": "Канонические дизайн-токены LOVII «Лови». Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css). Формат: упрощённый W3C Design Tokens (поля $value, $type, $desc).",
   "$canonical": {
@@ -82,10 +82,10 @@
         "line": { "$value": "#372d3e", "$type": "color", "$desc": "Бордер карточек." },
         "line2": { "$value": "#2e2535", "$type": "color", "$desc": "Разделитель строк." },
         "hairline": { "$value": "rgba(255, 255, 255, 0.12)", "$type": "color", "$desc": "Тонкая линия." },
-        "softPink": { "$value": "rgba(246, 74, 138, 0.12)", "$type": "color", "$desc": "Канон демки. В lovii-site — 0.2 (богаче на тёмном); см. docs/06-application §Расхождения." },
-        "mistPink": { "$value": "rgba(246, 74, 138, 0.06)", "$type": "color", "$desc": "В lovii-site — 0.1." },
-        "softTiffany": { "$value": "rgba(10, 186, 181, 0.12)", "$type": "color", "$desc": "В lovii-site — 0.18." },
-        "softGold": { "$value": "rgba(212, 168, 84, 0.16)", "$type": "color", "$desc": "В lovii-site — 0.2." },
+        "softPink": { "$value": "rgba(246, 74, 138, 0.20)", "$type": "color", "$desc": "v1.2: поднято с 0.12 — на тёмном .12 читалось слабо (решение по docs/06 #1, значения lovii-site приняты в канон)." },
+        "mistPink": { "$value": "rgba(246, 74, 138, 0.10)", "$type": "color", "$desc": "v1.2: поднято с 0.06 (docs/06 #2)." },
+        "softTiffany": { "$value": "rgba(10, 186, 181, 0.18)", "$type": "color", "$desc": "v1.2: поднято с 0.12 (docs/06 #1)." },
+        "softGold": { "$value": "rgba(212, 168, 84, 0.20)", "$type": "color", "$desc": "v1.2: поднято с 0.16 (docs/06 #1)." },
         "sandSoft": { "$value": "#38302a", "$type": "color", "$desc": "Песочная заливка тёмной темы." },
         "greySoft": { "$value": "#2e2535", "$type": "color", "$desc": "Серая заливка тёмной темы." },
         "goldText": { "$value": "#e2c88c", "$type": "color", "$desc": "Текст на softGold." },
@@ -170,9 +170,9 @@
   },
 
   "shadow": {
-    "soft": { "$value": "0 1px 3px rgba(26, 26, 26, 0.06)", "$desc": "Покой карточек." },
-    "lift": { "$value": "0 12px 32px -12px rgba(201, 42, 106, 0.22)", "$desc": "Hover карточек, активные чипы/табы. Розовый — только с розовым следом." },
-    "nav": { "$value": "0 12px 32px -12px rgba(26, 26, 26, 0.28)", "$desc": "Десктоп-капсула навигации." },
+    "soft": { "$value": "0 1px 3px rgba(26, 26, 26, 0.06)", "$dark": "0 1px 3px rgba(0, 0, 0, 0.45)", "$desc": "Покой карточек. v1.2: в тёмной теме — глубже (docs/06 #3)." },
+    "lift": { "$value": "0 12px 32px -12px rgba(201, 42, 106, 0.22)", "$dark": "0 12px 32px -12px rgba(0, 0, 0, 0.55)", "$desc": "Hover карточек, активные чипы/табы. Светлая: розовый след. v1.2: в тёмной — нейтральная глубокая тень (docs/06 #3)." },
+    "nav": { "$value": "0 12px 32px -12px rgba(26, 26, 26, 0.28)", "$dark": "0 12px 32px -12px rgba(0, 0, 0, 0.55)", "$desc": "Десктоп-капсула навигации. v1.2: в тёмной — глубже (docs/06 #3)." },
     "stuck": { "$value": "0 12px 16px -16px rgba(26, 26, 26, 0.28)", "$desc": "Липкая плашка чипов в прилипшем состоянии." },
     "toast": { "$value": "0 12px 32px -12px rgba(201, 42, 106, 0.35)", "$desc": "Тосты, fin-total." },
     "float": { "$value": "0 2px 8px rgba(26, 26, 26, 0.1)", "$desc": "Плавающие кнопки поверх обложек (fav-btn)." },
