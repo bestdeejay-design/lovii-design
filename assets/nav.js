@@ -21,7 +21,8 @@
     { p: 'examples/02-business-dashboard.html', t: 'Дашборд · бизнес', s: 'референс-экран', c: 'var(--lv-tiffany)' },
     { p: 'examples/03-partner-portal.html', t: 'Портал · партнёр',   s: 'референс-экран',   c: 'var(--lv-gold)' },
     { p: 'examples/04-ambassador-program.html', t: 'Амбассадор',     s: 'референс-экран',   c: 'var(--lv-pink)' },
-    { p: 'examples/05-investor-overview.html',  t: 'Инвестор',       s: 'референс-экран',   c: 'var(--lv-dim)' }
+    { p: 'examples/05-investor-overview.html',  t: 'Инвестор',       s: 'референс-экран',   c: 'var(--lv-dim)' },
+    { p: 'examples/06-ux-lab.html',             t: 'UX-лаборатория', s: 'живые паттерны v3', c: 'var(--lv-tiffany)' }
   ];
   var GH = 'https://github.com/bestdeejay-design/lovii-design';
 

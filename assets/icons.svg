@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-<!-- LOVII DS · иконочный спрайт v1 (1.3.0). Стиль: 24px, stroke 2, round caps/joins, currentColor.
+<!-- LOVII DS · иконочный спрайт v2 (1.4.0). Стиль: 24px, stroke 2, round caps/joins, currentColor.
      Использование: <svg class="ico"><use href="assets/icons.svg#i-heart"/></svg>
      Заливные (star) помечены fill внутри символа. Эмоджи в UI запрещены — см. docs/09-components.md §Иконки. -->
 <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
@@ -25,4 +25,7 @@
 <symbol id="i-salad" viewBox="0 0 24 24"><path d="M4 13a8 8 0 0 0 16 0"/><path d="M2 13h20"/><path d="M12 13V8"/><path d="M12 9C12 6.5 14 4.5 16.5 4.5 16.5 7 14.5 9 12 9Z"/></symbol>
 <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
 <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m8 7 4-4 4 4"/><path d="M6 11H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1"/></symbol>
 </svg>

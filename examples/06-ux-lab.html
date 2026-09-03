@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" id="metaTheme" content="#f64a8a">
+<title>LOVII · UX-лаборатория: scroll, адаптив, PWA, hash-роутинг</title>
+<script>
+/* Anti-FOUC: тема ставится ДО CSS. Копировать как есть. */
+(function(){try{var t=localStorage.getItem('lovii_theme');
+if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+/* ============ Базовый каркас (канон: капсула 480px) ============ */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html { scroll-behavior:auto; } }
+body { font-family:var(--lv-font); background:var(--lv-bg); color:var(--lv-ink); -webkit-font-smoothing:antialiased; }
+.view { max-width:var(--lv-container); margin:0 auto; padding-bottom:calc(var(--lv-nav-h) + 32px + env(safe-area-inset-bottom,0px)); }
+@media (min-width:640px){ .view { max-width:var(--lv-container-wide); padding-bottom:96px; } }
+.no-scrollbar { scrollbar-width:none; } .no-scrollbar::-webkit-scrollbar { display:none; }
+img.logo-dark-img, img.logo-light-img { display:block; height:28px; width:auto; }
+html[data-theme="light"] img.logo-dark-img { display:none; }
+html[data-theme="dark"] img.logo-light-img { display:none; }
+
+/* ============ Хедер: sticky glass, 56px ============ */
+.app-header {
+  position:sticky; top:0; z-index:40; height:var(--lv-header-h);
+  display:flex; align-items:center; gap:12px; padding:0 var(--lv-pad-x);
+  background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.theme-btn {
+  margin-left:auto; width:36px; height:36px; border-radius:999px; flex:none;
+  background:var(--lv-surface); display:flex; align-items:center; justify-content:center;
+  transition:transform .15s ease, background .2s ease;
+}
+.theme-btn:active { transform:scale(.95); }
+.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.theme-btn .tb-sun { display:none; }
+html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
+html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
+
+/* ============ Hero ============ */
+.hero {
+  margin:16px var(--lv-pad-x) 0; padding:24px 20px; border-radius:16px;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  box-shadow:var(--lv-shadow-lift); position:relative; overflow:hidden;
+}
+.hero .kicker { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.7); }
+.hero h1 { font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1.15; margin:8px 0 6px; }
+.hero p { font-size:14px; color:rgba(255,255,255,.7); line-height:1.6; max-width:44ch; }
+
+/* ============ Якорная лента (демо §1: chips + smooth + scroll-margin) ============ */
+.anchor-rail { display:flex; gap:8px; overflow-x:auto; padding:14px var(--lv-pad-x) 2px; }
+.anchor-chip {
+  flex:none; display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 14px;
+  border-radius:999px; background:var(--lv-card); border:1px solid var(--lv-line);
+  font-size:12px; font-weight:600; color:var(--lv-ink); text-decoration:none;
+  transition:background .15s ease, border-color .15s ease;
+}
+.anchor-chip .ico { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.anchor-chip:hover { background:var(--lv-soft-pink); border-color:transparent; }
+
+/* Канон docs/10 §1.1: якорные цели не прячутся под sticky-хедером */
+section[id] { scroll-margin-top:calc(var(--lv-header-h) + 12px); }
+
+/* ============ Секции и панели ============ */
+.section { margin-top:24px; padding:0 var(--lv-pad-x); }
+.section-title { font-size:20px; font-weight:800; letter-spacing:-.02em; }
+.section-sub { font-size:13px; color:var(--lv-dim); line-height:1.6; margin:4px 0 14px; }
+.panel {
+  background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px;
+  box-shadow:var(--lv-shadow-soft); padding:16px;
+}
+.panel + .panel { margin-top:12px; }
+.panel h3 { font-size:15px; font-weight:700; letter-spacing:-.01em; }
+.panel p { font-size:13px; color:var(--lv-dim); line-height:1.6; margin-top:6px; }
+.panel code, .route-now code {
+  font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size:12px; color:var(--lv-pink-dark); background:var(--lv-soft-pink);
+  border-radius:6px; padding:1px 6px;
+}
+.code-block {
+  margin-top:10px; background:var(--lv-surface); border-radius:12px; padding:12px 14px;
+  font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size:11.5px; line-height:1.65; color:var(--lv-ink); overflow-x:auto; white-space:pre;
+}
+.live-pill {
+  display:inline-flex; align-items:center; gap:8px; margin-top:12px;
+  background:var(--lv-surface); border-radius:999px; padding:7px 14px;
+  font-size:12px; font-weight:600; color:var(--lv-dim); font-variant-numeric:tabular-nums;
+}
+
+/* ============ §2 Адаптив: индикатор брейкпоинта ============ */
+.bp-name { margin-top:8px; font-size:22px; font-weight:800; letter-spacing:-.02em; }
+.bp-meta { font-size:12px; color:var(--lv-dim); margin-top:4px; font-variant-numeric:tabular-nums; }
+.bp-bar { display:flex; gap:6px; margin-top:14px; }
+.bp-seg {
+  flex:1; height:8px; border-radius:999px; background:var(--lv-grey-soft);
+  position:relative; transition:background .2s ease;
+}
+.bp-seg.on { background-image:var(--lv-gradient-brand); }
+.bp-scale { display:flex; gap:6px; margin-top:6px; }
+.bp-scale span { flex:1; font-size:10px; font-weight:600; color:var(--lv-dim); text-align:center; letter-spacing:.04em; }
+.demo-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:12px; }
+@media (min-width:640px){ .demo-grid { grid-template-columns:repeat(4,1fr); } }
+.demo-tile { border-radius:12px; padding:18px 8px; text-align:center; font-size:12px; font-weight:700; color:var(--lv-on-tile); }
+.demo-tile small { display:block; margin-top:4px; font-size:10px; font-weight:600; color:var(--lv-on-tile-dim); }
+.dt-pink { background-image:var(--lv-tile-pink); } .dt-tiffany { background-image:var(--lv-tile-tiffany); }
+.dt-gold { background-image:var(--lv-tile-gold); } .dt-ink { background-image:var(--lv-tile-ink); }
+
+/* ============ §3 PWA: состояния установки ============ */
+.install-btn {
+  margin-top:14px; height:48px; padding:0 24px; border-radius:999px; border:0; cursor:pointer;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  font-size:14px; font-weight:700; display:inline-flex; align-items:center; gap:8px;
+  box-shadow:var(--lv-shadow-soft); transition:transform .15s ease, box-shadow .2s ease;
+}
+.install-btn:hover { box-shadow:var(--lv-shadow-lift); }
+.install-btn:active { transform:scale(.95); }
+.install-btn .ico { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.state-chip {
+  display:inline-flex; align-items:center; gap:6px; margin-top:14px;
+  padding:6px 12px; border-radius:999px; font-size:12px; font-weight:600;
+}
+.state-chip .ico { width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.state-ok { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
+.state-dim { background:var(--lv-grey-soft); color:var(--lv-dim); }
+.ios-row { display:flex; align-items:center; gap:12px; margin-top:14px; }
+.ios-row .big-ico { width:26px; height:26px; flex:none; fill:none; stroke:var(--lv-pink); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+
+/* ============ §4 Hash-роутинг: табы-ссылки #/… ============ */
+.tabs { display:flex; gap:8px; margin-bottom:12px; }
+.tab {
+  flex:1; display:inline-flex; align-items:center; justify-content:center; gap:6px;
+  height:36px; border-radius:999px; text-decoration:none;
+  font-size:12px; font-weight:600; color:var(--lv-ink);
+  background:var(--lv-card); border:1px solid var(--lv-line);
+  transition:background .15s ease, color .15s ease, border-color .15s ease;
+}
+.tab .ico { width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.tab:hover { background:var(--lv-surface); }
+.tab.active { background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); border-color:transparent; }
+.route-now { font-size:12px; color:var(--lv-dim); margin-top:12px; }
+
+/* ============ Кнопка «наверх» (канон docs/10 §1.3) ============ */
+.to-top {
+  position:fixed; right:16px; bottom:calc(var(--lv-nav-h,64px) + 16px + env(safe-area-inset-bottom,0px));
+  z-index:70; width:48px; height:48px; border-radius:999px; border:0; cursor:pointer;
+  background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
+  display:flex; align-items:center; justify-content:center; box-shadow:var(--lv-shadow-lift);
+  opacity:0; pointer-events:none; transform:translateY(8px);
+  transition:opacity .2s ease, transform .2s ease;
+}
+.to-top.show { opacity:1; pointer-events:auto; transform:translateY(0); }
+.to-top .ico { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+@media (min-width:900px){ .to-top { bottom:96px; } }
+
+/* ============ Футер, тост ============ */
+.footer { margin:40px var(--lv-pad-x) 0; padding-top:16px; border-top:1px solid var(--lv-hairline); font-size:12px; color:var(--lv-dim); line-height:1.7; }
+.footer a { color:var(--lv-pink); font-weight:600; }
+.toast {
+  position:fixed; left:50%; bottom:24px; transform:translate(-50%, 16px);
+  background:var(--lv-ink); color:var(--lv-bg); font-size:13px; font-weight:600;
+  padding:10px 18px; border-radius:999px; opacity:0; pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease; z-index:90;
+}
+.toast.show { opacity:1; transform:translate(-50%, 0); }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <img src="../assets/lovii-logo-light.svg" class="logo-light-img" alt="LOVII">
+  <img src="../assets/lovii-logo-dark.svg" class="logo-dark-img" alt="LOVII">
+  <button class="theme-btn" id="themeBtn" aria-label="Переключить тему" title="Светлая/тёмная тема">
+    <svg class="tb-moon" aria-hidden="true"><use href="../assets/icons.svg#i-moon"/></svg>
+    <svg class="tb-sun" aria-hidden="true"><use href="../assets/icons.svg#i-sun"/></svg>
+  </button>
+</header>
+
+<div class="view">
+
+  <section class="hero">
+    <div class="kicker">Дизайн-система · v3</div>
+    <h1>UX-лаборатория</h1>
+    <p>Живые паттерны поведения экрана: якоря и scroll, адаптив, PWA-установка, hash-роутинг. Канон — docs/10-ux-patterns.md.</p>
+  </section>
+
+  <!-- Якорная лента: chips ведут себя по канону §1 -->
+  <nav class="anchor-rail no-scrollbar" aria-label="Разделы страницы">
+    <a class="anchor-chip" href="#s-scroll"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-arrow-up"/></svg>Scroll</a>
+    <a class="anchor-chip" href="#s-adaptive"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-shapes"/></svg>Адаптив</a>
+    <a class="anchor-chip" href="#s-pwa"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-download"/></svg>PWA</a>
+    <a class="anchor-chip" href="#s-hash"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-copy"/></svg>Hash-роутинг</a>
+  </nav>
+
+  <!-- ================= §1 Якоря и scroll ================= -->
+  <section class="section" id="s-scroll">
+    <h2 class="section-title">Якоря и scroll</h2>
+    <p class="section-sub">Якорные чипы выше скроллятся к секциям с <code>scroll-margin-top: calc(var(--lv-header-h) + 12px)</code> — заголовки не прячутся под sticky-шапкой. Прокрутите страницу ниже 480px — появится каноническая кнопка «наверх».</p>
+    <div class="panel">
+      <h3>Кнопка «наверх»</h3>
+      <p>Капсула 48px на <code>gradient-brand</code>, справа над нижней навигацией, safe-area учтён. Порог появления — 480px, показ через <code>opacity + translateY</code> (только transform/opacity).</p>
+      <span class="live-pill">scrollY: <span id="scrollNow">0</span> px · порог 480 px</span>
+    </div>
+    <div class="panel">
+      <h3>Внешний вход по якорю</h3>
+      <p>Ссылка вида <code>06-ux-lab.html#s-pwa</code> из письма или соцсети: если контент догружается после отрисовки, позиционирование повторяется на <code>load</code> — сниппет в docs/10 §1.2.</p>
+    </div>
+  </section>
+
+  <!-- ================= §2 Адаптив ================= -->
+  <section class="section" id="s-adaptive">
+    <h2 class="section-title">Адаптив</h2>
+    <p class="section-sub">Два порога — 640 и 900 — плюс токены каркаса. Медиазапросы используют литералы (в <code>@media</code> нельзя <code>var()</code>), значения сеток — из <code>--lv-container*</code>.</p>
+    <div class="panel">
+      <h3>Живой индикатор брейкпоинта</h3>
+      <div class="bp-name" id="bpName">Капсула 480px</div>
+      <div class="bp-meta">ширина окна: <span id="bpW">—</span> px</div>
+      <div class="bp-bar" aria-hidden="true">
+        <span class="bp-seg" id="seg0"></span><span class="bp-seg" id="seg1"></span><span class="bp-seg" id="seg2"></span>
+      </div>
+      <div class="bp-scale" aria-hidden="true"><span>&lt;640</span><span>640–899</span><span>≥900</span></div>
+    </div>
+    <div class="demo-grid">
+      <div class="demo-tile dt-pink">01<small>2 кол. → 4 при ≥640</small></div>
+      <div class="demo-tile dt-tiffany">02<small>gap 12px</small></div>
+      <div class="demo-tile dt-gold">03<small>плитки 12px</small></div>
+      <div class="demo-tile dt-ink">04<small>safe-area внизу</small></div>
+    </div>
+  </section>
+
+  <!-- ================= §3 PWA-установка ================= -->
+  <section class="section" id="s-pwa">
+    <h2 class="section-title">PWA-установка</h2>
+    <p class="section-sub">Честный флоу <code>beforeinstallprompt</code>: своё приглашение — только когда браузер его отдал; в standalone всё установочное скрыто; на iOS — инструкция с <code>i-share</code>.</p>
+    <div class="panel">
+      <h3>Установить «Лови»</h3>
+      <p>Состояние определяется на каждом входе и никогда не показывает лишнего.</p>
+      <button class="install-btn" id="installBtn" hidden>
+        <svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-download"/></svg>Установить приложение
+      </button>
+      <div id="pwaState"></div>
+    </div>
+  </section>
+
+  <!-- ================= §4 Hash-роутинг ================= -->
+  <section class="section" id="s-hash">
+    <h2 class="section-title">Hash-роутинг</h2>
+    <p class="section-sub">Роуты — <code>#/путь</code>, якоря страницы — <code>#блок</code>; роутер различает их по префиксу. Табы — настоящие ссылки <code>&lt;a href="#/…"&gt;</code>: работают назад/вперёд, средний клик и «открыть в новой вкладке».</p>
+    <div class="tabs" role="tablist" aria-label="Демо-роуты">
+      <a class="tab" href="#/obzor" data-tab="#/obzor"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-shapes"/></svg>Обзор</a>
+      <a class="tab" href="#/nagrad" data-tab="#/nagrad"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg>Награды</a>
+      <a class="tab" href="#/istoriya" data-tab="#/istoriya"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-clock"/></svg>История</a>
+    </div>
+    <div class="panel" data-route="#/obzor">
+      <h3>Экран «Обзор»</h3>
+      <p>Панель по умолчанию видна без JS (прогрессивное улучшение): роутер только синхронизирует <code>location.hash</code> с DOM. Неизвестный роут ведёт сюда же.</p>
+      <div class="code-block">try lovii-design…/06-ux-lab.html#/chto-ugodno → дефолт «Обзор»</div>
+    </div>
+    <div class="panel" data-route="#/nagrad" hidden>
+      <h3>Экран «Награды»</h3>
+      <p>Глубокая ссылка <code>…#/nagrad</code> открывает этот экран сразу из адресной строки — сервер не участвует. В лаборатории скролл к верху страницы при смене роута отключён (для удобства исследования), на продуктовых экранах — канон §4.1: <code>scrollTo top</code>.</p>
+    </div>
+    <div class="panel" data-route="#/istoriya" hidden>
+      <h3>Экран «История»</h3>
+      <p>Назад/вперёд браузера листают роуты бесплатно: <code>hashchange</code> и есть история. <code>history.pushState</code> вручную не вызывается никогда.</p>
+      <div class="code-block">hashchange → renderRoute() → [data-route] + [data-tab]</div>
+    </div>
+    <p class="route-now">Текущий роут: <code id="routeNow">#</code></p>
+  </section>
+
+  <div class="footer">
+    Канон поведения — <a href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/10-ux-patterns.md" target="_blank" rel="noopener">docs/10-ux-patterns.md</a> ·
+    Каркас и компоненты — examples/01–05, docs/09<br>
+    Дизайн-система LOVII · v1.4.0 · изменение потока: lovii-design → lovii_demo → lovii-site
+  </div>
+
+</div>
+
+<button class="to-top" id="toTop" aria-label="Наверх">
+  <svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-arrow-up"/></svg>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* Тема: канонический applyTheme (localStorage + meta theme-color) */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme', t);
+  try{ localStorage.setItem('lovii_theme', t); }catch(e){}
+  var m = document.getElementById('metaTheme');
+  if(m) m.content = t === 'dark' ? '#171219' : '#f64a8a';
+}
+document.getElementById('themeBtn').addEventListener('click', function(){
+  applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+});
+
+/* Toast */
+var toastEl = document.getElementById('toast'), toastTimer;
+function showToast(text){
+  toastEl.textContent = '✓ ' + text;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
+}
+
+/* §1.3 Кнопка «наверх» + живой счётчик scrollY (passive + rAF) */
+var toTop = document.getElementById('toTop'), scrollNow = document.getElementById('scrollNow'), ticking = false;
+function onScroll(){
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(function(){
+    toTop.classList.toggle('show', scrollY > 480);
+    scrollNow.textContent = Math.round(scrollY);
+    ticking = false;
+  });
+}
+addEventListener('scroll', onScroll, { passive: true });
+toTop.addEventListener('click', function(){ scrollTo({ top: 0, behavior: 'smooth' }); });
+
+/* §1.2 Внешний вход по якорю: повторное позиционирование после load */
+addEventListener('load', function(){
+  var h = location.hash;
+  if (h && h.indexOf('#/') !== 0) {
+    var t = document.querySelector(h);
+    if (t) t.scrollIntoView({ block: 'start' });
+  }
+});
+
+/* §2 Живой индикатор брейкпоинта (640 / 900) */
+var bpName = document.getElementById('bpName'), bpW = document.getElementById('bpW');
+var segs = [document.getElementById('seg0'), document.getElementById('seg1'), document.getElementById('seg2')];
+function renderBp(){
+  var w = innerWidth, idx = w < 640 ? 0 : (w < 900 ? 1 : 2);
+  bpW.textContent = Math.round(w);
+  bpName.textContent = idx === 0 ? 'Капсула 480px' : (idx === 1 ? 'Широкий поток' : 'Десктоп · капсула навигации');
+  segs.forEach(function(s, i){ s.classList.toggle('on', i === idx); });
+}
+addEventListener('resize', renderBp);
+renderBp();
+
+/* §3 PWA: канонический флоу установки (docs/10 §3.3) */
+var deferred = null, installBtn = document.getElementById('installBtn'), pwaState = document.getElementById('pwaState');
+var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+var standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+function renderPwa(){
+  if (standalone) {
+    pwaState.innerHTML = '<span class="state-chip state-ok"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Уже установлено · standalone</span>';
+  } else if (isIOS) {
+    pwaState.innerHTML = '<div class="ios-row"><svg class="big-ico" aria-hidden="true"><use href="../assets/icons.svg#i-share"/></svg>' +
+      '<p style="margin:0">Safari: «Поделиться» → «На экран „Домой“»</p></div>';
+  } else if (deferred) {
+    installBtn.hidden = false;
+    pwaState.innerHTML = '<span class="state-chip state-dim">Браузер готов показать приглашение</span>';
+  } else {
+    pwaState.innerHTML = '<span class="state-chip state-dim">prompt недоступен в этом браузере — сниппет docs/10 §3.3</span>';
+  }
+}
+addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault(); deferred = e; renderPwa();
+});
+installBtn.addEventListener('click', function(){
+  if (!deferred) return;
+  deferred.prompt();
+  deferred.userChoice.then(function(res){
+    showToast(res.outcome === 'accepted' ? 'Устанавливаем…' : 'Установка отменена');
+    deferred = null; installBtn.hidden = true; renderPwa();
+  });
+});
+addEventListener('appinstalled', function(){
+  standalone = true; deferred = null; installBtn.hidden = true;
+  showToast('Приложение установлено'); renderPwa();
+});
+renderPwa();
+
+/* §4.2 Мини-роутер: роуты #/…, якоря игнорируются, дефолт всегда виден */
+var ROUTES = ['#/obzor', '#/nagrad', '#/istoriya'], DEFAULT_ROUTE = ROUTES[0];
+var routeNow = document.getElementById('routeNow'), lastRoute = null;
+function renderRoute(){
+  var h = location.hash;
+  if (h.indexOf('#/') !== 0) {                        /* это якорь — не наш случай */
+    if (!(h === '' && lastRoute)) return;             /* назад из роута в «начало» — сброс на дефолт */
+    h = DEFAULT_ROUTE;
+  }
+  if (ROUTES.indexOf(h) < 0) h = DEFAULT_ROUTE;      /* неизвестный → дефолт */
+  document.querySelectorAll('[data-route]').forEach(function(p){
+    p.hidden = p.getAttribute('data-route') !== h;
+  });
+  document.querySelectorAll('[data-tab]').forEach(function(t){
+    t.classList.toggle('active', t.getAttribute('data-tab') === h);
+  });
+  routeNow.textContent = h;
+  lastRoute = h;
+  /* На продуктовых экранах здесь scrollTo({top:0}) — канон §4.1;
+     в лаборатории позиция сохранена для удобства исследования. */
+}
+addEventListener('hashchange', renderRoute);
+renderRoute();
+</script>
+
+<script src="../assets/nav.js" defer></script>
+</body>
+</html>

@@ -54,7 +54,7 @@
 3. Использовать на странице через `<use>`; в style-guide иконка появится после пересборки (`python3 tools/build-style-guide.py`).
 4. Новая иконка = коммит в lovii-design, затем использования.
 
-Текущий набор (v1): `moon, sun, heart, gift, gem, mail, bear, flame, choco, flower, ring, camera, shapes, award, crown, check, x, bot, star, coffee, salad, copy, clock`.
+Текущий набор (v2, 1.4.0): `moon, sun, heart, gift, gem, mail, bear, flame, choco, flower, ring, camera, shapes, award, crown, check, x, bot, star, coffee, salad, copy, clock, arrow-up, download, share`.
 
 ---
 
