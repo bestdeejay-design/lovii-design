@@ -1,6 +1,6 @@
 {
   "$name": "lovii-design-tokens",
-  "$version": "1.8.0",
+  "$version": "1.9.0",
   "$updated": "2026-09-04",
   "$description": "Канонические дизайн-токены LOVII «Лови». Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css). Формат: упрощённый W3C Design Tokens (поля $value, $type, $desc).",
   "$canonical": {
@@ -332,14 +332,14 @@
           "$desc": "Серая заливка тёмной темы."
         },
         "goldText": {
-          "$value": "#e2c88c",
+          "$value": "#d6bd8d",
           "$type": "color",
-          "$desc": "Текст на softGold."
+          "$desc": "Текст на softGold. v1.9: приглушён (тихая тёмная тема, docs/05)."
         },
         "tiffanyText": {
-          "$value": "#6fd9d4",
+          "$value": "#82c8c3",
           "$type": "color",
-          "$desc": "Текст на softTiffany."
+          "$desc": "Текст на softTiffany. v1.9: приглушён (тихая тёмная тема, docs/05)."
         },
         "greenText": {
           "$value": "#a8d686",
