@@ -82,3 +82,24 @@ document.documentElement.dataset.theme=t;}catch(e){document.documentElement.data
 ## Контакты
 
 Владелец системы: Sergey (bestdeejay) · сопровождение: ИИ-агент проекта LOVII.
+
+---
+
+> 📍 **Этот репозиторий:** **Дизайн-система «Лови»** — вы здесь. Канон стиля.
+
+---
+
+## 🗺️ Карта проектов LOVII — все адреса в одном месте
+
+> Правило сети: имея хотя бы один адрес — находишь все остальные.
+
+| Проект | Репозиторий | Адрес | Что это |
+|---|---|---|---|
+| **Дизайн-система «Лови»** | [lovii-design](https://github.com/bestdeejay-design/lovii-design) | [bestdeejay-design.github.io/lovii-design](https://bestdeejay-design.github.io/lovii-design/) | Канон бренда: токены, документация, стиль-гайд, иконки. Источник истины для стиля всех проектов |
+| **Сайт продукта · lovii.ru** | [lovii](https://github.com/bestdeejay-design/lovii) | [lovii.ru](https://lovii.ru) | White paper v2.0 на каноне ДС; целевая точка финального релиза сайта продукта |
+| **Инвест-портал** | [lovii_presentation](https://github.com/bestdeejay-design/lovii_presentation) | [invest.lovii.ru](https://invest.lovii.ru) | Инвестиции в долю: презентация, стратегия, калькулятор оценки, whitepaper, риск-политика, база знаний (CANON, финмодель), PDF |
+| **Демо-витрина** | [lovii_demo](https://github.com/bestdeejay-design/lovii_demo) | [lovii.mobiap.com](https://lovii.mobiap.com) | Рабочее демо капсулы: покупатель, B2B-кабинет поставщика, админ-панель |
+| **Легаси-сайт** | [lovii-site](https://github.com/bestdeejay-design/lovii-site) | [bestdeejay-design.github.io/lovii-site](https://bestdeejay-design.github.io/lovii-site/) | Первый статичный сайт (до дизайн-системы); уходит в архив после финального релиза на lovii.ru |
+
+**Пайплайн стиля:** `lovii-design` (канон) → `lovii` (lovii.ru) → `lovii_demo` · `lovii-site`.
+**Факты и цифры продукта:** база знаний инвест-портала — `lovii_presentation/docs/knowledge-base/` (CANON, PARAMS, FINANCIAL_MODEL, FACT_MAP); маркетинговые материалы факты не искажают.
