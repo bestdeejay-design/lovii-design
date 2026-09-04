@@ -10,7 +10,8 @@
 | Главный сайт (white paper) | `bestdeejay-design/lovii` | main | https://lovii.ru | Прод, потребитель ДС |
 | Витрина-приложение | `bestdeejay-design/lovii_demo` | master | https://lovii.mobiap.com | Эталон реализации, канон стилей |
 | Инвест-портал | `bestdeejay-design/lovii-invest` | main | https://invest.lovii.ru | Живой архив до ДС (модернизация после релиза) |
-| Легаси-сайт | `bestdeejay-design/lovii-legacy` | main | https://bestdeejay-design.github.io/lovii-legacy/ | Архив контента (бывш. lovii-site; старый URL 404 — GitHub не редиректит) |
+| Легаси-сайт (исходник контента) | `bestdeejay-design/lovii-legacy` | main | https://bestdeejay-design.github.io/lovii-legacy/ | Архив: Next.js-экспорт с хеш-роутами; контент перенесён в lovii-site (старый URL lovii-site — 404, GitHub не редиректит) |
+| Превью нового lovii.ru | `bestdeejay-design/lovii-site` | main | https://bestdeejay-design.github.io/lovii-site/ | Статика на lovii.css (снапшот, TARGETS); до Дня X — noindex/Disallow, релиз → lovii.ru |
 
 Клиентские роли LOVII (для новых экранов): **клиент** · **бизнес** · **партнёр** · **амбассадор** · **инвестор**. Референс-экраны ролей — `examples/01…05.html`; поведение экрана (якоря, адаптив, PWA, hash-роуты) — `examples/06-ux-lab.html` (см. `examples/README.md`); собирать новый экран начинай с каркаса референса.
 

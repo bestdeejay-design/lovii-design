@@ -33,6 +33,7 @@ SRC = ROOT / "lovii.css"
 # поколение --pink); lovii-legacy — архив, не размножаем.
 TARGETS = [
     ("lovii", "assets/lovii.css"),
+    ("lovii-site", "assets/lovii.css"),
 ]
 
 
