@@ -98,3 +98,14 @@
 - [ ] Все состояния из сетки docs/09 §6 присутствуют, где применимы (default/hover/active/focus/disabled/loading/empty/enter)
 - [ ] Живое демо в examples/08-components.html обновлено; спрайт-иконки — только из assets/icons.svg
 - [ ] Стражи зелёные: tools/check-sync.py + scripts/check_examples.py
+
+## 14. Сайт и лонгрид (docs/13)
+
+- [ ] Каркас: anti-FOUC до CSS, data-theme на html, двойной meta theme-color
+- [ ] Хедер-стекло из --lv-glass; якоря со scroll-margin; active-nav работает
+- [ ] Hero-подпись: кикер-пилюля, градиентное слово, meta-строка, ambient-декор за полями
+- [ ] Ленточные паттерны только на токенах; числа tabular-nums
+- [ ] Факты white paper не искажены (цифры, комиссия, подписка, юрлицо, ИНН, контакты)
+- [ ] Иконки из спрайта; эмодзи запрещены; print-версия читаема
+- [ ] 390px без гориз. скролла; reduce-motion гасит декор и reveal
+- [ ] SEO-обвязка полна: canonical, JSON-LD, og/twitter, geo, sitemap, robots, manifest
