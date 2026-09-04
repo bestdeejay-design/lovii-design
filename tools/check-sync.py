@@ -28,9 +28,14 @@ TARGETS = [
     "tools/tpl-head.part.html",
     "tools/tpl-body.part.html",
     "tools/tpl-js.part.html",
+    "css/lovii-components.css",
     "index.html",
     *sorted(f"examples/{p.name}" for p in (ROOT / "examples").glob("*.html")),
 ]
+# Примечание: lovii.css (сборка) в TARGETS не входит — он генерируется
+# tools/build-lovii-css.py из tokens/tokens.css (источник канона) и
+# css/lovii-components.css (под стражем выше). Hex-литералы определений
+# токенов в сборке — ожидаемое содержимое слоя A.
 
 # Служебные цвета демо-интерфейса, не токены (пары документированы в docs/02, AGENTS пр.6).
 def norm(h: str) -> str:
