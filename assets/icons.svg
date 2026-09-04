@@ -1,6 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg">
 <!-- LOVII DS · иконочный спрайт v4 (1.9.1): 44 символа. Стиль: 24px, stroke 2, round caps/joins, currentColor.
      Использование: <svg class="ico"><use href="assets/icons.svg#i-heart"/></svg>
+     Голубь Ло — маскот бренда (fill-знак, НЕ stroke-система): <svg class="ico-lo"><use href="assets/icons.svg#i-lo"/></svg>
      Заливные (star) помечены fill внутри символа. Эмоджи в UI запрещены — см. docs/09-components.md §Иконки. -->
 <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
 <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
