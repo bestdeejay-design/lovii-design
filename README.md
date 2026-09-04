@@ -4,7 +4,7 @@
 
 Документация написана для **людей и ИИ-агентов**: у каждого раздела есть значения, правила Do/Don't и чек-лист приёмки.
 
-**Version 1.10.0** · канон: lovii.mobiap.com · обновлено 2026-09-04 · [CHANGELOG](CHANGELOG.md)
+**Version 1.11.0** · канон: lovii.mobiap.com · обновлено 2026-09-05 · [CHANGELOG](CHANGELOG.md)
 
 ---
 
@@ -64,7 +64,7 @@ document.documentElement.dataset.theme=t;}catch(e){document.documentElement.data
 | `SKILL.md` | Скил «дизайн-система LOVII» для агента-дизайнера (готов к установке) |
 | `assets/` | Логотипы (light + dark, md5 зафиксирован), `nav.js` (навигация страниц), `icons.svg` (SVG-спрайт иконок, эмодзи запрещены) |
 | `index.html` | Хаб для GitHub Pages: ссылки на гайд и все референсы |
-| `tools/` | Сборщик style-guide (`build-style-guide.py`) · сборка lovii.css (`build-lovii-css.py`) · разнос lovii.css по сайтам (`sync-lovii-css.py`) · страж канона (`check-sync.py`) |
+| `tools/` | Сборщик style-guide (`build-style-guide.py`) · сборка lovii.css (`build-lovii-css.py`) · разнос lovii.css по всем сайтам одной командой (`propagate.py --push`, реестр — `targets.json`) · низкоуровневая сверка снапшотов (`sync-lovii-css.py`) · страж канона (`check-sync.py`) |
 
 ## Канон и иерархия
 
@@ -75,7 +75,7 @@ document.documentElement.dataset.theme=t;}catch(e){document.documentElement.data
 5. **lovii_demo** (lovii.mobiap.com) — эталонная реализация
 6. **lovii-legacy** — архив контента легаси-сайта (бывш. lovii-site)
 
-Порядок изменения стиля: `lovii-design` (слои) → `build-lovii-css.py` → `sync-lovii-css.py` → репо-потребители (lovii · lovii_demo · …) → проверка продов. Известные расхождения фиксируются в [docs/06-application.md](docs/06-application.md) (таблица «Расхождения»), а не молча выбираются.
+Порядок изменения стиля (фреймворк-цикл): `lovii-design` (слои) → `build-lovii-css.py` → `check-sync.py` → commit+push в lovii-design → `propagate.py --push` → снапшоты+стражи+коммиты+пуши во всех потребителях из `tools/targets.json` (lovii · lovii-site; lovii_demo — после миграции) → проверка продов. Известные расхождения фиксируются в [docs/06-application.md](docs/06-application.md) (таблица «Расхождения»), а не молча выбираются.
 
 ## Roadmap
 

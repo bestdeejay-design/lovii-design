@@ -8,12 +8,13 @@
 # Правишь исходники слоёв, потом запускаешь эту сборку —
 # lovii.css обновляется целиком. Напрямую lovii.css не править.
 #
-# Разноска на сайты: python3 tools/sync-lovii-css.py
-# Страж канона:       python3 tools/check-sync.py
+# Разноска на сайты: python3 tools/propagate.py --push
+# (низкоуровнево: tools/sync-lovii-css.py)
+# Страж канона:      python3 tools/check-sync.py
 # ============================================================
+import datetime
 import pathlib
 import re
-import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -23,18 +24,13 @@ OUT = ROOT / "lovii.css"
 UI_VERSION = "1.0.0"
 
 
-def git_short() -> str:
-    try:
-        return subprocess.check_output(
-            ["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, text=True
-        ).strip()
-    except Exception:
-        return "unknown"
-
-
 def token_version() -> str:
     m = re.search(r"дизайн-токены\s+(v[\d.]+)", LAYER_A.read_text(encoding="utf-8"))
     return m.group(1) if m else "unknown"
+
+
+def build_date() -> str:
+    return datetime.date.today().isoformat()
 
 
 def main() -> int:
@@ -43,11 +39,13 @@ def main() -> int:
 
     header = f"""/* ============================================================
    LOVII UI v{UI_VERSION} — ЕДИНЫЙ ФАЙЛ дизайн-системы «Лови»
-   Канон токенов: {token_version()} · lovii-design@{git_short()}
+   Канон токенов: {token_version()} · собрано {build_date()}
+   Провенанс снапшота (из какого коммита lovii-design взят файл)
+   добавляется разносчиком — см. шапку файла на сайте-потребителе.
    ------------------------------------------------------------
    ОДИН файл на любой сайт LOVII. Меняется в одном месте
-   (репо lovii-design) и разносится во все сайты снапшотами:
-     python3 tools/sync-lovii-css.py
+   (репо lovii-design) и разносится во все сайты одной командой:
+     python3 tools/propagate.py --push
    Править здесь нельзя — правятся исходники слоёв:
      tokens/tokens.css            — токены, база, движение
      css/lovii-components.css     — компоненты

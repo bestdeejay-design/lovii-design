@@ -6,7 +6,7 @@
 
 | Продукт | Репо | Ветка | URL | Роль |
 |---|---|---|---|---|
-| Дизайн-система | `bestdeejay-design/lovii-design` | main | — (style-guide.html локально) | Источник истины |
+| Дизайн-система | `bestdeejay-design/lovii-design` | main | https://bestdeejay-design.github.io/lovii-design/ (хаб · гайд · examples · lovii.css) | Источник истины; правка стилей ТОЛЬКО здесь; разноска `tools/propagate.py --push` |
 | Главный сайт (white paper) | `bestdeejay-design/lovii` | main | https://lovii.ru | Прод, потребитель ДС |
 | Витрина-приложение | `bestdeejay-design/lovii_demo` | master | https://lovii.mobiap.com | Эталон реализации, канон стилей |
 | Инвест-портал | `bestdeejay-design/lovii-invest` | main | https://invest.lovii.ru | Живой архив до ДС (модернизация после релиза) |
@@ -16,7 +16,7 @@
 Клиентские роли LOVII (для новых экранов): **клиент** · **бизнес** · **партнёр** · **амбассадор** · **инвестор**. Референс-экраны ролей — `examples/01…05.html`; поведение экрана (якоря, адаптив, PWA, hash-роуты) — `examples/06-ux-lab.html` (см. `examples/README.md`); собирать новый экран начинай с каркаса референса.
 
 - Канон стилей — **lovii.mobiap.com**. Токены канона — `tokens/tokens.css` и `tokens/design-tokens.json` в этом репозитории.
-- lovii-site — Next.js static export в `site-src/` (Tailwind 4, хеш-роуты `#/…`, деплой GitHub Actions).
+- lovii-site — статический HTML из генератора `/home/z/my-project/scripts/build_lovii_site.py` (правки страниц — только в генераторе, руками HTML не править; приёмка: paths/facts/smoke-стражи), деплой GitHub Pages из корня репо.
 - lovii_demo — ванильный HTML/CSS/JS + service worker `sw.js` (кэш `lovii-vN`), ветка master деплоится напрямую.
 
 ## 2. Железные правила (нарушать нельзя)
@@ -34,7 +34,8 @@
 11. **Иконки.** Эмоджи в UI запрещены (v1.3). Только SVG из `assets/icons.svg`: 24px сетка, stroke 2, `currentColor`, префикс `i-`. Новая иконка — через коммит в lovii-design. Анатомия и состояния компонентов — docs/09-components.md.
 12. **Секреты.** Токены доступа GitHub никогда не попадают в файлы — только переменные окружения/разовые команды.
 13. **Гайд — проекция канона.** В шаблонах (`tools/tpl-*.part.html`) и JS style-guide запрещено копировать значения токенов: свотчи, демо-точки тем и meta theme-color читают инлайннутый `tokens.css` (`parseTokenBuckets`). Неизбежные пины помечай комментарием `TOKEN-PIN`. Страж: `python3 tools/check-sync.py` — 0 ошибок после каждой пересборки гайда.
-14. **Единый файл ДС — `lovii.css` (LOVII UI).** Компоненты живут ТОЛЬКО в `css/lovii-components.css` (слой B); lovii.css — генерируемая сборка слоя A (`tokens/tokens.css`) + слоя B (`python3 tools/build-lovii-css.py`). Сайты получают снапшот с провенансом (`python3 tools/sync-lovii-css.py`); править снапшот в сайте = нарушение — правится lovii-design, потом разнос. Новый компонент = css/lovii-components.css + живой образец в examples/08 + docs/09; паритет проверяй скриншот-диффом (scripts/check_lovii_css_parity.py).
+14. **Единый файл ДС — `lovii.css` (LOVII UI).** Компоненты живут ТОЛЬКО в `css/lovii-components.css` (слой B); lovii.css — генерируемая сборка слоя A (`tokens/tokens.css`) + слоя B (`python3 tools/build-lovii-css.py`). Сайты получают снапшот с провенансом; править снапшот в сайте = нарушение — правится lovii-design, потом разнос. Новый компонент = css/lovii-components.css + живой образец в examples/08 + docs/09; паритет проверяй скриншот-диффом (scripts/check_lovii_css_parity.py).
+15. **Разноска — только фреймворк-циклом.** Правка стиля: исходники слоёв → `build-lovii-css.py` → `check-sync.py` → commit+push в lovii-design → `python3 tools/propagate.py --push` (снапшоты + стражи + точечные коммиты/пуши во всех потребителей из `tools/targets.json`). Коммитится только файл снапшота, никогда `-A`. Новый сайт на фреймворке = запись в `tools/targets.json`.
 
 ## 3. Как применять (порядок работы агента)
 

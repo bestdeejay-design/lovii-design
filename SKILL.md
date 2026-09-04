@@ -25,7 +25,7 @@ description: >
 ## Источники (в порядке приоритета)
 
 1. `tokens/tokens.css` — значения (CSS-переменные `--lv-*`); СЛОЙ А фреймворка
-2. `lovii.css` — **ЕДИНЫЙ ФАЙЛ ДС (LOVII UI)**: токены + база + все компоненты в одном файле; его снапшот подключает любой сайт LOVII (`<link rel="stylesheet" href="assets/lovii.css">`). Сборка: `tools/build-lovii-css.py` из слоя A (tokens.css) + слоя B (`css/lovii-components.css`); разнос на сайты: `tools/sync-lovii-css.py`. Править снапшоты в сайтах ЗАПРЕЩЕНО
+2. `lovii.css` — **ЕДИНЫЙ ФАЙЛ ДС (LOVII UI)**: токены + база + все компоненты в одном файле; его снапшот подключает любой сайт LOVII (`<link rel="stylesheet" href="assets/lovii.css">`). Сборка: `tools/build-lovii-css.py` из слоя A (tokens.css) + слоя B (`css/lovii-components.css`); разнос на сайты одной командой: `tools/propagate.py --push` (реестр сайтов — `tools/targets.json`). Править снапшоты в сайтах ЗАПРЕЩЕНО
 3. `tokens/design-tokens.json` — те же значения машинночитаемо
 4. `docs/01…06` — правила применения (каждый раздел с Do/Don't)
 5. `docs/07-patterns.md` — **copy-paste сниппеты всех компонентов** (тема, кнопки, карточки, формы, шит, тост, навигация + таблица антипаттернов)
@@ -38,7 +38,9 @@ description: >
 12. `style-guide.html` — визуальный эталон (открыть в браузере, переключить тему)
 13. `docs/checklist.md` — приёмка перед завершением (вкл. §12 «Текст и тон»)
 
-## Как подключить ДС к сайту (одним файлом)
+## Как подключить ДС к сайту (два режима)
+
+**Режим «снапшот» — по умолчанию для прод-потребителей** (lovii.ru, lovii-site): файл живёт в репо сайта, версия и провенанс зафиксированы коммитом, сборка и приёмка не зависят от сети:
 
 ```html
 <!-- тема: anti-FOUC до CSS, затем единый файл -->
@@ -46,7 +48,25 @@ description: >
 <link rel="stylesheet" href="assets/lovii.css">
 ```
 
-Дальше — только канонические классы (`cta-btn`, `panel`, `stat-pill`, `f-field`…): каталог — `examples/08`, анатомия — `docs/09`, визуальный эталон — `style-guide.html`. Своим остаётся только layout-специфика страницы; hex запрещён. Изменил компонент в lovii-design → build → sync → снапшот обновился во всех сайтах.
+**Режим «live-CDN» — для прототипов/быстрых сайтов**: прямая ссылка на Pages фреймворка, обновляется без пересборки сайта (CDN GitHub Pages кэширует до 10 минут):
+
+```html
+<link rel="stylesheet" href="https://bestdeejay-design.github.io/lovii-design/lovii.css">
+```
+
+Дальше — только канонические классы (`cta-btn`, `panel`, `stat-pill`, `f-field`…): каталог — `examples/08`, анатомия — `docs/09`, визуальный эталон — `style-guide.html`. Своим остаётся только layout-специфика страницы; hex запрещён.
+
+## Фреймворк-цикл: правка стиля в одном месте — все сайты сразу
+
+Единственное место правки стилей ЛЮБОГО сайта LOVII — этот репозиторий. Правка снапшота `assets/lovii.css` в сайте = нарушение (AGENTS.md пр.14).
+
+1. Правишь исходники: `tokens/tokens.css` (значения) и/или `css/lovii-components.css` (компоненты).
+2. `python3 tools/build-lovii-css.py` → `python3 tools/check-sync.py` (0 ошибок).
+3. `git commit` + `git push` в lovii-design (провенанс снапшотов должен указывать на запушенный коммит).
+4. `python3 tools/propagate.py --push` — все сайты из `tools/targets.json` получают свежий `lovii.css`: снапшот → стражи приёмки → точечный коммит (только файл снапшота) → пуш. Для медленной playwright-приёмки добавь `--smoke`, для сверки без записи — `--check`.
+5. Новое потребителя: добавить запись в `tools/targets.json` (repo, dest, branch, guards, live) — следующая разноска подхватит автоматически.
+
+Живой адрес фреймворка (хаб/гайд/examples/lovii.css): <https://bestdeejay-design.github.io/lovii-design/>
 
 ## Карта ролей → референсы
 
@@ -121,6 +141,7 @@ html[data-theme="dark"]  img.logo-light-img { display:none; }
 4. Проверь обе темы (style-guide + локально), оба вьюпорта (375 и десктоп).
 5. Прогони `docs/checklist.md` — все пункты; автоматические grep-проверки — `docs/08-recipes.md` Р5.
 6. Обнови `CHANGELOG.md` (semver) и, если менялись значения/правила, — соответствующий docs-раздел.
+7. Разнеси на все сайты фреймворк-циклом: commit+push в lovii-design → `python3 tools/propagate.py --push` (список сайтов — `tools/targets.json`).
 
 ## Запреты (частые ошибки)
 

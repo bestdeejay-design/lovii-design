@@ -2,14 +2,18 @@
 # ============================================================
 # Разнос lovii.css по сайтам LOVII (снапшоты с провенансом).
 #
-# Схема «одно место правки — везде одинаково»:
+# Схема «одно место правки — везде одинаково» (фреймворк-цикл):
 #   1. правишь исходники в lovii-design (tokens/tokens.css,
 #      css/lovii-components.css);
 #   2. python3 tools/build-lovii-css.py      — сборка lovii.css;
-#   3. python3 tools/sync-lovii-css.py       — этот скрипт кладёт
-#      снапшот в каждый репо-потребитель (без commit/push —
-#      обновление прода всегда осознанный шаг);
-#   4. git diff в каждом репо → коммит → пуш.
+#   3. git commit + push в lovii-design (провенанс снапшотов
+#      должен указывать на запушенный коммит);
+#   4. python3 tools/propagate.py --push     — снапшоты во ВСЕ
+#      потребителей + стражи + коммиты + пуши одной командой.
+#
+# Этот скрипт — низкоуровневый шаг №4 без commit/push (его же
+# использует propagate.py). Список потребителей — реестр
+# tools/targets.json (добавил сайт — добавь запись в реестр).
 #
 # Снапшот = lovii.css + инъекция шапки-провенанса
 # («СНАПШОТ из lovii-design@<hash>; не редактировать»).
@@ -21,20 +25,26 @@
 #   --check — только сверка (код 1 = есть расхождение).
 # ============================================================
 import argparse
+import json
 import pathlib
 import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SRC = ROOT / "lovii.css"
+REGISTRY = ROOT / "tools" / "targets.json"
 
-# Потребители: (путь к репо от /home/z/my-project, файл назначения)
-# lovii-demo — ПОСЛЕ миграции витрины на LOVII UI (сейчас там
-# поколение --pink); lovii-legacy — архив, не размножаем.
-TARGETS = [
-    ("lovii", "assets/lovii.css"),
-    ("lovii-site", "assets/lovii.css"),
-]
+# Резервный список, если реестра нет (реестр — источник истины).
+FALLBACK = [("lovii", "assets/lovii.css"), ("lovii-site", "assets/lovii.css")]
+
+
+def load_targets():
+    """Реестр потребителей из tools/targets.json → [(repo, dest), …]."""
+    if not REGISTRY.exists():
+        print(f"ВНИМАНИЕ: нет {REGISTRY.name} — используется резервный список")
+        return list(FALLBACK)
+    data = json.loads(REGISTRY.read_text(encoding="utf-8"))
+    return [(c["repo"], c["dest"]) for c in data.get("consumers", [])]
 
 
 def git_short() -> str:
@@ -66,7 +76,7 @@ def main() -> int:
     body = SRC.read_text(encoding="utf-8")
 
     drift = []
-    for repo, dest_rel in TARGETS:
+    for repo, dest_rel in load_targets():
         dest = ROOT.parent / repo / dest_rel
         name = f"{repo}/{dest_rel}"
         if not dest.parent.exists():
