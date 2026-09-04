@@ -145,8 +145,13 @@ def main() -> int:
         expected = SYNC.provenance(c["repo"]) + body
         current = dest.read_text(encoding="utf-8") if dest.exists() else None
         if current == expected:
-            print(f"{name}: синхронен ✓")
-            in_sync.append(name)
+            # содержимое верное; но снапшот мог быть записан ранее и не закоммичен
+            if c["dest"] in dirty_files(repo):
+                print(f"{name}: содержимое верное, снапшот НЕ закоммичен — включён в разноску")
+                changed.append(c)
+            else:
+                print(f"{name}: синхронен ✓")
+                in_sync.append(name)
             continue
         if args.check:
             print(f"{name}: РАСХОЖДЕНИЕ (нужна разноска)")
@@ -196,7 +201,7 @@ def main() -> int:
     for c in changed:
         repo = WORLD / c["repo"]
         br = branch_of(repo)
-        staged_before, _ = git(repo, ["diff", "--cached", "--name-only"])
+        _code, staged_before = git(repo, ["diff", "--cached", "--name-only"])
         if staged_before.strip():
             print(f"[{c['repo']}] SKIP: в индексе уже есть чужие файлы — вручную: {staged_before.strip()}")
             skipped.append(c["repo"])
