@@ -108,7 +108,7 @@
 
 ## 2. Иконки библиотеки
 
-Спрайт `assets/icons.svg` (v3, 43 символа): контентные (heart, gift, gem, bear, coffee…) + **системные v1.7.0**: `search, chevron-right, arrow-left, plus, minus, bell, dots, home, user, bag, edit, trash, map-pin, filter, phone, calendar, info`. Все 24px, stroke 2, round, currentColor; `star` — заливной gold. Размеры по контекстам — docs/09 §1. Эмоджи запрещены (AGENTS пр.11).
+Спрайт `assets/icons.svg` (v4, 44 символа): контентные (heart, gift, gem, bear, coffee…) + **системные v1.7.0**: `search, chevron-right, arrow-left, plus, minus, bell, dots, home, user, bag, edit, trash, map-pin, filter, phone, calendar, info` + **бренд-маскот v1.9.1**: `i-lo` (голубь Ло — fill-знак 512, единственное исключение из stroke-системы). Все 24px, stroke 2, round, currentColor; `star` — заливной gold. Размеры по контекстам — docs/09 §1. Эмоджи запрещены (AGENTS пр.11).
 
 ---
 
