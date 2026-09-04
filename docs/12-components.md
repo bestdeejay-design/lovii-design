@@ -1,6 +1,6 @@
 # 12 · Библиотека компонентов: полный набор
 
-> Version: 1.6.0 · Updated: 2026-09-04 · Живая библиотека: `examples/08-components.html` · Анатомия и состояния: `docs/09-components.md` · Сниппеты copy-paste: `docs/07-patterns.md` · Значения: `tokens/tokens.css`
+> Version: 1.7.0 · Updated: 2026-09-04 · Живая библиотека: `examples/08-components.html` · Анатомия и состояния: `docs/09-components.md` · Сниппеты copy-paste: `docs/07-patterns.md` · Значения: `tokens/tokens.css`
 
 Полный набор компонентов ДС «Лови». Собран по итогам v5 роадмэпа: владелец делегировал подбор состава агенту, дальше смотрит библиотеку живьём и решает, чего не хватает и с чем работать. Каждый компонент собран **только** из канонических токенов; если новому компоненту нужно значение, которого нет — сначала токен (рецепт Р3), потом компонент.
 
@@ -108,7 +108,7 @@
 
 ## 2. Иконки библиотеки
 
-Спрайт `assets/icons.svg` (v3, 43 символа): контентные (heart, gift, gem, bear, coffee…) + **системные v1.6.0**: `search, chevron-right, arrow-left, plus, minus, bell, dots, home, user, bag, edit, trash, map-pin, filter, phone, calendar, info`. Все 24px, stroke 2, round, currentColor; `star` — заливной gold. Размеры по контекстам — docs/09 §1. Эмоджи запрещены (AGENTS пр.11).
+Спрайт `assets/icons.svg` (v3, 43 символа): контентные (heart, gift, gem, bear, coffee…) + **системные v1.7.0**: `search, chevron-right, arrow-left, plus, minus, bell, dots, home, user, bag, edit, trash, map-pin, filter, phone, calendar, info`. Все 24px, stroke 2, round, currentColor; `star` — заливной gold. Размеры по контекстам — docs/09 §1. Эмоджи запрещены (AGENTS пр.11).
 
 ---
 

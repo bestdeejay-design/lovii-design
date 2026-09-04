@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" id="metaTheme" content="#f64a8a">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <title>LOVII · Пример: обзор для инвесторов (роль «Инвестор»)</title>
 <script>
 (function(){try{var t=localStorage.getItem('lovii_theme');
@@ -27,7 +28,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
 }
 .role-pill { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--lv-dim); }
-.theme-btn { margin-left:auto; width:36px; height:36px; border-radius:999px; background:var(--lv-surface);
+.theme-btn { margin-left:auto; width:36px; height:36px; border-radius:var(--lv-r-pill); background:var(--lv-surface);
   display:flex; align-items:center; justify-content:center; font-size:16px; border:0; cursor:pointer; transition:transform .15s ease; }
 .theme-btn:active { transform:scale(.95); }
 .theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
@@ -48,7 +49,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .section-lead { font-size:14px; color:var(--lv-dim); line-height:1.6; margin-top:-4px; margin-bottom:16px; }
 
 /* Герой: чернильный градиент 150deg, тёплый белый текст */
-.hero { margin-top:16px; padding:32px 24px; border-radius:16px;
+.hero { margin-top:16px; padding:32px 24px; border-radius:var(--lv-r-lg);
   background-image:var(--lv-gradient-ink); color:var(--lv-on-brand); box-shadow:var(--lv-shadow-lift); }
 .hero .kicker { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--lv-sand); }
 .hero h1 { margin-top:8px; font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1.15; }
@@ -57,7 +58,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 /* Метрики: 2×2 */
 .metrics { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
 @media (min-width:640px){ .metrics { grid-template-columns:repeat(4,1fr); } }
-.metric { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; padding:18px 16px; box-shadow:var(--lv-shadow-soft); }
+.metric { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); padding:18px 16px; box-shadow:var(--lv-shadow-soft); }
 .metric .v { font-size:26px; font-weight:800; letter-spacing:-.02em; }
 .metric .v span { font-size:14px; font-weight:700; color:var(--lv-pink); }
 .metric .l { margin-top:6px; font-size:12px; font-weight:600; color:var(--lv-dim); }
@@ -65,22 +66,22 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* Роадмап: таймлайн на хайрлайнах, точки пульсируют */
 .timeline { position:relative; padding-left:28px; }
-.timeline::before { content:''; position:absolute; left:8px; top:6px; bottom:6px; width:2px; background:var(--lv-hairline); border-radius:999px; }
+.timeline::before { content:''; position:absolute; left:8px; top:6px; bottom:6px; width:2px; background:var(--lv-hairline); border-radius:var(--lv-r-pill); }
 .milestone { position:relative; padding:0 0 20px 8px; }
 .milestone:last-child { padding-bottom:0; }
-.milestone .dot { position:absolute; left:-28px; top:4px; width:14px; height:14px; border-radius:999px; background:var(--lv-card); border:2px solid var(--lv-pink); display:flex; align-items:center; justify-content:center; }
-.milestone .dot::after { content:''; width:6px; height:6px; border-radius:999px; background:var(--lv-pink); }
+.milestone .dot { position:absolute; left:-28px; top:4px; width:14px; height:14px; border-radius:var(--lv-r-pill); background:var(--lv-card); border:2px solid var(--lv-pink); display:flex; align-items:center; justify-content:center; }
+.milestone .dot::after { content:''; width:6px; height:6px; border-radius:var(--lv-r-pill); background:var(--lv-pink); }
 .milestone.future .dot { border-color:var(--lv-line); } .milestone.future .dot::after { background:var(--lv-dim); animation:none; opacity:.6; }
 .milestone .q { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--lv-dim); }
 .milestone h3 { margin-top:2px; font-size:16px; font-weight:700; }
 .milestone p { margin-top:4px; font-size:13px; color:var(--lv-dim); line-height:1.6; max-width:52ch; }
-.milestone .now { margin-left:8px; padding:3px 10px; border-radius:999px; background:var(--lv-soft-pink); color:var(--lv-pink-dark); font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; vertical-align:2px; }
+.milestone .now { margin-left:8px; padding:3px 10px; border-radius:var(--lv-r-pill); background:var(--lv-soft-pink); color:var(--lv-pink-dark); font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; vertical-align:2px; }
 
 /* Команда */
 .team { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
 @media (min-width:640px){ .team { grid-template-columns:repeat(4,1fr); } }
-.member { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; padding:20px 14px; text-align:center; box-shadow:var(--lv-shadow-soft); }
-.member .ph { width:56px; height:56px; margin:0 auto; border-radius:999px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; }
+.member { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); padding:20px 14px; text-align:center; box-shadow:var(--lv-shadow-soft); }
+.member .ph { width:56px; height:56px; margin:0 auto; border-radius:var(--lv-r-pill); display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; }
 .mp-pink { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
 .mp-tiff { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
 .mp-gold { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
@@ -89,7 +90,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .member .r { margin-top:2px; font-size:11px; color:var(--lv-dim); }
 
 /* Контакты: строки */
-.facts { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); overflow:hidden; }
+.facts { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); overflow:hidden; }
 .fact { display:flex; align-items:center; gap:12px; padding:14px 16px; border-top:1px solid var(--lv-line-2); }
 .fact:first-child { border-top:0; }
 .fact .k { flex:1; font-size:13px; color:var(--lv-dim); }
@@ -97,11 +98,11 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .fact .v a { color:var(--lv-pink); text-decoration:none; }
 
 /* CTA */
-.cta { margin-top:24px; padding:24px 20px; border-radius:16px; text-align:center;
+.cta { margin-top:24px; padding:24px 20px; border-radius:var(--lv-r-lg); text-align:center;
   background:var(--lv-kpi-soft); border:1px solid transparent; }
 .cta h2 { font-size:20px; font-weight:800; letter-spacing:-.02em; }
 .cta p { margin:6px auto 16px; font-size:13px; color:var(--lv-dim); line-height:1.6; max-width:40ch; }
-.btn { height:48px; padding:0 32px; border:0; cursor:pointer; border-radius:999px; font-family:inherit;
+.btn { height:48px; padding:0 32px; border:0; cursor:pointer; border-radius:var(--lv-r-pill); font-family:inherit;
   font-size:15px; font-weight:700; display:inline-flex; align-items:center; justify-content:center;
   background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); box-shadow:var(--lv-shadow-lift);
   transition:transform .15s ease, box-shadow .2s ease; text-decoration:none; }

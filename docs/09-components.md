@@ -1,6 +1,6 @@
 # 09 · Компоненты: анатомия и состояния
 
-> Version: 1.6.0 · Updated: 2026-09-04 · Канон: `style-guide.html` (собран из tokens) · Полный набор живьём: `examples/08-components.html` · Референсы: `examples/`
+> Version: 1.7.0 · Updated: 2026-09-04 · Канон: `style-guide.html` (собран из tokens) · Полный набор живьём: `examples/08-components.html` · Референсы: `examples/`
 > v2 роадмэпа. Сниппеты copy-paste — `docs/07-patterns.md`; реестр набора и правила расширения — `docs/12-components.md`; значения — `tokens/tokens.css`.
 
 Компонент ДС собирается **только** из канонических значений: высоты, радиусы, шрифты, тени и цвета берутся из tokens. Если компоненту нужно новое значение — сначала токен (рецепт Р3), потом компонент. Ниже — анатомия четырёх базовых семейств (кнопки, чипы, карточки, шиты) и общая сетка состояний.
@@ -54,7 +54,7 @@
 3. Использовать на странице через `<use>`; в style-guide иконка появится после пересборки (`python3 tools/build-style-guide.py`).
 4. Новая иконка = коммит в lovii-design, затем использования.
 
-Текущий набор (v3, 1.6.0, 43 символа): контентные `moon, sun, heart, gift, gem, mail, bear, flame, choco, flower, ring, camera, shapes, award, crown, check, x, bot, star, coffee, salad, copy, clock, arrow-up, download, share` + системные библиотеки `search, chevron-right, arrow-left, plus, minus, bell, dots, home, user, bag, edit, trash, map-pin, filter, phone, calendar, info`.
+Текущий набор (v3, 1.7.0, 43 символа): контентные `moon, sun, heart, gift, gem, mail, bear, flame, choco, flower, ring, camera, shapes, award, crown, check, x, bot, star, coffee, salad, copy, clock, arrow-up, download, share` + системные библиотеки `search, chevron-right, arrow-left, plus, minus, bell, dots, home, user, bag, edit, trash, map-pin, filter, phone, calendar, info`.
 
 ---
 

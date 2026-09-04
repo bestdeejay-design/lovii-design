@@ -1,5 +1,5 @@
 /* ============================================================
-   LOVII «Лови» — канонические дизайн-токены v1.6.0
+   LOVII «Лови» — канонические дизайн-токены v1.7.0
    Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css)
    Репо дизайн-системы: bestdeejay-design/lovii-design
 
@@ -54,6 +54,14 @@
   --lv-theme-key: 'lovii_theme';      /* localStorage ключ */
   --lv-meta-light: #f64a8a;           /* meta theme-color для светлой */
   --lv-meta-dark: #171219;            /* meta theme-color для тёмной */
+
+  /* Радиусы (канон docs/04): пилюли-капсулы, карточки, шиты.
+     v1.7.0: токенизированы — раньше дрейфовали как литералы */
+  --lv-r-sm: 12px;                    /* плитки, мелкие контролы */
+  --lv-r-md: 14px;                    /* поля ввода */
+  --lv-r-lg: 16px;                    /* карточки, панели, тосты */
+  --lv-r-xl: 24px;                    /* bottom-sheet, премиум-обложки */
+  --lv-r-pill: 999px;                 /* все капсулы/пилюли */
 
   /* Каркас */
   --lv-header-h: 56px;                /* шапка приложения-витрины */
@@ -196,6 +204,9 @@ input, textarea, select { font-family: inherit; }
 
 /* Фокус с клавиатуры — всегда розовый брендовый */
 :focus-visible { outline: 2px solid var(--lv-pink); outline-offset: 2px; border-radius: 8px; }
+
+/* Выделение текста — тоже бренд (v1.7.0): системное синее выбивалось из палитры */
+::selection { background: var(--lv-pink); color: #ffffff; }
 
 /* Уважение к reduce motion — обязательное a11y-правило */
 @media (prefers-reduced-motion: reduce) {

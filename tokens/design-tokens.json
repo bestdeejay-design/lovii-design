@@ -1,6 +1,6 @@
 {
   "$name": "lovii-design-tokens",
-  "$version": "1.6.0",
+  "$version": "1.7.0",
   "$updated": "2026-09-04",
   "$description": "Канонические дизайн-токены LOVII «Лови». Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css). Формат: упрощённый W3C Design Tokens (поля $value, $type, $desc).",
   "$canonical": {
@@ -578,26 +578,31 @@
   "radius": {
     "pill": {
       "$value": "999px",
+      "$css": "--lv-r-pill",
       "$desc": "Все контролы-капсулы: кнопки, чипы, пилюли, бейджи, инпуты-поиск. Основной радиус системы."
     },
     "sheet": {
       "$value": "24px",
+      "$css": "--lv-r-xl",
       "$desc": "Bottom-sheet (только верхние углы), премиум-карточки (loyalty, prof-head, pd-cover)."
     },
     "premium": {
       "$value": "20px",
-      "$desc": "apply-head, roi-card."
+      "$desc": "apply-head, roi-card. В живом коде ДС не встречается — только демо-шкала гайда."
     },
     "card": {
       "$value": "16px",
+      "$css": "--lv-r-lg",
       "$desc": "Все карточки, тосты, district-row. Второй по частоте."
     },
     "tab": {
       "$value": "14px",
-      "$desc": "hero-tab, status-banner, fin-total."
+      "$css": "--lv-r-md",
+      "$desc": "hero-tab, status-banner, fin-total, поля ввода f-field."
     },
     "tile": {
       "$value": "12px",
+      "$css": "--lv-r-sm",
       "$desc": "Квадратные иконки-плитки (em-tile 48, avail-emoji, f-field инпуты, dash-note)."
     },
     "msgTail": {

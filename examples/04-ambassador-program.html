@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" id="metaTheme" content="#f64a8a">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <title>LOVII · Пример: амбассадоры (роль «Амбассадор»)</title>
 <script>
 (function(){try{var t=localStorage.getItem('lovii_theme');
@@ -27,7 +28,7 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
 }
 .role-pill { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--lv-dim); }
-.theme-btn { margin-left:auto; width:36px; height:36px; border-radius:999px; background:var(--lv-surface);
+.theme-btn { margin-left:auto; width:36px; height:36px; border-radius:var(--lv-r-pill); background:var(--lv-surface);
   display:flex; align-items:center; justify-content:center; font-size:16px; border:0; cursor:pointer; transition:transform .15s ease; }
 .theme-btn:active { transform:scale(.95); }
 .theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
@@ -47,15 +48,15 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .section-sub { font-size:13px; color:var(--lv-dim); line-height:1.6; margin-top:-6px; margin-bottom:14px; }
 
 /* Hero: мягкий, на hero-top → card (не брендовый градиент!) */
-.hero { margin-top:16px; padding:24px 20px; border-radius:16px;
+.hero { margin-top:16px; padding:24px 20px; border-radius:var(--lv-r-lg);
   background:linear-gradient(180deg, var(--lv-hero-top), var(--lv-card));
   border:1px solid var(--lv-line); box-shadow:var(--lv-shadow-soft); text-align:center; }
-.hero .emoji { width:44px; height:44px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; animation:lv-float 5s ease-in-out infinite; }
+.hero .ico { width:44px; height:44px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; animation:lv-float 5s ease-in-out infinite; }
 .hero h1 { margin-top:10px; font-size:26px; font-weight:800; letter-spacing:-.02em; }
 .hero p { margin-top:6px; font-size:14px; color:var(--lv-dim); line-height:1.6; max-width:36ch; margin-left:auto; margin-right:auto; }
 
 /* Промокод: пунктирный бордер, моноширинный код */
-.promo-card { margin-top:16px; padding:20px; border-radius:16px; text-align:center;
+.promo-card { margin-top:16px; padding:20px; border-radius:var(--lv-r-lg); text-align:center;
   background:var(--lv-card); border:1px dashed var(--lv-pink); box-shadow:var(--lv-shadow-soft); }
 .promo-label { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--lv-dim); }
 .promo-code { margin-top:8px; font-size:26px; font-weight:800; letter-spacing:.12em;
@@ -64,7 +65,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .promo-actions { margin-top:14px; display:flex; gap:8px; justify-content:center; flex-wrap:wrap; }
 
 /* Кнопки */
-.btn { height:44px; padding:0 22px; border:0; cursor:pointer; border-radius:999px; font-family:inherit;
+.btn { height:44px; padding:0 22px; border:0; cursor:pointer; border-radius:var(--lv-r-pill); font-family:inherit;
   font-size:14px; font-weight:700; display:inline-flex; align-items:center; justify-content:center; gap:8px;
   transition:transform .15s ease, box-shadow .2s ease; }
 .btn:active { transform:scale(.96); }
@@ -74,29 +75,29 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* Статистика приглашений */
 .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.stat { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; padding:16px 12px; text-align:center; box-shadow:var(--lv-shadow-soft); }
+.stat { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); padding:16px 12px; text-align:center; box-shadow:var(--lv-shadow-soft); }
 .stat .v { font-size:20px; font-weight:800; letter-spacing:-.02em; }
 .stat .l { margin-top:4px; font-size:11px; color:var(--lv-dim); }
 
 /* Уровни: карточки с плиточными подложками (плитки фиксированно светлые — текст только on-tile) */
 .levels { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.level { border-radius:16px; padding:18px 12px 16px; text-align:center; border:1px solid transparent; transition:transform .15s ease, box-shadow .2s ease; }
+.level { border-radius:var(--lv-r-lg); padding:18px 12px 16px; text-align:center; border:1px solid transparent; transition:transform .15s ease, box-shadow .2s ease; }
 .level:hover { box-shadow:var(--lv-shadow-lift); }
 .level .medal { display:flex; align-items:center; justify-content:center; }
 .level .medal svg { width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .level .name { margin-top:8px; font-size:14px; font-weight:800; color:var(--lv-on-tile); }
 .level .cond { margin-top:4px; font-size:11px; line-height:1.5; color:var(--lv-on-tile-dim); }
-.level .reward { margin-top:10px; display:inline-block; padding:4px 10px; border-radius:999px; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; background:var(--lv-tile-chip); color:var(--lv-on-tile-dim); }
+.level .reward { margin-top:10px; display:inline-block; padding:4px 10px; border-radius:var(--lv-r-pill); font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; background:var(--lv-tile-chip); color:var(--lv-on-tile-dim); }
 .lv-bronze { background-image:var(--lv-tile-ink); }
 .lv-silver { background-image:var(--lv-tile-tiffany); }
 .lv-gold { background-image:var(--lv-tile-gold); }
 .level.current { border-color:var(--lv-pink); box-shadow:var(--lv-shadow-lift); }
 
 /* Задания: чек-лист */
-.tasks { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px; box-shadow:var(--lv-shadow-soft); overflow:hidden; }
+.tasks { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); overflow:hidden; }
 .task { display:flex; align-items:center; gap:12px; padding:14px 16px; border-top:1px solid var(--lv-line-2); }
 .task:first-child { border-top:0; }
-.checkbox { width:22px; height:22px; border-radius:999px; flex:none; display:flex; align-items:center; justify-content:center;
+.checkbox { width:22px; height:22px; border-radius:var(--lv-r-pill); flex:none; display:flex; align-items:center; justify-content:center;
   font-size:12px; border:2px solid var(--lv-line); color:transparent; transition:all .2s ease; }
 .task.done .checkbox { background-image:var(--lv-gradient-brand); border-color:transparent; color:var(--lv-on-brand); }
 .checkbox svg { width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:3; stroke-linecap:round; stroke-linejoin:round; }
@@ -109,14 +110,14 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .task-xp { font-size:12px; font-weight:700; color:var(--lv-gold-text); white-space:nowrap; }
 .task.done .task-title { color:var(--lv-dim); text-decoration:line-through; }
 
-.pill { padding:5px 11px; border-radius:999px; font-size:11px; font-weight:600; white-space:nowrap; }
+.pill { padding:5px 11px; border-radius:var(--lv-r-pill); font-size:11px; font-weight:600; white-space:nowrap; }
 .p-gold { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
 .p-pink { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
 
 /* Toast */
 .toast {
   position:fixed; left:50%; bottom:24px; z-index:60; transform:translateX(-50%) translateY(16px);
-  opacity:0; pointer-events:none; padding:12px 18px; border-radius:999px;
+  opacity:0; pointer-events:none; padding:12px 18px; border-radius:var(--lv-r-pill);
   background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
   box-shadow:var(--lv-shadow-toast); font-size:14px; font-weight:600;
   transition:opacity .25s ease, transform .25s cubic-bezier(.32,.72,0,1);
@@ -138,7 +139,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 <main class="view">
   <!-- Hero: мягкая подача (hero-top), эмодзи левитирует (lv-float) -->
   <section class="hero lv-enter">
-    <svg class="emoji" aria-hidden="true"><use href="../assets/icons.svg#i-heart"/></svg>
+    <svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-heart"/></svg>
     <h1>Привет, Алина!</h1>
     <p>Ты в программе амбассадоров LOVII. Делись любовью — получай бонусы за каждый заказ по твоему коду.</p>
   </section>
@@ -241,13 +242,13 @@ document.getElementById('themeBtn').addEventListener('click', function(){
 });
 var toastEl = document.getElementById('toast'), toastTimer;
 function showToast(text){
-  toastEl.textContent = text;
+  toastEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px;vertical-align:-2px;margin-right:6px"><path d="M5 13l4 4L19 7"/></svg>' + text;
   toastEl.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
 }
 document.getElementById('copyBtn').addEventListener('click', function(){
-  var done = function(){ showToast('✓ Промокод ALINA.LOVII скопирован'); };
+  var done = function(){ showToast('Промокод ALINA.LOVII скопирован'); };
   if (navigator.clipboard) { navigator.clipboard.writeText('ALINA.LOVII').then(done, done); } else { done(); }
 });
 document.getElementById('shareBtn').addEventListener('click', function(){

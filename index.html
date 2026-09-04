@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" id="metaTheme" content="#f64a8a">
+<meta name="description" content="LOVII «Лови» — дизайн-система: токены, компоненты, UX-паттерны, тон бренда. Живой style-guide, референс-экраны и библиотека компонентов в двух темах.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LOVII · Дизайн-система">
+<meta property="og:title" content="LOVII — дизайн-система «Лови»">
+<meta property="og:description" content="Токены, компоненты, UX-паттерны и тон бренда. Живой style-guide, 8 референс-экранов и библиотека компонентов.">
+<meta property="og:image" content="https://bestdeejay-design.github.io/lovii-design/assets/og-cover.png">
+<meta property="og:url" content="https://bestdeejay-design.github.io/lovii-design/">
+<meta name="twitter:card" content="summary_large_image">
 <title>LOVII · Дизайн-система</title>
 <script>
 /* Anti-FOUC: тема ставится ДО CSS. Копировать как есть. */
@@ -33,10 +42,10 @@ html[data-theme="light"] img.logo-dark-img { display:none; }
 html[data-theme="dark"] img.logo-light-img { display:none; }
 .ver-pill {
   margin-left:10px; font-size:11px; font-weight:700; color:var(--lv-dim);
-  background:var(--lv-surface); border-radius:999px; padding:4px 10px; white-space:nowrap;
+  background:var(--lv-surface); border-radius:var(--lv-r-pill); padding:4px 10px; white-space:nowrap;
 }
 .theme-btn {
-  margin-left:auto; width:36px; height:36px; border-radius:999px; flex:none;
+  margin-left:auto; width:36px; height:36px; border-radius:var(--lv-r-pill); flex:none;
   background:var(--lv-surface); display:flex; align-items:center; justify-content:center;
   font-size:16px; transition:transform .15s ease, background .2s ease;
 }
@@ -45,37 +54,55 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
 .theme-btn .tb-sun { display:none; }
 html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
 html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
-.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-.theme-btn .tb-sun { display:none; }
-html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
-html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
-/* Hero на брендовом градиенте */
+/* Hero на брендовом градиенте + фирменное свечение (v1.7.0) */
 .hero {
-  margin-top:16px; padding:28px 24px; border-radius:16px;
+  margin-top:16px; padding:28px 24px; border-radius:var(--lv-r-lg);
   background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
   box-shadow:var(--lv-shadow-lift); position:relative; overflow:hidden;
 }
+.hero::before, .hero::after {
+  content:""; position:absolute; border-radius:var(--lv-r-pill); pointer-events:none;
+}
+.hero::before { width:230px; height:230px; right:-70px; top:-100px;
+  background:radial-gradient(closest-side, rgba(255,255,255,.32), rgba(255,255,255,0));
+  animation:lv-float 6s ease-in-out infinite; }
+.hero::after { width:170px; height:170px; left:-60px; bottom:-80px;
+  background:radial-gradient(closest-side, rgba(255,255,255,.2), rgba(255,255,255,0));
+  animation:lv-float 7s ease-in-out 1s infinite reverse; }
 .hero .kicker { font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.7); }
 .hero h1 { font-size:30px; font-weight:800; letter-spacing:-.02em; line-height:1.12; margin:10px 0 8px; }
+.hero h1 .grad { background-image:linear-gradient(90deg, #ffffff, #e8d5b7); -webkit-background-clip:text; background-clip:text; color:transparent; }
 .hero p { font-size:14px; color:rgba(255,255,255,.72); line-height:1.65; max-width:52ch; }
 .hero .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
 .hero .chip {
-  font-size:12px; font-weight:600; padding:6px 12px; border-radius:999px;
+  font-size:12px; font-weight:600; padding:6px 12px; border-radius:var(--lv-r-pill);
   background:rgba(255,255,255,.14); color:#fff;
 }
 
-/* Секции */
+/* Секции: кикер-пилюля — подписной приём бренда (v1.7.0) */
 .section { margin-top:32px; }
+.kicker-pill {
+  display:inline-block; font-size:10.5px; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--lv-pink-dark); background:var(--lv-soft-pink);
+  border-radius:var(--lv-r-pill); padding:3px 9px; margin-bottom:10px;
+}
+html[data-theme="dark"] .kicker-pill { color:var(--lv-pink); } /* на тёмном pink-dark не читается */
 .section-title { font-size:20px; font-weight:800; letter-spacing:-.02em; margin-bottom:4px; }
 .section-sub { font-size:13px; color:var(--lv-dim); line-height:1.6; margin-bottom:14px; }
 
+/* Каскадный вход (v1.7.0) */
+.reveal { opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .55s cubic-bezier(.22,.61,.36,1); }
+.reveal.in { opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){ .reveal { opacity:1; transform:none; transition:none; } }
+
 /* Главная карта: живой гайд */
 .guide-card {
-  display:block; border-radius:16px; background:var(--lv-card);
-  border:1px solid var(--lv-hairline); box-shadow:var(--lv-shadow-lift);
-  padding:20px; transition:transform .15s ease;
+  display:block; border-radius:var(--lv-r-lg); background:var(--lv-card);
+  border:1px solid var(--lv-hairline); box-shadow:var(--lv-shadow-soft);
+  padding:20px; transition:transform .2s ease, box-shadow .2s ease;
 }
+.guide-card:hover { transform:translateY(-2px); box-shadow:var(--lv-shadow-lift); }
 .guide-card:active { transform:scale(.985); }
 .guide-card .swatches { display:flex; gap:6px; margin-bottom:14px; }
 .guide-card .sw { width:28px; height:28px; border-radius:9px; border:1px solid var(--lv-hairline); }
@@ -87,14 +114,15 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .role-grid { display:grid; grid-template-columns:1fr; gap:12px; }
 @media (min-width:640px){ .role-grid { grid-template-columns:repeat(2, 1fr); } }
 .role-card {
-  display:block; border-radius:16px; background:var(--lv-card);
+  display:block; border-radius:var(--lv-r-lg); background:var(--lv-card);
   border:1px solid var(--lv-hairline); padding:18px;
-  transition:transform .15s ease;
+  transition:transform .2s ease, box-shadow .2s ease;
 }
+.role-card:hover { transform:translateY(-2px); box-shadow:var(--lv-shadow-lift); }
 .role-card:active { transform:scale(.985); }
 .role-card .badge {
   display:inline-block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
-  border-radius:999px; padding:4px 10px; margin-bottom:10px;
+  border-radius:var(--lv-r-pill); padding:4px 10px; margin-bottom:10px;
 }
 .role-card h3 { font-size:15px; font-weight:800; letter-spacing:-.02em; }
 .role-card p { font-size:13px; color:var(--lv-dim); line-height:1.55; margin-top:6px; }
@@ -108,7 +136,6 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 }
 .doc-row:last-child { border-bottom:none; }
 .doc-num svg { width:15px; height:15px; display:block; fill:none; stroke:var(--lv-pink); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-.doc-num svg { width:15px; height:15px; display:block; fill:none; stroke:var(--lv-pink); stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .doc-num { font-size:12px; font-weight:700; color:var(--lv-dim); font-variant-numeric:tabular-nums; flex:none; width:26px; }
 .doc-row .t { font-size:14px; font-weight:600; }
 .doc-row .d { font-size:12px; color:var(--lv-dim); margin-left:auto; text-align:right; }
@@ -120,7 +147,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .toast {
   position:fixed; left:50%; bottom:24px; transform:translate(-50%, 16px);
   background:var(--lv-ink); color:var(--lv-bg); font-size:13px; font-weight:600;
-  padding:10px 18px; border-radius:999px; opacity:0; pointer-events:none;
+  padding:10px 18px; border-radius:var(--lv-r-pill); opacity:0; pointer-events:none;
   transition:opacity .25s ease, transform .25s ease; z-index:60;
 }
 .toast.show { opacity:1; transform:translate(-50%, 0); }
@@ -131,7 +158,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 <header class="app-header">
   <img src="assets/lovii-logo-light.svg" class="logo-light-img" alt="LOVII">
   <img src="assets/lovii-logo-dark.svg" class="logo-dark-img" alt="LOVII">
-  <span class="ver-pill">v1.6.0</span>
+  <span class="ver-pill">v1.7.0</span>
   <button class="theme-btn" id="themeBtn" aria-label="Переключить тему" title="Светлая/тёмная тема">
   <svg class="tb-moon" aria-hidden="true"><use href="assets/icons.svg#i-moon"/></svg>
   <svg class="tb-sun" aria-hidden="true"><use href="assets/icons.svg#i-sun"/></svg>
@@ -142,7 +169,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
   <section class="hero">
     <div class="kicker">Дизайн-система LOVII</div>
-    <h1>Единый стиль всех интерфейсов «Лови»</h1>
+    <h1>Единый стиль всех интерфейсов <span class="grad">«Лови»</span></h1>
     <p>Токены, компоненты, референс-экраны и правила для людей и ИИ-агентов. Канон стиля: lovii.mobiap.com. Поток изменений: lovii-design → lovii_demo → lovii-site.</p>
     <div class="chips">
       <span class="chip">Pink #f64a8a</span>
@@ -153,7 +180,8 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
     </div>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
+    <span class="kicker-pill">Гайд</span>
     <h2 class="section-title">Живой style-guide</h2>
     <p class="section-sub">Все токены и компоненты в одном самодостаточном файле: палитра, типографика, кнопки, пилюли, карточки, bottom-sheet, toast. Обе темы — переключалкой в хедере.</p>
     <a class="guide-card" href="style-guide.html">
@@ -169,7 +197,8 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
     </a>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
+    <span class="kicker-pill">Роли</span>
     <h2 class="section-title">Референсы по ролям</h2>
     <p class="section-sub">Пять самодостаточных экранов: копируй каркас и подставляй контент своей роли.</p>
     <div class="role-grid">
@@ -206,7 +235,8 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
     </div>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
+    <span class="kicker-pill">Паттерны</span>
     <h2 class="section-title">Живые UX-паттерны</h2>
     <p class="section-sub">v3: лаборатория с работающими демонстрациями поведения экрана — всё, что вокруг компонентов.</p>
     <a class="role-card" href="examples/06-ux-lab.html">
@@ -217,7 +247,8 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
     </a>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
+    <span class="kicker-pill">Тон</span>
     <h2 class="section-title">Бренд и тон</h2>
     <p class="section-sub">v4: голос «Лови» и тексты вживую — принципы, матрица тона, канонические формулировки, юр.блок.</p>
     <a class="role-card" href="examples/07-voice-lab.html">
@@ -228,7 +259,8 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
     </a>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
+    <span class="kicker-pill">Компоненты</span>
     <h2 class="section-title">Библиотека компонентов</h2>
     <p class="section-sub">v5: полный набор вживую — каждая группа со состояниями, в обеих темах. Реестр набора и правила расширения — docs/12.</p>
     <a class="role-card" href="examples/08-components.html">
@@ -239,7 +271,8 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
     </a>
   </section>
 
-  <section class="section">
+  <section class="section reveal">
+    <span class="kicker-pill">Доки</span>
     <h2 class="section-title">Документация</h2>
     <p class="section-sub">Полные тексты — в репозитории на GitHub.</p>
     <div class="doc-list">
@@ -247,7 +280,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
         <span class="doc-num">01</span><span class="t">Принципы</span><span class="d">основа стиля</span>
       </a>
       <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/02-color.md" target="_blank" rel="noopener">
-        <span class="doc-num">02</span><span class="t">Цвет</span><span class="d">47 токенов, Do / Don't</span>
+        <span class="doc-num">02</span><span class="t">Цвет</span><span class="d">вся палитра, Do / Don't</span>
       </a>
       <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/03-typography.md" target="_blank" rel="noopener">
         <span class="doc-num">03</span><span class="t">Типографика</span><span class="d">Inter, шкала</span>
@@ -280,7 +313,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
         <span class="doc-num">12</span><span class="t">Библиотека компонентов</span><span class="d">реестр набора, расширение</span>
       </a>
       <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/docs/checklist.md" target="_blank" rel="noopener">
-        <span class="doc-num">✓</span><span class="t">Чек-лист приёмки</span><span class="d">перед каждым коммитом</span>
+        <span class="doc-num"><svg aria-hidden="true"><use href="assets/icons.svg#i-check"/></svg></span><span class="t">Чек-лист приёмки</span><span class="d">перед каждым коммитом</span>
       </a>
       <a class="doc-row" href="https://github.com/bestdeejay-design/lovii-design/blob/main/AGENTS.md" target="_blank" rel="noopener">
         <span class="doc-num"><svg aria-hidden="true"><use href="assets/icons.svg#i-bot"/></svg></span><span class="t">AGENTS.md + SKILL.md</span><span class="d">правила для ИИ</span>
@@ -312,10 +345,23 @@ document.getElementById('themeBtn').addEventListener('click', function(){
 });
 var toastEl = document.getElementById('toast'), toastTimer;
 function showToast(text){
-  toastEl.textContent = '✓ ' + text;
+  toastEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px;vertical-align:-2px;margin-right:6px"><path d="M5 13l4 4L19 7"/></svg>' + text;
   toastEl.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
+}
+
+/* Каскадный вход секций (v1.7.0): reduce-motion гасится в CSS */
+if ('IntersectionObserver' in window) {
+  var io = new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.08 });
+  document.querySelectorAll('.reveal').forEach(function(el, i){
+    el.style.transitionDelay = Math.min(i*70, 350) + 'ms';
+    io.observe(el);
+  });
+} else {
+  document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
 }
 </script>
 

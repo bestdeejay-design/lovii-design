@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" id="metaTheme" content="#f64a8a">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
 <title>LOVII · Пример: витрина (роль «Клиент»)</title>
 <script>
 /* Anti-FOUC: тема ставится ДО CSS. Копировать как есть. */
@@ -34,15 +35,11 @@ html[data-theme="dark"] img.logo-light-img { display:none; }
   background:var(--lv-glass); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
 }
 .theme-btn {
-  margin-left:auto; width:36px; height:36px; border-radius:999px; flex:none;
+  margin-left:auto; width:36px; height:36px; border-radius:var(--lv-r-pill); flex:none;
   background:var(--lv-surface); display:flex; align-items:center; justify-content:center;
   font-size:16px; transition:transform .15s ease, background .2s ease;
 }
 .theme-btn:active { transform:scale(.95); }
-.theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
-.theme-btn .tb-sun { display:none; }
-html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
-html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .theme-btn svg { width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .theme-btn .tb-sun { display:none; }
 html[data-theme="dark"] .theme-btn .tb-sun { display:block; }
@@ -57,7 +54,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* ============ Hero-промо: брендовый градиент 135deg ============ */
 .hero {
-  margin:16px var(--lv-pad-x) 0; padding:24px 20px; border-radius:16px;
+  margin:16px var(--lv-pad-x) 0; padding:24px 20px; border-radius:var(--lv-r-lg);
   background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
   box-shadow:var(--lv-shadow-lift); position:relative; overflow:hidden;
 }
@@ -68,11 +65,11 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 /* ============ Категории: плитки (только светлая подача) ============ */
 .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; padding:0 var(--lv-pad-x); }
 .tile {
-  border-radius:12px; padding:14px 8px 10px; text-align:center; text-decoration:none;
+  border-radius:var(--lv-r-sm); padding:14px 8px 10px; text-align:center; text-decoration:none;
   transition:transform .15s ease;
 }
 .tile:active { transform:scale(.96); }
-.tile .emoji { width:26px; height:26px; color:var(--lv-on-tile); fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.tile .ico { width:26px; height:26px; color:var(--lv-on-tile); fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .tile .name { margin-top:6px; font-size:11px; font-weight:600; color:var(--lv-on-tile); } /* текст НА плитке — фиксированный, не темовый */
 .t-pink { background-image:var(--lv-tile-pink); } .t-tiffany { background-image:var(--lv-tile-tiffany); }
 .t-gold { background-image:var(--lv-tile-gold); } .t-ink { background-image:var(--lv-tile-ink); }
@@ -81,7 +78,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .grid-products { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; padding:0 var(--lv-pad-x); }
 @media (min-width:640px){ .grid-products { grid-template-columns:repeat(4,1fr); } }
 .card {
-  background:var(--lv-card); border:1px solid var(--lv-line); border-radius:16px;
+  background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg);
   box-shadow:var(--lv-shadow-soft); overflow:hidden;
   transition:transform .15s ease, box-shadow .2s ease;
 }
@@ -91,13 +88,10 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .cover .cv-ico { width:46px; height:46px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
 .cv-hero .cv-ico { color:var(--lv-pink-dark); }
 .cv-ink .cv-ico { color:#ffffff; }
-.cover .cv-ico { width:46px; height:46px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-.cv-hero .cv-ico { color:var(--lv-pink-dark); }
-.cv-ink .cv-ico { color:#ffffff; }
 .cv-hero { background:linear-gradient(180deg, var(--lv-hero-top), var(--lv-card)); }
 .cv-ink { background-image:var(--lv-gradient-ink); }
 .badge {
-  position:absolute; top:10px; left:10px; padding:4px 10px; border-radius:999px;
+  position:absolute; top:10px; left:10px; padding:4px 10px; border-radius:var(--lv-r-pill);
   font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
 }
 .b-hit { background:var(--lv-badge-hit); color:var(--lv-pink-dark); }
@@ -110,7 +104,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .price { font-size:16px; font-weight:800; letter-spacing:-.02em; }
 .price small { font-size:11px; font-weight:600; color:var(--lv-dim); text-decoration:line-through; margin-left:4px; }
 .btn-add {
-  width:32px; height:32px; border-radius:999px; border:0; cursor:pointer; flex:none;
+  width:32px; height:32px; border-radius:var(--lv-r-pill); border:0; cursor:pointer; flex:none;
   background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); font-size:16px; line-height:1;
   box-shadow:var(--lv-shadow-soft); transition:transform .15s ease, box-shadow .2s ease;
 }
@@ -121,7 +115,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .rail .card { flex:0 0 150px; scroll-snap-align:start; }
 
 /* ============ Пилюли статусов: soft-пары ============ */
-.pill { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:600; }
+.pill { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:var(--lv-r-pill); font-size:12px; font-weight:600; }
 .pill .lv-dot { background:currentColor; }
 .p-pink { background:var(--lv-soft-pink); color:var(--lv-pink-dark); }
 .p-tiffany { background:var(--lv-soft-tiffany); color:var(--lv-tiffany-text); }
@@ -140,7 +134,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 @media (min-width:900px){
   .bottom-nav {
     left:50%; right:auto; transform:translateX(-50%); bottom:16px;
-    height:60px; padding:0 8px; border-radius:999px; width:min(420px,90vw);
+    height:60px; padding:0 8px; border-radius:var(--lv-r-pill); width:min(420px,90vw);
     box-shadow:var(--lv-shadow-nav);
   }
 }
@@ -157,13 +151,18 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .toast {
   position:fixed; left:50%; bottom:calc(var(--lv-nav-h) + 16px + env(safe-area-inset-bottom,0px)); z-index:60;
   transform:translateX(-50%) translateY(16px); opacity:0; pointer-events:none;
-  max-width:min(420px, calc(100vw - 32px)); padding:12px 18px; border-radius:999px;
+  max-width:min(420px, calc(100vw - 32px)); padding:12px 18px; border-radius:var(--lv-r-pill);
   background-image:var(--lv-gradient-brand); color:var(--lv-on-brand);
   box-shadow:var(--lv-shadow-toast); font-size:14px; font-weight:600; text-align:center;
   transition:opacity .25s ease, transform .25s cubic-bezier(.32,.72,0,1);
 }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 .toast small { display:block; font-size:11px; font-weight:500; color:var(--lv-toast-d); }
+
+/* Фирменное свечение бренда (v1.7.0) */
+.hero::before, .hero::after { content:""; position:absolute; border-radius:var(--lv-r-pill); pointer-events:none; }
+.hero::before { width:210px; height:210px; right:-60px; top:-90px; background:radial-gradient(closest-side, rgba(255,255,255,.3), rgba(255,255,255,0)); animation:lv-float 6s ease-in-out infinite; }
+.hero::after { width:150px; height:150px; left:-50px; bottom:-70px; background:radial-gradient(closest-side, rgba(255,255,255,.18), rgba(255,255,255,0)); animation:lv-float 7s ease-in-out 1s infinite reverse; }
 </style>
 </head>
 <body>
@@ -190,10 +189,10 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
   <section class="section">
     <div class="section-head"><h2 class="section-title">Категории</h2></div>
     <nav class="tiles" aria-label="Категории">
-      <a class="tile t-pink" href="#"><svg class="emoji" aria-hidden="true"><use href="../assets/icons.svg#i-heart"/></svg><span class="name">Для неё</span></a>
-      <a class="tile t-tiffany" href="#"><svg class="emoji" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg><span class="name">Наборы</span></a>
-      <a class="tile t-gold" href="#"><svg class="emoji" aria-hidden="true"><use href="../assets/icons.svg#i-gem"/></svg><span class="name">Премиум</span></a>
-      <a class="tile t-ink" href="#"><svg class="emoji" aria-hidden="true"><use href="../assets/icons.svg#i-mail"/></svg><span class="name">Открытки</span></a>
+      <a class="tile t-pink" href="#"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-heart"/></svg><span class="name">Для неё</span></a>
+      <a class="tile t-tiffany" href="#"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg><span class="name">Наборы</span></a>
+      <a class="tile t-gold" href="#"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gem"/></svg><span class="name">Премиум</span></a>
+      <a class="tile t-ink" href="#"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-mail"/></svg><span class="name">Открытки</span></a>
     </nav>
   </section>
 
@@ -319,7 +318,7 @@ document.getElementById('themeBtn').addEventListener('click', function(){
 /* Toast: один элемент переиспользуется */
 var toastEl = document.getElementById('toast'), toastTimer;
 function showToast(text){
-  toastEl.textContent = '✓ ' + text;
+  toastEl.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px;vertical-align:-2px;margin-right:6px"><path d="M5 13l4 4L19 7"/></svg>' + text;
   toastEl.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(function(){ toastEl.classList.remove('show'); }, 2400);
