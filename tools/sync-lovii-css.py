@@ -15,7 +15,9 @@
 # использует propagate.py). Список потребителей — реестр
 # tools/targets.json (добавил сайт — добавь запись в реестр).
 #
-# Снапшот = lovii.css + инъекция шапки-провенанса
+# Снапшот = выбранный артефакт (по умолчанию lovii.css; поле "src"
+# в реестре — lovii-tokens.css для потребителей со своим
+# компонентным слоем) + инъекция шапки-провенанса
 # («СНАПШОТ из lovii-design@<hash>; не редактировать»).
 # Направление строго одно: lovii-design → сайты. Правки
 # снапшота на месте запрещены и будут перезатёрты.
@@ -35,16 +37,19 @@ SRC = ROOT / "lovii.css"
 REGISTRY = ROOT / "tools" / "targets.json"
 
 # Резервный список, если реестра нет (реестр — источник истины).
-FALLBACK = [("lovii", "assets/lovii.css"), ("lovii-site", "assets/lovii.css")]
+FALLBACK = [("lovii", "assets/lovii.css", "lovii.css"),
+            ("lovii-site", "assets/lovii.css", "lovii.css")]
 
 
 def load_targets():
-    """Реестр потребителей из tools/targets.json → [(repo, dest), …]."""
+    """Реестр потребителей tools/targets.json → [(repo, dest, src), …].
+    src — имя артефакта lovii-design (по умолчанию lovii.css)."""
     if not REGISTRY.exists():
         print(f"ВНИМАНИЕ: нет {REGISTRY.name} — используется резервный список")
         return list(FALLBACK)
     data = json.loads(REGISTRY.read_text(encoding="utf-8"))
-    return [(c["repo"], c["dest"]) for c in data.get("consumers", [])]
+    return [(c["repo"], c["dest"], c.get("src", "lovii.css"))
+            for c in data.get("consumers", [])]
 
 
 def git_short() -> str:
@@ -56,10 +61,13 @@ def git_short() -> str:
         return "unknown"
 
 
-def provenance(repo: str) -> str:
+def provenance(repo: str, src: str = "lovii.css") -> str:
+    artifact = ("lovii.css (полный файл ДС)" if src == "lovii.css"
+                else f"{src} (слой токенов без компонентов)")
     return (
         f"/* СНАПШОТ LOVII UI из репо bestdeejay-design/lovii-design@{git_short()}\n"
         f"   Потребитель: {repo}. НЕ РЕДАКТИРОВАТЬ ЗДЕСЬ.\n"
+        f"   Артефакт: {artifact}.\n"
         f"   Правки только в lovii-design: css/lovii-components.css или\n"
         f"   tokens/tokens.css → build-lovii-css.py → sync-lovii-css.py. */\n\n"
     )
@@ -73,17 +81,22 @@ def main() -> int:
     if not SRC.exists():
         print(f"Нет {SRC} — сначала python3 tools/build-lovii-css.py")
         return 1
-    body = SRC.read_text(encoding="utf-8")
 
     drift = []
-    for repo, dest_rel in load_targets():
+    for repo, dest_rel, src_rel in load_targets():
+        src = ROOT / src_rel
+        if not src.exists():
+            print(f"lovii-design/{src_rel}: НЕТ АРТЕФАКТА — сначала сборка")
+            drift.append(f"{repo}/{dest_rel}")
+            continue
+        body = src.read_text(encoding="utf-8")
         dest = ROOT.parent / repo / dest_rel
         name = f"{repo}/{dest_rel}"
         if not dest.parent.exists():
             print(f"{name}: НЕТ КАТАЛОГА {dest.parent} — пропущен")
             drift.append(name)
             continue
-        expected = provenance(repo) + body
+        expected = provenance(repo, src_rel) + body
         if dest.exists() and dest.read_text(encoding="utf-8") == expected:
             print(f"{name}: синхронен ✓")
         elif args.check:

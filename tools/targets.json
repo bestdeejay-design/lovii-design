@@ -1,5 +1,5 @@
 {
-  "_comment": "Реестр потребителей lovii.css — ЕДИНСТВЕННОЕ место, где перечислены сайты, получающие снапшоты дизайн-системы. Читают tools/sync-lovii-css.py и tools/propagate.py. Поля: repo — каталог репо рядом с lovii-design (/home/z/my-project/<repo>); dest — файл снапшота внутри репо; branch — ветка пуша; guards — команды приёмки перед коммитом (cwd=/home/z/my-project, код 0 = OK); smoke — медленная playwright-приёмка (--smoke); live — адрес прода; notes — когда пушить осознанно. Новый сайт на фреймворке = добавить объект сюда (см. SKILL.md, раздел «Фреймворк-цикл»).",
+  "_comment": "Реестр потребителей lovii.css — ЕДИНСТВЕННОЕ место, где перечислены сайты, получающие снапшоты дизайн-системы. Читают tools/sync-lovii-css.py и tools/propagate.py. Поля: repo — каталог репо рядом с lovii-design (/home/z/my-project/<repo>); dest — файл снапшота внутри репо; src — артефакт lovii-design (по умолчанию lovii.css; lovii-tokens.css — слой токенов без компонентов для потребителей со своим компонентным слоем); branch — ветка пуша; guards — команды приёмки перед коммитом (cwd=/home/z/my-project, код 0 = OK); smoke — медленная playwright-приёмка (--smoke); live — адрес прода; notes — когда пушить осознанно. Новый сайт на фреймворке = добавить объект сюда (см. SKILL.md, раздел «Фреймворк-цикл»).",
   "consumers": [
     {
       "repo": "lovii",
@@ -20,13 +20,16 @@
       "smoke": "python3 scripts/smoke_lovii_site.py",
       "live": "https://bestdeejay-design.github.io/lovii-site/",
       "notes": "Превью нового lovii.ru. CDN GitHub Pages кэширует до 10 минут — live-приёмку гонять с учётом кэша."
+    },
+    {
+      "repo": "lovii-demo",
+      "src": "lovii-tokens.css",
+      "dest": "assets/lovii-tokens.css",
+      "branch": "main",
+      "guards": [],
+      "live": "https://lovii.mobiap.com",
+      "notes": "Витрина lovii.mobiap.com (демо продукта). Получает СЛОЙ ТОКЕНОВ (lovii-tokens.css: --lv-* + compat-алиасы --pink/--bg/...); свой компонентный слой css/lovii.css живёт в репо демо. Полный lovii.css подключать НЕЛЬЗЯ — словарь классов демо разошёлся с каноном (worklog Task 59). Приёмка после разноски: scripts/demo_migration_shots.py + визуальная сверка со shots/lovii_demo_migration/."
     }
   ],
-  "future": [
-    {
-      "repo": "lovii_demo",
-      "dest": "css/lovii.css",
-      "notes": "После миграции витрины lovii.mobiap.com с поколения --pink на LOVII UI (--lv-*); до миграции в consumers не вносить — снапшот не совместим с легаси-именами."
-    }
-  ]
+  "future": []
 }

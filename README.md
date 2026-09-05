@@ -75,7 +75,7 @@ document.documentElement.dataset.theme=t;}catch(e){document.documentElement.data
 5. **lovii_demo** (lovii.mobiap.com) — эталонная реализация
 6. **lovii-legacy** — архив контента легаси-сайта (бывш. lovii-site)
 
-Порядок изменения стиля (фреймворк-цикл): `lovii-design` (слои) → `build-lovii-css.py` → `check-sync.py` → commit+push в lovii-design → `propagate.py --push` → снапшоты+стражи+коммиты+пуши во всех потребителях из `tools/targets.json` (lovii · lovii-site; lovii_demo — после миграции) → проверка продов. Известные расхождения фиксируются в [docs/06-application.md](docs/06-application.md) (таблица «Расхождения»), а не молча выбираются.
+Порядок изменения стиля (фреймворк-цикл): `lovii-design` (слои) → `build-lovii-css.py` (оба артефакта: lovii.css + lovii-tokens.css) → `check-sync.py` → commit+push в lovii-design → `propagate.py --push` → снапшоты+стражи+коммиты+пуши во всех потребителях из `tools/targets.json` (lovii · lovii-site · lovii-demo) → проверка продов. Известные расхождения фиксируются в [docs/06-application.md](docs/06-application.md) (таблица «Расхождения»), а не молча выбираются.
 
 ## Roadmap
 
@@ -88,7 +88,7 @@ document.documentElement.dataset.theme=t;}catch(e){document.documentElement.data
 - **v4 (готова)** — бренд и тон: голос, тексты, юр.блок, иллюстрации (docs/11) + живая Тон-лаборатория examples/07-voice-lab.html
 - **v5 (готова)** — компоненты: полный набор собран агентом — реестр 9 групп (docs/12) + живая библиотека examples/08-components.html; расширение — по запросу владельца
 - **Сайт (готов)** — итоговая версия LOVII site на домене lovii.ru (репозиторий bestdeejay-design/lovii): собран на каноне ДС по docs/13; лучший опыт white paper v1.23 (контент, факты, декор) смешан со стилем «Лови»
-- **далее** — разноска канонических значений в lovii_demo одним стилевым циклом (dark v1.2, бежевый фон v1.3, иконки v1.3: бамп `?v=N` + SW CACHE)
+- **далее** — ~~разноска канонических значений в lovii_demo~~ ВЫПОЛНЕНО (v1.12.0): демо на lovii-tokens.css (слой токенов + compat-алиасы); бежевый фон v1.3 и dark-значения v1.2 приехали в витрину
 
 ## Контакты
 

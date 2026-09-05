@@ -38,7 +38,7 @@ description: >
 12. `style-guide.html` — визуальный эталон (открыть в браузере, переключить тему)
 13. `docs/checklist.md` — приёмка перед завершением (вкл. §12 «Текст и тон»)
 
-## Как подключить ДС к сайту (два режима)
+## Как подключить ДС к сайту (три режима)
 
 **Режим «снапшот» — по умолчанию для прод-потребителей** (lovii.ru, lovii-site): файл живёт в репо сайта, версия и провенанс зафиксированы коммитом, сборка и приёмка не зависят от сети:
 
@@ -46,6 +46,13 @@ description: >
 <!-- тема: anti-FOUC до CSS, затем единый файл -->
 <script>(function(){try{var t=localStorage.getItem('lovii_theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <link rel="stylesheet" href="assets/lovii.css">
+```
+
+**Режим «снапшот токенов» — для сайтов со СВОИМ компонентным слоем** (lovii-demo / lovii.mobiap.com): раздаётся `lovii-tokens.css` (токены+база+движение+compat-алиасы, БЕЗ компонентов) — канонические классы конфликтуют с локальным словарём сайта. Поле `"src": "lovii-tokens.css"` в реестре. Свои классы сайта могут использовать легаси-имена (`--pink`) — их значения идут от канона через алиасы:
+
+```html
+<link rel="stylesheet" href="assets/lovii-tokens.css"> <!-- сначала канон токенов -->
+<link rel="stylesheet" href="css/site.css">            <!-- свой слой сайта -->
 ```
 
 **Режим «live-CDN» — для прототипов/быстрых сайтов**: прямая ссылка на Pages фреймворка, обновляется без пересборки сайта (CDN GitHub Pages кэширует до 10 минут):
@@ -60,11 +67,11 @@ description: >
 
 Единственное место правки стилей ЛЮБОГО сайта LOVII — этот репозиторий. Правка снапшота `assets/lovii.css` в сайте = нарушение (AGENTS.md пр.14).
 
-1. Правишь исходники: `tokens/tokens.css` (значения) и/или `css/lovii-components.css` (компоненты).
-2. `python3 tools/build-lovii-css.py` → `python3 tools/check-sync.py` (0 ошибок).
+1. Правишь исходники: `tokens/tokens.css` (значения), `tokens/compat-legacy.css` (легаси-алиасы) и/или `css/lovii-components.css` (компоненты).
+2. `python3 tools/build-lovii-css.py` → оба артефакта (`lovii.css` + `lovii-tokens.css`) → `python3 tools/check-sync.py` (0 ошибок).
 3. `git commit` + `git push` в lovii-design (провенанс снапшотов должен указывать на запушенный коммит).
-4. `python3 tools/propagate.py --push` — все сайты из `tools/targets.json` получают свежий `lovii.css`: снапшот → стражи приёмки → точечный коммит (только файл снапшота) → пуш. Для медленной playwright-приёмки добавь `--smoke`, для сверки без записи — `--check`.
-5. Новое потребителя: добавить запись в `tools/targets.json` (repo, dest, branch, guards, live) — следующая разноска подхватит автоматически.
+4. `python3 tools/propagate.py --push` — все сайты из `tools/targets.json` получают свой артефакт (поле `src`): снапшот → стражи приёмки → точечный коммит (только файл снапшота) → пуш. Для медленной playwright-приёмки добавь `--smoke`, для сверки без записи — `--check`.
+5. Новый потребитель: добавить запись в `tools/targets.json` (repo, dest, src?, branch, guards, live) — следующая разноска подхватит автоматически. Сайты на канонических классах берут `lovii.css`; сайты со своим компонентным слоем — `lovii-tokens.css`.
 
 Живой адрес фреймворка (хаб/гайд/examples/lovii.css): <https://bestdeejay-design.github.io/lovii-design/>
 

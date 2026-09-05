@@ -132,23 +132,29 @@ def main() -> int:
         return 1
 
     # ── Шаг 1: снапшоты ───────────────────────────────────────
-    body = (ROOT / "lovii.css").read_text(encoding="utf-8")
     changed, in_sync, failed = [], [], []
     for c in consumers:
         repo = WORLD / c["repo"]
         dest = repo / c["dest"]
+        src_name = c.get("src", "lovii.css")
+        src = ROOT / src_name
         name = f"{c['repo']}/{c['dest']}"
         if not repo.exists():
             print(f"{name}: НЕТ РЕПО {repo} — пропущен")
             failed.append(name)
             continue
-        expected = SYNC.provenance(c["repo"]) + body
+        if not src.exists():
+            print(f"{name}: НЕТ АРТЕФАКТА lovii-design/{src_name} — сначала сборка")
+            failed.append(name)
+            continue
+        body = src.read_text(encoding="utf-8")
+        expected = SYNC.provenance(c["repo"], src_name) + body
         current = dest.read_text(encoding="utf-8") if dest.exists() else None
         if current == expected:
             # содержимое верное; но снапшот мог быть записан ранее и не закоммичен
             if c["dest"] in dirty_files(repo):
                 print(f"{name}: содержимое верное, снапшот НЕ закоммичен — включён в разноску")
-                changed.append(c)
+                changed.append((c, src_name))
             else:
                 print(f"{name}: синхронен ✓")
                 in_sync.append(name)
@@ -158,8 +164,8 @@ def main() -> int:
             failed.append(name)
             continue
         dest.write_text(expected, encoding="utf-8")
-        print(f"{name}: обновлён ← lovii-design@{head_short(ROOT)}")
-        changed.append(c)
+        print(f"{name}: обновлён ← lovii-design/{src_name}@{head_short(ROOT)}")
+        changed.append((c, src_name))
 
     if args.check:
         print("\nСВЕРКА: " + ("всё синхронно ✓" if not failed else f"расхождения: {len(failed)}"))
@@ -172,7 +178,7 @@ def main() -> int:
     # ── Шаг 2: стражи приёмки ─────────────────────────────────
     print("\n— Стражи приёмки —")
     blocked = []
-    for c in changed:
+    for c, _src_name in changed:
         for g in guard_cmd(c):
             code, out = run(g, WORLD)
             tail = (out.strip().splitlines() or [""])[-1]
@@ -198,7 +204,7 @@ def main() -> int:
 
     print("\n— Коммиты и пуши (только файлы снапшотов) —")
     pushed, skipped = [], []
-    for c in changed:
+    for c, src_name in changed:
         repo = WORLD / c["repo"]
         br = branch_of(repo)
         _code, staged_before = git(repo, ["diff", "--cached", "--name-only"])
@@ -212,7 +218,7 @@ def main() -> int:
             print(f"[{c['repo']}] SKIP: после стражей снапшот не изменился")
             skipped.append(c["repo"])
             continue
-        msg = f"chore(ds): снапшот lovii.css → lovii-design@{head_short(ROOT)}"
+        msg = f"chore(ds): снапшот {src_name} → lovii-design@{head_short(ROOT)}"
         code, out = git(repo, ["commit", "-m", msg])
         if code != 0:
             print(f"[{c['repo']}] COMMIT FAIL:\n{out[-800:]}")
@@ -236,7 +242,7 @@ def main() -> int:
     if failed:
         print(f"  ОШИБКИ               : {', '.join(failed)}")
         return 1
-    for c in changed:
+    for c, _src_name in changed:
         if c.get("live"):
             print(f"  live {c['repo']:<10}: {c['live']} (CDN Pages до 10 мин — приёмка с cache-buster)")
     return 0
