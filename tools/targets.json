@@ -25,7 +25,7 @@
       "repo": "lovii-demo",
       "src": "lovii-tokens.css",
       "dest": "assets/lovii-tokens.css",
-      "branch": "main",
+      "branch": "master",
       "guards": [],
       "live": "https://lovii.mobiap.com",
       "notes": "Витрина lovii.mobiap.com (демо продукта). Получает СЛОЙ ТОКЕНОВ (lovii-tokens.css: --lv-* + compat-алиасы --pink/--bg/...); свой компонентный слой css/lovii.css живёт в репо демо. Полный lovii.css подключать НЕЛЬЗЯ — словарь классов демо разошёлся с каноном (worklog Task 59). Приёмка после разноски: scripts/demo_migration_shots.py + визуальная сверка со shots/lovii_demo_migration/."
