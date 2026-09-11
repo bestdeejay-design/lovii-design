@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-<!-- LOVII DS · иконочный спрайт v5 (1.13.0): 50 символов. Стиль: 24px, stroke 2, round caps/joins, currentColor.
+<!-- LOVII DS · иконочный спрайт v6 (1.13.1): 51 символ. Стиль: 24px, stroke 2, round caps/joins, currentColor.
      Использование: <svg class="ico"><use href="assets/icons.svg#i-heart"/></svg>
      Голубь Ло — маскот бренда (fill-знак, НЕ stroke-система): <svg class="ico-lo"><use href="assets/icons.svg#i-lo"/></svg>
      Заливные (star) помечены fill внутри символа. Эмоджи в UI запрещены — см. docs/09-components.md §Иконки. -->
@@ -24,6 +24,7 @@
 <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></symbol>
 <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></symbol>
 <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/></symbol>
+<symbol id="i-ticket" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/></symbol>
 <symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></symbol>
 <symbol id="i-bear" viewBox="0 0 24 24"><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="6.5" r="2.5"/><circle cx="12" cy="13.5" r="6.5"/><path d="M10 12.5h.01"/><path d="M14 12.5h.01"/><path d="M12 15v.5"/><path d="M10.5 17c.9.7 2.1.7 3 0"/></symbol>

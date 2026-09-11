@@ -353,26 +353,26 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
     </div>
   </section>
 
-  <!-- ================= §10 LOVII CLUB · LOVII PAY ================= -->
+  <!-- ================= §10 LOVII PAY ================= -->
   <section class="section" id="clubpay">
-    <h2 class="section-title">LOVII CLUB · LOVII PAY</h2>
-    <p class="section-sub">Клубный профиль: карта участника <code>LOVII PAY</code> (flip по тапу, tilt по курсору — на desktop), счёт кэшбека, история операций, статус LC и привилегии. 1 балл = 1 ₽ · баллы не сгорают · вывод через СБП.</p>
+    <h2 class="section-title">LOVII PAY</h2>
+    <p class="section-sub">Профиль лояльности: карта <code>LOVII PAY</code> (flip по тапу, tilt по курсору — на desktop), счёт, история операций, уровни PAY→PASS→VIP и привилегии. 1 балл = 1 ₽ · баллы не сгорают · вывод через СБП.</p>
     <div class="panel">
       <div style="max-width:400px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
           <span class="tile tile-gold" style="width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center"><svg class="ico" style="width:22px;height:22px" aria-hidden="true"><use href="../assets/icons.svg#i-user"/></svg></span>
           <div style="min-width:0"><div style="font-size:16px;font-weight:800">Александра</div><div style="font-size:12px;color:var(--lv-dim);font-weight:600">+7 926 •••-45-67</div></div>
-          <span class="lc-badge"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-crown"/></svg>LC · Gold</span>
+          <span class="pay-badge"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-crown"/></svg>LOVII PASS</span>
         </div>
         <div class="pay-stage">
           <div class="pay-tilt" id="demoTilt">
-            <button class="pay-card" id="demoPayCard" type="button" aria-label="Карта LOVII PAY — перевернуть">
+            <button class="paycard" id="demoPayCard" type="button" aria-label="Карта LOVII PAY — перевернуть">
               <span class="pay-face pay-front">
                 <span class="pay-sheen" aria-hidden="true"></span>
                 <span class="pay-top"><span class="pay-brand">LOVII&nbsp;PAY</span><span class="pay-chip" aria-hidden="true"></span></span>
-                <span class="pay-num">5536 9138 4210 7753</span>
+                <span class="pay-num">9643 9138 4210 7755</span>
                 <span class="pay-bot">
-                  <span class="pay-holder"><span class="lbl">Участник LOVII CLUB</span><span class="val">ALEXANDRA</span></span>
+                  <span class="pay-holder"><span class="lbl">Держатель</span><span class="val">ALEXANDRA LOVII</span></span>
                   <span class="pay-bal"><span class="lbl">Счёт</span><span class="val">1 250 ₽</span></span>
                 </span>
               </span>
@@ -382,7 +382,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
                   <span class="pay-qr"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-qr"/></svg></span>
                   <span class="pay-back-info">
                     <span class="pay-cvv"><span class="lbl">CVV</span><span class="val">•••</span></span>
-                    <span class="pay-note">Оплата QR у партнёров клуба</span>
+                    <span class="pay-note">Оплата QR у партнёров Лови</span>
                   </span>
                 </span>
                 <span class="pay-back-bot">1 балл = 1 ₽ · баллы не сгорают · вывод через СБП</span>
@@ -400,7 +400,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
           <div class="acct-lbl">Баланс LOVII PAY · 1 балл = 1 ₽</div>
           <div class="acct-stats">
             <div class="as-b"><span class="v">323 ₽</span><span class="l">Кэшбек за месяц</span></div>
-            <div class="as-b"><span class="v">2%</span><span class="l">Ставка клуба</span></div>
+            <div class="as-b"><span class="v">14</span><span class="l">Покупки за месяц</span></div>
             <div class="as-b"><span class="v">3 400 ₽</span><span class="l">Выведено через СБП</span></div>
           </div>
           <div class="acct-actions">
@@ -417,19 +417,20 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
         </div>
 
         <div style="margin-top:16px" class="tier-card">
-          <div class="tier-row"><span class="tier-name"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-crown"/></svg>LC Gold</span><span class="tier-cb">кэшбек 2%</span></div>
-          <div class="tier-bar" role="progressbar" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100"><span style="width:41%"></span></div>
-          <div class="tier-next">До уровня <b>LC Ink</b> — ещё 17 600 ₽ покупок в этом месяце</div>
-          <div class="tier-perks"><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Кэшбек 2%</span><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>×2 кэшбек по пятницам</span><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Подарок ко дню рождения</span></div>
+          <div class="tier-levels"><span class="tl done"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>LOVII PAY</span><span class="tl cur"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>LOVII PASS</span><span class="tl lock">LOVII VIP</span></div>
+          <div class="tier-row" style="margin-top:12px"><span class="tier-name"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-crown"/></svg>LOVII PASS</span><span class="tier-cond">по подписке Лови</span></div>
+          <div class="tier-bar" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"><span style="width:68%"></span></div>
+          <div class="tier-next">До уровня <b>LOVII VIP</b> — обороты ещё 15 800 ₽ в этом месяце</div>
+          <div class="tier-perks"><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Мерч Лови</span><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Закрытые мероприятия</span><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Спец-скидки у МСП</span></div>
         </div>
 
         <div class="hscroll no-scrollbar lv-edge-fade" style="margin-top:16px">
-          <div class="priv-card t-gold"><span class="pc-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-percent"/></svg></span><div class="pc-title">×2 кэшбек по пятницам</div><div class="pc-sub">У всех партнёров района</div></div>
-          <div class="priv-card t-pink"><span class="pc-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg></span><div class="pc-title">Подарок ко дню рождения</div><div class="pc-sub">Выбери в сентябре</div></div>
-          <div class="priv-card t-tiffany"><span class="pc-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-clock"/></svg></span><div class="pc-title">Приоритет записи</div><div class="pc-sub">Без очереди у 14 точек</div></div>
+          <div class="priv-card t-pink"><span class="pc-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-gift"/></svg></span><div class="pc-title">Мерч Лови</div><div class="pc-sub">Эксклюзивные дропы для PASS и VIP</div></div>
+          <div class="priv-card t-gold"><span class="pc-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-ticket"/></svg></span><div class="pc-title">Закрытые мероприятия</div><div class="pc-sub">Вечера района для своих</div></div>
+          <div class="priv-card t-tiffany"><span class="pc-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-percent"/></svg></span><div class="pc-title">Спец-скидки у МСП</div><div class="pc-sub">Свой процент у партнёров района</div></div>
         </div>
       </div>
-      <div class="spec"><b>pay-card</b> gradient-ink · flip .65s · tilt ±10° (pointer:fine, off при reduce-motion) · номер 4-4-4-4 tabular &nbsp;·&nbsp; <b>acct-card</b> баланс 30/800 · h44 капсулы &nbsp;·&nbsp; <b>tx-row</b> иконка 36×36 soft-пара: in tiffany / buy pink / out gold &nbsp;·&nbsp; <b>tier-bar</b> h6 gradient-gold &nbsp;·&nbsp; <b>priv-card</b> 168px в hscroll</div>
+      <div class="spec"><b>paycard</b> gradient-ink · flip .65s · tilt ±10° (pointer:fine, off при reduce-motion) · номер 4-4-4-4 tabular, префикс 9643 &nbsp;·&nbsp; <b>acct-card</b> баланс 30/800 · h44 капсулы &nbsp;·&nbsp; <b>tx-row</b> иконка 36×36 soft-пара: in tiffany / buy pink / out gold &nbsp;·&nbsp; <b>tier-levels</b> PAY→PASS→VIP + <b>tier-bar</b> h6 gradient-gold &nbsp;·&nbsp; <b>priv-card</b> 168px в hscroll</div>
     </div>
   </section>
 

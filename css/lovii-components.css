@@ -380,25 +380,29 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .hero::before { width:210px; height:210px; right:-60px; top:-90px; background:radial-gradient(closest-side, rgba(255,255,255,.3), rgba(255,255,255,0)); animation:lv-float 6s ease-in-out infinite; }
 .hero::after { width:150px; height:150px; left:-50px; bottom:-70px; background:radial-gradient(closest-side, rgba(255,255,255,.18), rgba(255,255,255,0)); animation:lv-float 7s ease-in-out 1s infinite reverse; }
 
-/* ============ §10 LOVII CLUB · LOVII PAY (клубный профиль, v1.13.0) ============
-   Клуб «Лови» (LOVII CLUB) и карта участника (LOVII PAY): карта = клубная,
-   включает счёт и баланс (1 балл = 1 ₽, вывод через СБП). Канон демо:
-   lovii-demo js/club.js + css/lovii.css — словарь классов одинаковый.
-   Термины владельца: платформа «Лови» · клуб LOVII CLUB (LC) · карта LOVII PAY.
-   Иконки: .ico (§icons), спрайт v5: i-wallet i-qr i-rotate i-percent i-send i-arrow-down-left. */
+/* ============ §10 LOVII PAY (профиль лояльности, v1.13.1) ============
+   Программа LOVII PAY: карта + счёт + баланс (1 балл = 1 ₽, вывод через СБП).
+   Канон демо: lovii-demo js/club.js + css/lovii.css — словарь классов одинаковый.
+   Термины владельца (2026-09): платформа «Лови» · программа LOVII PAY.
+   «Клубов» и «карты жителя» нет. Уровни: LOVII PAY (база) → LOVII PASS
+   (действующая подписка) → LOVII VIP (оборот по карте). Привилегии — мерч,
+   мероприятия и спец-скидки у МСП (повышенный кэшбек НЕ используется).
+   ⚠ Класс 3D-карты — .paycard (без дефиса): .pay-card занят карточкой
+   шага «Платёж и возврат» в онбординге МСП демо.
+   Иконки: .ico (§icons), спрайт v6: i-wallet i-qr i-rotate i-percent i-send i-arrow-down-left i-ticket. */
 
-/* ---------- Клубный хедер ---------- */
-.club-head { display:flex; align-items:center; gap:14px; }
-.lc-badge { margin-left:auto; flex:none; display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 12px; border-radius:var(--lv-r-pill); background:var(--lv-soft-gold); color:var(--lv-gold-text); font-size:11px; font-weight:800; letter-spacing:.04em; white-space:nowrap; }
-.lc-badge .ico { width:13px; height:13px; }
+/* ---------- Хедер участника ---------- */
+.pay-head { display:flex; align-items:center; gap:14px; }
+.pay-badge { margin-left:auto; flex:none; display:inline-flex; align-items:center; gap:5px; height:28px; padding:0 12px; border-radius:var(--lv-r-pill); background:var(--lv-soft-gold); color:var(--lv-gold-text); font-size:11px; font-weight:800; letter-spacing:.04em; white-space:nowrap; }
+.pay-badge .ico { width:13px; height:13px; }
 
 /* ---------- Карта LOVII PAY: 3D flip + tilt ---------- */
 .pay-stage { }
 .pay-tilt { perspective:1100px; transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)); transition:transform .25s ease; }
-.pay-card { position:relative; display:block; width:100%; aspect-ratio:1.586/1; border:0; padding:0; cursor:pointer; transform-style:preserve-3d; transition:transform .65s cubic-bezier(.2,.75,.25,1); text-align:left; border-radius:var(--lv-r-xl); box-shadow:var(--lv-shadow-nav); font-family:inherit; }
-.pay-card.flipped { transform:rotateY(180deg); }
-.pay-card:active { transform:scale(.985); }
-.pay-card.flipped:active { transform:rotateY(180deg) scale(.985); }
+.paycard { position:relative; display:block; width:100%; margin:0; aspect-ratio:1.586/1; border:0; padding:0; cursor:pointer; transform-style:preserve-3d; transition:transform .65s cubic-bezier(.2,.75,.25,1); text-align:left; border-radius:var(--lv-r-xl); box-shadow:var(--lv-shadow-nav); font-family:inherit; }
+.paycard.flipped { transform:rotateY(180deg); }
+.paycard:active { transform:scale(.985); }
+.paycard.flipped:active { transform:rotateY(180deg) scale(.985); }
 .pay-face { position:absolute; inset:0; display:flex; flex-direction:column; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:var(--lv-r-xl); background-image:var(--lv-gradient-ink); overflow:hidden; color:#ffffff; padding:18px 20px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.09); }
 .pay-sheen { position:absolute; inset:0; pointer-events:none; background:radial-gradient(120% 90% at 88% -8%, rgba(212,168,84,.38) 0%, rgba(212,168,84,.1) 34%, transparent 62%), radial-gradient(90% 70% at -6% 108%, rgba(246,74,138,.28) 0%, transparent 55%); }
 .pay-top { position:relative; display:flex; align-items:flex-start; justify-content:space-between; gap:8px; }
@@ -429,7 +433,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .pay-hint.as-btn { color:var(--lv-pink); cursor:pointer; border:0; background:none; font-family:inherit; }
 .pay-hint.as-btn:active { opacity:.7; }
 
-/* ---------- Счёт кэшбека (составляющая LOVII PAY) ---------- */
+/* ---------- Счёт LOVII PAY ---------- */
 .acct-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
 .acct-balance { font-size:30px; font-weight:800; letter-spacing:-.02em; color:var(--lv-ink); font-variant-numeric:tabular-nums; }
 .acct-balance .unit { margin-left:4px; font-size:18px; font-weight:700; color:var(--lv-pink); }
@@ -462,12 +466,17 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .tx-sum { flex-shrink:0; font-size:13.5px; font-weight:800; color:var(--lv-ink); font-variant-numeric:tabular-nums; }
 .tx-sum.plus { color:var(--lv-tiffany-text); }
 
-/* ---------- Статус LC: уровень и прогресс ---------- */
+/* ---------- Статус LOVII PAY: уровни PAY→PASS→VIP и прогресс ---------- */
 .tier-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
+.tier-levels { display:flex; gap:6px; }
+.tl { flex:1; display:inline-flex; align-items:center; justify-content:center; gap:4px; min-width:0; height:30px; padding:0 6px; border-radius:var(--lv-r-pill); background:var(--lv-surface); font-size:10px; font-weight:800; letter-spacing:.02em; color:var(--lv-dim); white-space:nowrap; overflow:hidden; }
+.tl .ico { width:11px; height:11px; flex-shrink:0; }
+.tl.done { color:var(--lv-ink); }
+.tl.cur { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
 .tier-row { display:flex; align-items:center; justify-content:space-between; gap:8px; }
 .tier-name { display:inline-flex; align-items:center; gap:6px; font-size:14.5px; font-weight:800; color:var(--lv-ink); }
 .tier-name .ico { width:15px; height:15px; color:var(--lv-gold); }
-.tier-cb { padding:3px 10px; border-radius:var(--lv-r-pill); background:var(--lv-soft-gold); color:var(--lv-gold-text); font-size:11px; font-weight:800; }
+.tier-cond { padding:3px 10px; border-radius:var(--lv-r-pill); background:var(--lv-soft-gold); color:var(--lv-gold-text); font-size:11px; font-weight:800; }
 .tier-bar { height:6px; margin-top:12px; border-radius:var(--lv-r-pill); background:var(--lv-surface); overflow:hidden; }
 .tier-bar span { display:block; height:100%; border-radius:var(--lv-r-pill); background-image:var(--lv-gradient-gold); transition:width .4s ease; }
 .tier-next { margin-top:10px; font-size:12px; line-height:1.5; color:var(--lv-dim); }
@@ -476,7 +485,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .tp { display:inline-flex; align-items:center; gap:4px; padding:5px 10px; border-radius:var(--lv-r-pill); background:var(--lv-surface); font-size:11px; font-weight:600; color:var(--lv-ink); }
 .tp .ico { width:12px; height:12px; color:var(--lv-tiffany-text); }
 
-/* ---------- Витрина привилегий клуба ---------- */
+/* ---------- Витрина привилегий ---------- */
 .priv-card { flex-shrink:0; width:168px; padding:14px; border-radius:var(--lv-r-lg); border:1px solid var(--lv-line); background:var(--lv-card); box-shadow:var(--lv-shadow-soft); display:flex; flex-direction:column; gap:6px; }
 .priv-card .pc-ico { width:34px; height:34px; border-radius:var(--lv-r-sm); display:flex; align-items:center; justify-content:center; }
 .priv-card .pc-ico .ico { width:17px; height:17px; }

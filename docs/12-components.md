@@ -106,20 +106,21 @@
 
 ---
 
-### Группа 11 · LOVII CLUB · LOVII PAY (`#clubpay`)
+### Группа 11 · LOVII PAY (`#clubpay`)
 
 | Компонент | Варианты | Правило |
 |---|---|---|
-| `pay-card` (+ `pay-face` front/back) | лицевая / оборот | gradient-ink · flip по тапу · tilt по курсору · номер 4-4-4-4 Visa/Мир |
-| `acct-card` | счёт кэшбека | баланс 30/800 · 3 метрики · h44 капсулы-действия |
+| `paycard` (+ `pay-face` front/back) | лицевая / оборот | gradient-ink · flip по тапу · tilt по курсору · номер 4-4-4-4 Visa/Мир · префикс 9643 |
+| `pay-badge` / `pay-head` | бейдж уровня в хедере | gold-капсула с crown |
+| `acct-card` | счёт LOVII PAY | баланс 30/800 · 3 метрики · h44 капсулы-действия |
 | `tx-tabs` / `tx-row` | Все / Начисления / Покупки / Списания | группы дней · иконка 36×36 soft-пара по типу |
-| `tier-card` / `tier-bar` | статусы LC Start→Silver→Gold→Ink | прогресс gradient-gold · перки-чипы |
+| `tier-card` / `tier-levels` / `tier-bar` | уровни LOVII PAY→PASS→VIP | полоска уровней · прогресс gradient-gold · перки-чипы |
 | `priv-card` | gold / pink / tiffany | плитка 168px в ленте hscroll |
 | `msp-fav` | сердце soft-pink | 40×40, active scale .9 |
 
 ## 2. Иконки библиотеки
 
-Спрайт `assets/icons.svg` (v4, 44 символа): контентные (heart, gift, gem, bear, coffee…) + **системные v1.7.0**: `search, chevron-right, arrow-left, plus, minus, bell, dots, home, user, bag, edit, trash, map-pin, filter, phone, calendar, info` + **бренд-маскот v1.9.1**: `i-lo` (голубь Ло — fill-знак 512, единственное исключение из stroke-системы). Все 24px, stroke 2, round, currentColor; `star` — заливной gold. Размеры по контекстам — docs/09 §1. Эмоджи запрещены (AGENTS пр.11).
+Спрайт `assets/icons.svg` (v6, 51 символ): контентные (heart, gift, gem, bear, coffee…) + **системные v1.7.0**: `search, chevron-right, arrow-left, plus, minus, bell, dots, home, user, bag, edit, trash, map-pin, filter, phone, calendar, info` + **LOVII PAY v1.13.0**: `i-wallet i-qr i-rotate i-percent i-send i-arrow-down-left` + **v1.13.1**: `i-ticket` (мероприятия) + **бренд-маскот v1.9.1**: `i-lo` (голубь Ло — fill-знак 512, единственное исключение из stroke-системы). Все 24px, stroke 2, round, currentColor; `star` — заливной gold. Размеры по контекстам — docs/09 §1. Эмоджи запрещены (AGENTS пр.11).
 
 ---
 
