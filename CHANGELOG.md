@@ -3,6 +3,16 @@
 Все значимые изменения дизайн-системы LOVII. Формат — Keep a Changelog, версионирование — SemVer.
 Изменение значений токенов: backward-compatible — MINOR, ломающее — MAJOR, правки правил/опечаток — PATCH.
 
+## [1.13.0] — 2026-09-11
+
+### Added
+- **Семейство LOVII CLUB · LOVII PAY** (клубный профиль, §10 слоя компонентов): карта участника `pay-card` (gradient-ink, flip `rotateY` по тапу .65s + tilt ±10° по курсору — только `pointer:fine`, off при `prefers-reduced-motion`; номер 4-4-4-4 по стандарту Visa/Мир, tabular-nums; оборот: QR 84×84 + CVV-плашка), счёт кэшбека `acct-card` (баланс 30/800 · 3 метрики · капсулы h44 «Вывести через СБП»/«История»), история операций `tx-tabs`/`tx-row` (Все/Начисления/Покупки/Списания; группы дней; soft-пары иконок: in→tiffany, buy→pink, out→gold), статус LC `tier-card` (уровни Start→Silver→Gold→Ink, прогресс gradient-gold, перки-чипы), витрина привилегий `priv-card` (168px, gold/pink/tiffany), избранное МСП `msp-fav`, бейдж статуса `lc-badge`, хедер `club-head`.
+- **Спрайт v5: +6 иконок** (44→50): `i-wallet`, `i-qr`, `i-rotate`, `i-percent`, `i-send`, `i-arrow-down-left` — под счёт, историю и карту LOVII PAY.
+- Доки: anatomy — docs/09 §8; реестр — docs/12 «Группа 11 `#clubpay`»; живой образец — examples/08 `#clubpay` (flip+tilt вживую).
+
+### Terminology (канон владельца)
+- Платформа — «Лови» · клуб — **LOVII CLUB (LC)** · карта — **LOVII PAY** (включает счёт и баланс). «Карты жителя» нет. Экономика клуба: 1 балл = 1 ₽, баллы не сгорают, вывод через СБП. Эталон реализации — lovii-demo `js/club.js` (тот же словарь классов).
+
 ## [1.12.0] — 2026-09-05
 
 ### Added
