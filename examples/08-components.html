@@ -356,7 +356,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <!-- ================= §10 LOVII PAY ================= -->
   <section class="section" id="clubpay">
     <h2 class="section-title">LOVII PAY</h2>
-    <p class="section-sub">Профиль лояльности: карта <code>LOVII PAY</code> (flip по тапу, tilt по курсору — на desktop), счёт, история операций, уровни PAY→PASS→VIP и привилегии. 1 балл = 1 ₽ · баллы не сгорают · вывод через СБП.</p>
+    <p class="section-sub">Профиль лояльности: карта <code>LOVII PAY</code> (flip по тапу, tilt и блики по курсору — на desktop), счёт, история операций, уровни PAY→PASS→VIP и привилегии. Канон 2026-09-12: у клиента ОДИН счёт — меняется только скин карты (PAY · PASS · VIP · BUSINESS). 1 балл = 1 ₽ · баллы не сгорают · вывод через СБП.</p>
     <div class="panel">
       <div style="max-width:400px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
@@ -366,10 +366,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
         </div>
         <div class="pay-stage">
           <div class="pay-tilt" id="demoTilt">
-            <button class="paycard" id="demoPayCard" type="button" aria-label="Карта LOVII PAY — перевернуть">
+            <button class="paycard skin-pass" id="demoPayCard" type="button" aria-label="Карта LOVII PAY — перевернуть">
               <span class="pay-face pay-front">
                 <span class="pay-sheen" aria-hidden="true"></span>
-                <span class="pay-top"><span class="pay-brand">LOVII&nbsp;PAY</span><span class="pay-chip" aria-hidden="true"></span></span>
+                <span class="pay-glare" aria-hidden="true"></span>
+                <span class="pay-top"><span class="pay-brand" id="demoSkinTag">LOVII PASS</span><span class="pay-chip" aria-hidden="true"></span></span>
                 <span class="pay-num">9643 9138 4210 7755</span>
                 <span class="pay-bot">
                   <span class="pay-holder"><span class="lbl">Держатель</span><span class="val">ALEXANDRA LOVII</span></span>
@@ -385,7 +386,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
                     <span class="pay-note">Оплата QR у партнёров Лови</span>
                   </span>
                 </span>
-                <span class="pay-back-bot">1 балл = 1 ₽ · баллы не сгорают · вывод через СБП</span>
+                <span class="pay-back-bot">1 балл = 1 ₽ · баллы не сгорают · счёт один — скины меняются</span>
               </span>
             </button>
           </div>
@@ -394,6 +395,15 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
             <span class="pay-hint as-btn"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-copy"/></svg>Скопировать номер</span>
           </div>
         </div>
+
+        <!-- Скины карты (канон 2026-09-12): счёт один — меняется оформление -->
+        <div class="tier-levels" id="demoSkinPicker" style="margin-top:14px">
+          <button class="tl" type="button" data-skin="pay">LOVII PAY</button>
+          <button class="tl cur" type="button" data-skin="pass">LOVII PASS</button>
+          <button class="tl" type="button" data-skin="vip">LOVII VIP</button>
+          <button class="tl" type="button" data-skin="biz">LOVII BUSINESS</button>
+        </div>
+        <div class="pay-skin-note">Счёт и номер одни — переключи скин, чтобы посмотреть оформление</div>
 
         <div style="margin-top:16px" class="acct-card">
           <div class="acct-balance">1 250 ₽<span class="unit">₽</span></div>
@@ -419,9 +429,9 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
         <div style="margin-top:16px" class="tier-card">
           <div class="tier-levels"><span class="tl done"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>LOVII PAY</span><span class="tl cur"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>LOVII PASS</span><span class="tl lock">LOVII VIP</span></div>
           <div class="tier-row" style="margin-top:12px"><span class="tier-name"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-crown"/></svg>LOVII PASS</span><span class="tier-cond">по подписке Лови</span></div>
-          <div class="tier-bar" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100"><span style="width:68%"></span></div>
-          <div class="tier-next">До уровня <b>LOVII VIP</b> — обороты ещё 15 800 ₽ в этом месяце</div>
-          <div class="tier-perks"><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Мерч Лови</span><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Закрытые мероприятия</span><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Спец-скидки у МСП</span></div>
+          <div class="tier-bar" role="progressbar" aria-valuenow="39" aria-valuemin="0" aria-valuemax="100"><span style="width:39%"></span></div>
+          <div class="tier-next">До уровня <b>LOVII VIP</b> — обороты ещё 181 600 ₽ (порог — 300 000 ₽ в месяц)</div>
+          <div class="tier-perks"><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Статус представителя LOVII</span><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Вывод на карту 0% от 3 000 ₽</span><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Мерч Лови</span><span class="tp"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-check"/></svg>Спец-скидки у МСП</span></div>
         </div>
 
         <div class="hscroll no-scrollbar lv-edge-fade" style="margin-top:16px">
@@ -430,7 +440,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
           <div class="priv-card t-tiffany"><span class="pc-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-percent"/></svg></span><div class="pc-title">Спец-скидки у МСП</div><div class="pc-sub">Свой процент у партнёров района</div></div>
         </div>
       </div>
-      <div class="spec"><b>paycard</b> gradient-ink · flip .65s · tilt ±10° (pointer:fine, off при reduce-motion) · номер 4-4-4-4 tabular, префикс 9643 &nbsp;·&nbsp; <b>acct-card</b> баланс 30/800 · h44 капсулы &nbsp;·&nbsp; <b>tx-row</b> иконка 36×36 soft-пара: in tiffany / buy pink / out gold &nbsp;·&nbsp; <b>tier-levels</b> PAY→PASS→VIP + <b>tier-bar</b> h6 gradient-gold &nbsp;·&nbsp; <b>priv-card</b> 168px в hscroll</div>
+      <div class="spec"><b>paycard</b> скины: skin-pay графит/серебро · skin-pass ink/розовое свечение · skin-vip чёрное золото · skin-biz графит/тиффани — счёт и номер одни; <b>pay-glare</b> блик следит за курсором (pointer:fine, off при reduce-motion) · flip .65s · tilt ±10° · номер 4-4-4-4 tabular, префикс 9643 &nbsp;·&nbsp; <b>acct-card</b> баланс 30/800 · h44 капсулы &nbsp;·&nbsp; <b>tx-row</b> иконка 36×36 soft-пара: in tiffany / buy pink / out gold &nbsp;·&nbsp; <b>tier-levels</b> кнопки-скины + <b>tier-bar</b> h6 gradient-gold &nbsp;·&nbsp; <b>priv-card</b> 168px в hscroll</div>
     </div>
   </section>
 
@@ -598,7 +608,7 @@ document.querySelectorAll('[data-copy]').forEach(function(btn){
   });
 });
 
-/* LOVII PAY: flip + tilt (демо) */
+/* LOVII PAY: flip + tilt + блики (демо) */
 (function(){
   var card = document.getElementById('demoPayCard');
   if (card) card.addEventListener('click', function(){ card.classList.toggle('flipped'); });
@@ -606,14 +616,37 @@ document.querySelectorAll('[data-copy]').forEach(function(btn){
   if (tilt && matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     tilt.addEventListener('pointermove', function(e){
       var r = tilt.getBoundingClientRect();
-      var px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
-      tilt.style.setProperty('--ry', (px * 10).toFixed(2) + 'deg');
-      tilt.style.setProperty('--rx', (-py * 8).toFixed(2) + 'deg');
+      var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      tilt.style.setProperty('--ry', ((px - .5) * 10).toFixed(2) + 'deg');
+      tilt.style.setProperty('--rx', (-(py - .5) * 8).toFixed(2) + 'deg');
+      /* блик следит за курсором */
+      tilt.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
+      tilt.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
     });
     tilt.addEventListener('pointerleave', function(){
       tilt.style.setProperty('--ry', '0deg'); tilt.style.setProperty('--rx', '0deg');
     });
   }
+})();
+
+/* LOVII PAY: скины карты (канон 2026-09-12 — счёт один, оформление разное) */
+(function(){
+  var TAGS = { pay: 'LOVII PAY', pass: 'LOVII PASS', vip: 'LOVII VIP', biz: 'LOVII BUSINESS' };
+  var card = document.getElementById('demoPayCard');
+  var tag = document.getElementById('demoSkinTag');
+  var picker = document.getElementById('demoSkinPicker');
+  if (!card || !picker) return;
+  picker.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-skin]');
+    if (!btn) return;
+    card.className = card.className.replace(/\bskin-\w+\b/g, '').trim();
+    card.classList.add('skin-' + btn.dataset.skin);
+    if (tag) tag.textContent = TAGS[btn.dataset.skin] || 'LOVII PAY';
+    picker.querySelectorAll('.tl').forEach(function(b){
+      b.classList.toggle('pv', b === btn);
+      b.classList.toggle('cur', b === btn);
+    });
+  });
 })();
 
 /* Повтор входа .lv-enter */

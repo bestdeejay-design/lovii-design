@@ -110,11 +110,11 @@
 
 | Компонент | Варианты | Правило |
 |---|---|---|
-| `paycard` (+ `pay-face` front/back) | лицевая / оборот | gradient-ink · flip по тапу · tilt по курсору · номер 4-4-4-4 Visa/Мир · префикс 9643 |
+| `paycard` (+ `pay-face` front/back) | лицевая / оборот · скины v1.14.0: `skin-pay` графит/серебро · `skin-pass` ink/розовое свечение · `skin-vip` чёрное золото · `skin-biz` графит/тиффани | rgba-оверлеи на gradient-ink · flip по тапу · tilt + блик `.pay-glare` по курсору (--gx/--gy, pointer:fine) · номер 4-4-4-4 Visa/Мир · префикс 9643 · счёт один — скины меняются |
 | `pay-badge` / `pay-head` | бейдж уровня в хедере | gold-капсула с crown |
 | `acct-card` | счёт LOVII PAY | баланс 30/800 · 3 метрики · h44 капсулы-действия |
 | `tx-tabs` / `tx-row` | Все / Начисления / Покупки / Списания | группы дней · иконка 36×36 soft-пара по типу |
-| `tier-card` / `tier-levels` / `tier-bar` | уровни LOVII PAY→PASS→VIP | полоска уровней · прогресс gradient-gold · перки-чипы |
+| `tier-card` / `tier-levels` / `tier-bar` | уровни LOVII PAY→PASS→VIP · кнопки-скины (превью `.tl.pv`) | полоска уровней · прогресс gradient-gold · перки-чипы · подпись `.pay-skin-note` |
 | `priv-card` | gold / pink / tiffany | плитка 168px в ленте hscroll |
 | `msp-fav` | сердце soft-pink | 40×40, active scale .9 |
 
