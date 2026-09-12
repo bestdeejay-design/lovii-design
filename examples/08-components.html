@@ -356,7 +356,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   <!-- ================= §10 LOVII PAY ================= -->
   <section class="section" id="clubpay">
     <h2 class="section-title">LOVII PAY</h2>
-    <p class="section-sub">Профиль лояльности: карта <code>LOVII PAY</code> (flip по тапу, tilt и блики по курсору — на desktop), счёт, история операций, уровни PAY→PASS→VIP и привилегии. Канон 2026-09-12: у клиента ОДИН счёт — меняется только скин карты (PAY · PASS · VIP · BUSINESS). 1 балл = 1 ₽ · баллы не сгорают · вывод через СБП.</p>
+    <p class="section-sub">Профиль лояльности: карта <code>LOVII PAY</code> (flip по тапу, tilt и блики по курсору — на desktop), счёт, история операций, уровни PAY→PASS→VIP и привилегии. Канон 2026-09-12: у клиента ОДИН счёт — меняется только скин карты (PAY · PASS · VIP · BUSINESS). 1 балл = 1 ₽ · баллы не сгорают · вывод через СБП. Блики: пятно за курсором + живой свип-луч через карту при hover (v1.14.1).</p>
     <div class="panel">
       <div style="max-width:400px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
@@ -370,6 +370,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
               <span class="pay-face pay-front">
                 <span class="pay-sheen" aria-hidden="true"></span>
                 <span class="pay-glare" aria-hidden="true"></span>
+                <span class="pay-sweep" aria-hidden="true"></span>
                 <span class="pay-top"><span class="pay-brand" id="demoSkinTag">LOVII PASS</span><span class="pay-chip" aria-hidden="true"></span></span>
                 <span class="pay-num">9643 9138 4210 7755</span>
                 <span class="pay-bot">
@@ -387,6 +388,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
                   </span>
                 </span>
                 <span class="pay-back-bot">1 балл = 1 ₽ · баллы не сгорают · счёт один — скины меняются</span>
+                <span class="pay-sweep" aria-hidden="true"></span>
               </span>
             </button>
           </div>
@@ -440,7 +442,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
           <div class="priv-card t-tiffany"><span class="pc-ico"><svg class="ico" aria-hidden="true"><use href="../assets/icons.svg#i-percent"/></svg></span><div class="pc-title">Спец-скидки у МСП</div><div class="pc-sub">Свой процент у партнёров района</div></div>
         </div>
       </div>
-      <div class="spec"><b>paycard</b> скины: skin-pay графит/серебро · skin-pass ink/розовое свечение · skin-vip чёрное золото · skin-biz графит/тиффани — счёт и номер одни; <b>pay-glare</b> блик следит за курсором (pointer:fine, off при reduce-motion) · flip .65s · tilt ±10° · номер 4-4-4-4 tabular, префикс 9643 &nbsp;·&nbsp; <b>acct-card</b> баланс 30/800 · h44 капсулы &nbsp;·&nbsp; <b>tx-row</b> иконка 36×36 soft-пара: in tiffany / buy pink / out gold &nbsp;·&nbsp; <b>tier-levels</b> кнопки-скины + <b>tier-bar</b> h6 gradient-gold &nbsp;·&nbsp; <b>priv-card</b> 168px в hscroll</div>
+      <div class="spec"><b>paycard</b> скины: skin-pay графит/серебро · skin-pass ink/розовое свечение · skin-vip чёрное золото · skin-biz графит/тиффани — счёт и номер одни; <b>pay-glare</b> блик следит за курсором + <b>pay-sweep</b> живой свип-луч через карту при hover/tap (v1.14.1, off при reduce-motion) · flip .65s · tilt ±10° · номер 4-4-4-4 tabular, префикс 9643 &nbsp;·&nbsp; <b>acct-card</b> баланс 30/800 · h44 капсулы &nbsp;·&nbsp; <b>tx-row</b> иконка 36×36 soft-пара: in tiffany / buy pink / out gold &nbsp;·&nbsp; <b>tier-levels</b> кнопки-скины + <b>tier-bar</b> h6 gradient-gold &nbsp;·&nbsp; <b>priv-card</b> 168px в hscroll</div>
     </div>
   </section>
 
