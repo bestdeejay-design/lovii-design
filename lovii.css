@@ -1,6 +1,6 @@
 /* ============================================================
    LOVII UI v1.0.0 — ЕДИНЫЙ ФАЙЛ дизайн-системы «Лови»
-   Канон токенов: v1.11.0 · собрано 2026-09-12
+   Канон токенов: v1.11.0 · собрано 2026-09-20
    Провенанс снапшота (из какого коммита lovii-design взят файл)
    добавляется разносчиком — см. шапку файла на сайте-потребителе.
    ------------------------------------------------------------
@@ -17,6 +17,14 @@
 
 /* ══════════════════ СЛОЙ A: ТОКЕНЫ И БАЗА ══════════════════ */
 
+
+/* ══════════════════ КАРКАС СЛОЁВ ══════════════════ */
+
+@layer tokens, base, primitives, components, utilities, screens;
+
+/* ══════════════════ СЛОЙ A · ТОКЕНЫ ══════════════════ */
+
+@layer tokens {
 /* ============================================================
    LOVII «Лови» — канонические дизайн-токены v1.11.0 (значения без изменений с 1.9.1)
    Источник истины: lovii.mobiap.com (репо lovii_demo, css/lovii.css)
@@ -89,7 +97,24 @@
   --lv-container: 480px;              /* мобильная капсула приложения */
   --lv-container-wide: 1120px;        /* общий поток ≥640px */
   --lv-container-narrow: 760px;       /* линейные экраны ≥640px */
+  --lv-content-max: 924px;            /* контентная капсула экранов: ширина контейнера (контент 892px при гуттере 16px) */
   --lv-pad-x: 16px;                   /* боковой отступ экрана */
+
+  /* SZ-062 · добавлено: фиксированные цвета + шкала иконок */
+  --lv-white: #ffffff;
+  --lv-ink-deep: #1a1a1a;
+  --lv-black: #000000;
+  --lv-icon-12: 12px;
+  --lv-icon-16: 16px;
+  --lv-icon-18: 18px;
+  --lv-icon-20: 20px;
+  --lv-icon-24: 24px;
+  --lv-icon-32: 32px;
+
+  /* SZ-062 · семантика состояний */
+  --lv-info: #4797ff;
+  --lv-negative: #c25555;
+  --lv-negative-soft: #fdf1f1;
 }
 
 /* ------------------------------------------------------------
@@ -113,6 +138,7 @@
 
   /* Бордеры и разделители */
   --lv-line: #ece5da;                 /* бордер карточек (v1.3: бежевый нейтральный вместо розоватого) */
+  --lv-line-strong: #8f8578;          /* видимый контур карточек: контраст ≥3:1 к фону карточки (SZ-062) */
   --lv-line-2: #f6f1e8;               /* разделитель строк внутри карточки (v1.3) */
   --lv-hairline: rgba(26, 26, 26, .08);   /* тонкая линия (юр.блок) */
 
@@ -171,6 +197,7 @@
   --lv-on-brand: #ffffff;
 
   --lv-line: #372d3e;
+  --lv-line-strong: #8d7f88;           /* видимый контур карточек в тёмной теме (SZ-062) */
   --lv-line-2: #2e2535;
   --lv-hairline: rgba(255, 255, 255, .12);
 
@@ -207,54 +234,8 @@
   --lv-ring-search: 0 0 0 2px rgba(246, 74, 138, .4);
   --lv-ring-field: 0 0 0 4px rgba(246, 74, 138, .1);
 
-  --lv-scroll-thumb: rgba(255, 255, 255, .18);
-}
+  --lv-scroll-thumb: rgba(255, 255, 255, .18);}
 
-/* ------------------------------------------------------------
-   4. БАЗОВЫЕ СТИЛИ (опционально — можно не подключать)
-   ------------------------------------------------------------ */
-body {
-  font-family: var(--lv-font);
-  background: var(--lv-bg);
-  color: var(--lv-ink);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-
-button { font-family: inherit; border: 0; background: none; padding: 0; cursor: pointer; color: inherit; font-size: inherit; }
-input, textarea, select { font-family: inherit; }
-
-/* Фокус с клавиатуры — всегда розовый брендовый */
-:focus-visible { outline: 2px solid var(--lv-pink); outline-offset: 2px; border-radius: 8px; }
-
-/* Выделение текста — тоже бренд (v1.7.0): системное синее выбивалось из палитры */
-::selection { background: var(--lv-pink); color: #ffffff; }
-
-/* Уважение к reduce motion — обязательное a11y-правило */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
-  }
-}
-
-/* ------------------------------------------------------------
-   5. ДВИЖЕНИЕ (ключевые кадры канона)
-   ------------------------------------------------------------ */
-@keyframes lv-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes lv-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-@keyframes lv-pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.8); } }
-
-.lv-enter { animation: lv-enter .35s ease-out both; }
-.lv-float { animation: lv-float 5s ease-in-out infinite; }
-.lv-dot { width: 6px; height: 6px; border-radius: 999px; display: inline-block; animation: lv-pulse-dot 1.4s ease-in-out infinite; }
-
-/* Ленты-карусели: карточки растворяются у краёв */
-.lv-edge-fade {
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
-}
 
 /* ══════════════ СЛОЙ A-COMPAT: ЛЕГАСИ-АЛИАСЫ ══════════════ */
 
@@ -344,9 +325,64 @@ input, textarea, select { font-family: inherit; }
   --ch-ink-b: var(--lv-ch-ink-b);
   --toast-d: var(--lv-toast-d);
 }
+}
+
+/* ══════════════════ СЛОЙ A · БАЗА ══════════════════ */
+
+@layer base {
+/* == @layer:base == ниже начинается слой base: сброс, типографика, движение, утилиты поведения.
+   Маркер читает сборка (tools/build-lovii-css.py): всё до него — слой tokens, всё после — слой base. */
+
+/* ------------------------------------------------------------
+   4. БАЗОВЫЕ СТИЛИ (опционально — можно не подключать)
+   ------------------------------------------------------------ */
+body {
+  font-family: var(--lv-font);
+  background: var(--lv-bg);
+  color: var(--lv-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button { font-family: inherit; border: 0; background: none; padding: 0; cursor: pointer; color: inherit; font-size: inherit; }
+input, textarea, select { font-family: inherit; }
+
+/* Фокус с клавиатуры — всегда розовый брендовый */
+:focus-visible { outline: 2px solid var(--lv-pink); outline-offset: 2px; border-radius: 8px; }
+
+/* Выделение текста — тоже бренд (v1.7.0): системное синее выбивалось из палитры */
+::selection { background: var(--lv-pink); color: #ffffff; }
+
+/* Уважение к reduce motion — обязательное a11y-правило */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   5. ДВИЖЕНИЕ (ключевые кадры канона)
+   ------------------------------------------------------------ */
+@keyframes lv-enter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes lv-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+@keyframes lv-pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.8); } }
+
+.lv-enter { animation: lv-enter .35s ease-out both; }
+.lv-float { animation: lv-float 5s ease-in-out infinite; }
+.lv-dot { width: 6px; height: 6px; border-radius: 999px; display: inline-block; animation: lv-pulse-dot 1.4s ease-in-out infinite; }
+
+/* Ленты-карусели: карточки растворяются у краёв */
+.lv-edge-fade {
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+}
+}
 
 /* ══════════════════ СЛОЙ B: КОМПОНЕНТЫ ══════════════════ */
 
+@layer components {
 /* ============================================================
    LOVII UI — СЛОЙ B: КОМПОНЕНТЫ (рукописный исходник)
    ------------------------------------------------------------
@@ -940,3 +976,10 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
   .pay-screen .priv-card { width:auto; }
 }
 @media (min-width:1024px) { .pay-cols { gap:0 28px; } }
+
+/* ---------- Surface card (компонент ДС, SZ-062) ---------- */
+.card { background: var(--lv-card); border: 1px solid var(--lv-line); border-radius: var(--lv-r-lg); box-shadow: var(--lv-shadow-soft); overflow: hidden; box-sizing: border-box; }
+.card--flush { padding: 0; }
+.card--tap { transition: box-shadow .2s, transform .2s, border-color .2s; }
+.card--tap:hover { box-shadow: var(--lv-shadow-lift); border-color: var(--lv-pink); transform: translateY(-2px); }
+}
