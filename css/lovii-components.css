@@ -206,7 +206,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .stepper .val { min-width:28px; text-align:center; font-size:14px; font-weight:700; font-variant-numeric:tabular-nums; }
 
 /* ============ §4 Карточки (канон docs/09 §4) ============ */
-.btn-card { display:block; width:100%; text-align:left; background:var(--lv-card); border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); overflow:hidden; transition:transform .2s, box-shadow .2s; padding:0; cursor:pointer; color:var(--lv-ink); font-family:inherit; }
+.btn-card { display:block; width:100%; text-align:left; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); overflow:hidden; transition:transform .2s, box-shadow .2s; padding:0; cursor:pointer; color:var(--lv-ink); font-family:inherit; }
 .btn-card:hover { transform:translateY(-2px); box-shadow:var(--lv-shadow-lift); }
 .btn-card:active { transform:scale(.97); }
 .cover { height:80px; display:flex; align-items:center; justify-content:center; position:relative; }
@@ -245,7 +245,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .delta-down { color:var(--lv-pink-dark); }
 
 /* ============ §5 Списки и строки ============ */
-.list-card { background:var(--lv-card); border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); padding:4px 0; }
+.list-card { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); padding:4px 0; }
 .row { display:flex; align-items:center; gap:12px; padding:11px 14px; border-bottom:1px solid var(--lv-line-2); cursor:pointer; background:none; border-left:0; border-right:0; border-top:0; width:100%; text-align:left; font-family:inherit; color:var(--lv-ink); transition:background .15s ease; }
 .row:last-child { border-bottom:0; }
 .row:hover { background:var(--lv-surface); }
@@ -505,7 +505,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .pay-hint.as-btn:active { opacity:.7; }
 
 /* ---------- Счёт LOVII PAY ---------- */
-.acct-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
+.acct-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
 .acct-balance { font-size:30px; font-weight:800; letter-spacing:-.02em; color:var(--lv-ink); font-variant-numeric:tabular-nums; }
 .acct-balance .unit { margin-left:4px; font-size:18px; font-weight:700; color:var(--lv-pink); }
 .acct-lbl { margin-top:3px; font-size:11.5px; font-weight:600; color:var(--lv-dim); }
@@ -538,7 +538,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .tx-sum.plus { color:var(--lv-tiffany-text); }
 
 /* ---------- Статус LOVII PAY: уровни PAY→PASS→VIP и прогресс ---------- */
-.tier-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
+.tier-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
 .tier-levels { display:flex; gap:6px; }
 /* уровни — кнопки превью скина (канон «счёт один»: клик по уровню
    показывает оформление карты, повторный возвращает свой) */
@@ -564,7 +564,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .tp .ico { width:12px; height:12px; color:var(--lv-tiffany-text); }
 
 /* ---------- Витрина привилегий ---------- */
-.priv-card { flex-shrink:0; width:168px; padding:14px; border-radius:var(--lv-r-lg); border:1px solid var(--lv-line-strong); background:var(--lv-card); box-shadow:var(--lv-shadow-soft); display:flex; flex-direction:column; gap:6px; }
+.priv-card { flex-shrink:0; width:168px; padding:14px; border-radius:var(--lv-r-lg); border:1px solid var(--lv-line); background:var(--lv-card); box-shadow:var(--lv-shadow-soft); display:flex; flex-direction:column; gap:6px; }
 .priv-card .pc-ico { width:34px; height:34px; border-radius:var(--lv-r-sm); display:flex; align-items:center; justify-content:center; }
 .priv-card .pc-ico .ico { width:17px; height:17px; }
 .priv-card.t-gold .pc-ico { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
