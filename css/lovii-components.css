@@ -591,3 +591,9 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
   .pay-screen .priv-card { width:auto; }
 }
 @media (min-width:1024px) { .pay-cols { gap:0 28px; } }
+
+/* ---------- Surface card (компонент ДС, SZ-062) ---------- */
+.card { background: var(--lv-card); border: 1px solid var(--lv-line); border-radius: var(--lv-r-lg); box-shadow: var(--lv-shadow-soft); overflow: hidden; box-sizing: border-box; }
+.card--flush { padding: 0; }
+.card--tap { transition: box-shadow .2s, transform .2s, border-color .2s; }
+.card--tap:hover { box-shadow: var(--lv-shadow-lift); border-color: var(--lv-pink); transform: translateY(-2px); }
