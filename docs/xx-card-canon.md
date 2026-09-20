@@ -9,10 +9,10 @@
   background: var(--lv-card);                 /* белая поверхность */
   border: 1px solid var(--lv-line);           /* канон-рамка (тёплый нейтральный) */
   border-radius: 16px;
-  box-shadow: var(--lv-shadow-float);         /* мягкая тень (канон) */
+  box-shadow: var(--lv-shadow-soft);          /* тень покоя карточки (канон) */
 }
 .card-surface:hover {
-  box-shadow: var(--lv-shadow-lift);
+  box-shadow: var(--lv-shadow-lift);          /* hover: лифт */
   border-color: var(--lv-pink);
 }
 ```
