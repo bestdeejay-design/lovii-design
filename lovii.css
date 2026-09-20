@@ -137,8 +137,8 @@
   --lv-on-brand: #ffffff;             /* текст НА брендовом градиенте */
 
   /* Бордеры и разделители */
-  --lv-line: #ece5da;                 /* бордер карточек (v1.3: бежевый нейтральный вместо розоватого) */
-  --lv-line-strong: #8f8578;          /* видимый контур карточек: контраст ≥3:1 к фону карточки (SZ-062) */
+  --lv-line: #ece5da;                 /* хром и разделители: линии шапки, навигации, хайрлайны (v1.3: бежевый нейтральный) */
+  --lv-line-strong: #8f8578;          /* ОБВОДКА БЛОКОВ И КОНТРОЛОВ: единая для всех карточек, полей, кнопок; ≥3:1 к фону (SZ-062) */
   --lv-line-2: #f6f1e8;               /* разделитель строк внутри карточки (v1.3) */
   --lv-hairline: rgba(26, 26, 26, .08);   /* тонкая линия (юр.блок) */
 
@@ -196,8 +196,8 @@
   --lv-glass: rgba(30, 23, 34, .86);
   --lv-on-brand: #ffffff;
 
-  --lv-line: #372d3e;
-  --lv-line-strong: #8d7f88;           /* видимый контур карточек в тёмной теме (SZ-062) */
+  --lv-line: #372d3e;                 /* хром и разделители */
+  --lv-line-strong: #8d7f88;           /* обводка блоков и контролов (тёмная тема) */
   --lv-line-2: #2e2535;
   --lv-hairline: rgba(255, 255, 255, .12);
 
@@ -451,7 +451,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .anchor-rail { display:flex; gap:8px; overflow-x:auto; padding:14px 0 2px; }
 .anchor-chip {
   flex:none; display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 14px;
-  border-radius:var(--lv-r-pill); background:var(--lv-card); border:1px solid var(--lv-line);
+  border-radius:var(--lv-r-pill); background:var(--lv-card); border:1px solid var(--lv-line-strong);
   font-size:12px; font-weight:600; color:var(--lv-ink); text-decoration:none;
   transition:background .15s ease, border-color .15s ease;
 }
@@ -464,7 +464,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .section-sub { font-size:13px; color:var(--lv-dim); line-height:1.6; margin:4px 0 14px; }
 .section-sub code { font-family:ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size:12px; color:var(--lv-pink-dark); background:var(--lv-soft-pink); border-radius:6px; padding:1px 6px; }
 .panel {
-  background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg);
+  background:var(--lv-card); border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg);
   box-shadow:var(--lv-shadow-soft); padding:16px;
 }
 .panel + .panel { margin-top:12px; }
@@ -494,7 +494,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .cta-btn.loading { opacity:.7; pointer-events:none; }
 .cta-btn .spinner { width:14px; height:14px; border-radius:var(--lv-r-pill); border:2px solid rgba(255,255,255,.4); border-top-color:var(--lv-on-brand); animation:spin .8s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
-.ghost-btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; height:40px; padding:0 16px; border-radius:var(--lv-r-pill); border:1.5px solid var(--lv-line); background:var(--lv-card); font-size:13px; font-weight:700; color:var(--lv-ink); transition:all .2s; }
+.ghost-btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; height:40px; padding:0 16px; border-radius:var(--lv-r-pill); border:1.5px solid var(--lv-line-strong); background:var(--lv-card); font-size:13px; font-weight:700; color:var(--lv-ink); transition:all .2s; }
 .ghost-btn:hover { border-color:var(--lv-pink); color:var(--lv-pink-dark); }
 .ghost-btn.sm { height:32px; padding:0 12px; font-size:12px; }
 .ghost-btn .ico { width:16px; height:16px; }
@@ -540,7 +540,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .open-pill.off .dot { background:#bbb; }
 .filter-chip {
   display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 14px;
-  border-radius:var(--lv-r-pill); border:1px solid var(--lv-line); background:var(--lv-card);
+  border-radius:var(--lv-r-pill); border:1px solid var(--lv-line-strong); background:var(--lv-card);
   font-size:12px; font-weight:600; color:var(--lv-ink); cursor:pointer;
   transition:background .15s ease, color .15s ease, border-color .15s ease;
 }
@@ -554,7 +554,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 @media (max-width:640px){ .form-grid { grid-template-columns:1fr; } }
 .f-field { display:block; }
 .f-field .lb { display:block; margin-bottom:6px; font-size:12px; font-weight:700; color:var(--lv-ink); }
-.f-field input, .f-field textarea, .f-field select { width:100%; border:1.5px solid var(--lv-line); border-radius:var(--lv-r-md); padding:12px 14px; font:inherit; font-size:14px; background:var(--lv-card); color:var(--lv-ink); outline:none; transition:border-color .2s, box-shadow .2s; }
+.f-field input, .f-field textarea, .f-field select { width:100%; border:1.5px solid var(--lv-line-strong); border-radius:var(--lv-r-md); padding:12px 14px; font:inherit; font-size:14px; background:var(--lv-card); color:var(--lv-ink); outline:none; transition:border-color .2s, box-shadow .2s; }
 .f-field input:focus, .f-field textarea:focus, .f-field select:focus { border-color:var(--lv-pink); box-shadow:var(--lv-ring-field); }
 .f-field textarea { min-height:84px; resize:vertical; }
 .f-field .err { display:none; margin-top:6px; font-size:11px; font-weight:600; color:var(--lv-pink-dark); }
@@ -567,7 +567,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .search-bar input::placeholder { color:var(--lv-dim); }
 .check-row { display:flex; align-items:center; gap:10px; cursor:pointer; font-size:13px; font-weight:600; color:var(--lv-ink); }
 .check-row input { position:absolute; opacity:0; width:0; height:0; }
-.cbx { flex:none; width:20px; height:20px; border-radius:6px; border:1.5px solid var(--lv-line); background:var(--lv-card); display:flex; align-items:center; justify-content:center; transition:all .15s ease; }
+.cbx { flex:none; width:20px; height:20px; border-radius:6px; border:1.5px solid var(--lv-line-strong); background:var(--lv-card); display:flex; align-items:center; justify-content:center; transition:all .15s ease; }
 .cbx .ico { width:12px; height:12px; stroke-width:3; color:var(--lv-on-brand); opacity:0; transform:scale(.5); transition:all .15s ease; }
 .check-row input:checked + .cbx { background-image:var(--lv-gradient-brand); border-color:transparent; }
 .check-row input:checked + .cbx .ico { opacity:1; transform:scale(1); }
@@ -591,7 +591,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .stepper .val { min-width:28px; text-align:center; font-size:14px; font-weight:700; font-variant-numeric:tabular-nums; }
 
 /* ============ §4 Карточки (канон docs/09 §4) ============ */
-.btn-card { display:block; width:100%; text-align:left; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); overflow:hidden; transition:transform .2s, box-shadow .2s; padding:0; cursor:pointer; color:var(--lv-ink); font-family:inherit; }
+.btn-card { display:block; width:100%; text-align:left; background:var(--lv-card); border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); overflow:hidden; transition:transform .2s, box-shadow .2s; padding:0; cursor:pointer; color:var(--lv-ink); font-family:inherit; }
 .btn-card:hover { transform:translateY(-2px); box-shadow:var(--lv-shadow-lift); }
 .btn-card:active { transform:scale(.97); }
 .cover { height:80px; display:flex; align-items:center; justify-content:center; position:relative; }
@@ -621,7 +621,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .promo-mini { display:inline-flex; align-items:center; gap:6px; height:20px; padding:0 8px; border-radius:var(--lv-r-pill); background:rgba(255,255,255,.8); font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--lv-pink-dark); }
 .promo-title { margin-top:8px; font-size:16px; font-weight:800; line-height:1.3; }
 .promo-desc { font-size:12px; color:var(--lv-dim); margin-top:2px; }
-.kpi { border-radius:var(--lv-r-lg); padding:12px 14px; min-width:0; background:var(--lv-card); border:1px solid var(--lv-line); box-shadow:var(--lv-shadow-soft); }
+.kpi { border-radius:var(--lv-r-lg); padding:12px 14px; min-width:0; background:var(--lv-card); border:1px solid var(--lv-line-strong); box-shadow:var(--lv-shadow-soft); }
 .kpi.accent { background-image:linear-gradient(150deg, var(--lv-kpi-soft), var(--lv-card)); border-color:rgba(246, 74, 138, .25); }
 .kpi .l { font-size:10.5px; font-weight:700; color:var(--lv-dim); text-transform:uppercase; letter-spacing:.04em; }
 .kpi .v { margin-top:5px; font-size:19px; font-weight:800; letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
@@ -630,7 +630,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .delta-down { color:var(--lv-pink-dark); }
 
 /* ============ §5 Списки и строки ============ */
-.list-card { background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); padding:4px 0; }
+.list-card { background:var(--lv-card); border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); padding:4px 0; }
 .row { display:flex; align-items:center; gap:12px; padding:11px 14px; border-bottom:1px solid var(--lv-line-2); cursor:pointer; background:none; border-left:0; border-right:0; border-top:0; width:100%; text-align:left; font-family:inherit; color:var(--lv-ink); transition:background .15s ease; }
 .row:last-child { border-bottom:0; }
 .row:hover { background:var(--lv-surface); }
@@ -644,7 +644,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .row .chev { flex:none; width:16px; height:16px; color:var(--lv-dim); }
 .row.danger .row-title, .row.danger .row-icon { color:var(--lv-pink-dark); }
 .row.danger .row-icon { background:var(--lv-soft-pink); }
-.district-row { display:flex; align-items:center; justify-content:space-between; height:56px; padding:0 16px; border-radius:var(--lv-r-lg); border:1px solid var(--lv-line); transition:all .2s; text-align:left; width:100%; color:var(--lv-ink); background:var(--lv-card); cursor:pointer; font-family:inherit; }
+.district-row { display:flex; align-items:center; justify-content:space-between; height:56px; padding:0 16px; border-radius:var(--lv-r-lg); border:1px solid var(--lv-line-strong); transition:all .2s; text-align:left; width:100%; color:var(--lv-ink); background:var(--lv-card); cursor:pointer; font-family:inherit; }
 .district-row:hover { border-color:var(--lv-pink); }
 .district-row.active { border-color:var(--lv-pink); background:var(--lv-soft-pink); }
 .district-row .nm { display:block; font-size:14px; font-weight:600; }
@@ -703,7 +703,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .sheet-head h3 { margin:0; font-size:18px; font-weight:800; }
 .sheet-head p { margin:4px 0 0; font-size:14px; color:var(--lv-dim); }
 .sheet-body { padding:0 16px 24px; overflow-y:auto; display:grid; gap:8px; }
-.skeleton-card { border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); padding:12px; display:flex; gap:12px; align-items:center; }
+.skeleton-card { border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg); padding:12px; display:flex; gap:12px; align-items:center; }
 .sk { background:var(--lv-grey-soft); border-radius:8px; position:relative; overflow:hidden; }
 .sk::after { content:''; position:absolute; inset:0; transform:translateX(-100%); background:linear-gradient(90deg, transparent, rgba(255,255,255,.45), transparent); animation:shimmer 1.4s infinite; }
 @keyframes shimmer { to { transform:translateX(100%); } }
@@ -890,7 +890,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .pay-hint.as-btn:active { opacity:.7; }
 
 /* ---------- Счёт LOVII PAY ---------- */
-.acct-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
+.acct-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
 .acct-balance { font-size:30px; font-weight:800; letter-spacing:-.02em; color:var(--lv-ink); font-variant-numeric:tabular-nums; }
 .acct-balance .unit { margin-left:4px; font-size:18px; font-weight:700; color:var(--lv-pink); }
 .acct-lbl { margin-top:3px; font-size:11.5px; font-weight:600; color:var(--lv-dim); }
@@ -903,7 +903,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .acct-btn:active { transform:scale(.97); }
 .acct-btn .ico { width:15px; height:15px; }
 .acct-btn.brand { background-image:var(--lv-gradient-brand); color:var(--lv-on-brand); }
-.acct-btn.ghost { border:1px solid var(--lv-line); color:var(--lv-ink); background:var(--lv-card); }
+.acct-btn.ghost { border:1px solid var(--lv-line-strong); color:var(--lv-ink); background:var(--lv-card); }
 
 /* ---------- История операций: фильтры и строки ---------- */
 .tx-tabs { display:flex; gap:6px; overflow-x:auto; }
@@ -923,7 +923,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .tx-sum.plus { color:var(--lv-tiffany-text); }
 
 /* ---------- Статус LOVII PAY: уровни PAY→PASS→VIP и прогресс ---------- */
-.tier-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
+.tier-card { padding:16px; background:var(--lv-card); border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-lg); box-shadow:var(--lv-shadow-soft); }
 .tier-levels { display:flex; gap:6px; }
 /* уровни — кнопки превью скина (канон «счёт один»: клик по уровню
    показывает оформление карты, повторный возвращает свой) */
@@ -949,7 +949,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .tp .ico { width:12px; height:12px; color:var(--lv-tiffany-text); }
 
 /* ---------- Витрина привилегий ---------- */
-.priv-card { flex-shrink:0; width:168px; padding:14px; border-radius:var(--lv-r-lg); border:1px solid var(--lv-line); background:var(--lv-card); box-shadow:var(--lv-shadow-soft); display:flex; flex-direction:column; gap:6px; }
+.priv-card { flex-shrink:0; width:168px; padding:14px; border-radius:var(--lv-r-lg); border:1px solid var(--lv-line-strong); background:var(--lv-card); box-shadow:var(--lv-shadow-soft); display:flex; flex-direction:column; gap:6px; }
 .priv-card .pc-ico { width:34px; height:34px; border-radius:var(--lv-r-sm); display:flex; align-items:center; justify-content:center; }
 .priv-card .pc-ico .ico { width:17px; height:17px; }
 .priv-card.t-gold .pc-ico { background:var(--lv-soft-gold); color:var(--lv-gold-text); }
