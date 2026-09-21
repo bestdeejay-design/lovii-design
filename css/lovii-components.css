@@ -626,3 +626,10 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* ---------- Плитка строки: крупный размер (модификатор к .row-icon) ---------- */
 .row-icon--lg { width:42px; height:42px; font-size:21px; }
+/* ---------- Ряд: варианты под витринный рисунок (надмножество для перехода витрины) ---------- */
+/* Плитка без тональной заливки — для эмодзи-иконок (витринный .ri-emoji) */
+.row-icon--plain { background:none; }
+/* Заголовок ряда, который переносится и умеет нести бейдж рядом (витринный .ri-mid .nm) */
+.row-title--wrap { white-space:normal; overflow:visible; text-overflow:clip; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+/* Подпись ряда с иконкой внутри (витринный .ri-mid .sb) */
+.row-sub svg { width:12px; height:12px; }
