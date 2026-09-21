@@ -620,6 +620,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* ---------- Счётчик количества (компонент ДС, перенос из витрины SZ-062) ---------- */
 .qty { display:inline-flex; align-items:center; height:32px; border-radius:var(--lv-r-pill); background:var(--lv-soft-pink); }
+.qty button svg { width:16px; height:16px; }
 .qty button { width:32px; height:32px; border-radius:var(--lv-r-pill); color:var(--lv-pink-dark); font-size:18px; font-weight:700; transition:background .2s; }
 .qty button:hover { background:color-mix(in srgb, var(--lv-white) 60%, transparent); }
 .qty .n { width:22px; text-align:center; font-size:13px; font-weight:700; color:var(--lv-pink-dark); }
