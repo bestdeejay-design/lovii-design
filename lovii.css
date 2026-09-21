@@ -1023,4 +1023,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 /* ---------- Ряд: правая рейка (сумма + счётчик) ---------- */
 .row-rail { display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0; }
 .row-amount { font-size:15px; font-weight:700; font-variant-numeric:tabular-nums; color:var(--lv-ink); white-space:nowrap; }
+
+/* ---------- Фото внутри плитки (анатомия плитки) ---------- */
+.thumb-img { width:100%; height:100%; object-fit:cover; display:block; border-radius:inherit; }
 }
