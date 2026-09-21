@@ -1004,10 +1004,10 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .acc-fields { display:grid; grid-template-columns:1fr; gap:10px; }
 
 /* ---------- Счётчик количества (компонент ДС, перенос из витрины SZ-062) ---------- */
-.qty { display:inline-flex; align-items:center; height:36px; border-radius:var(--lv-r-pill); background:var(--lv-soft-pink); }
-.qty button { width:36px; height:36px; border-radius:var(--lv-r-pill); color:var(--lv-pink-dark); font-size:18px; font-weight:700; transition:background .2s; }
+.qty { display:inline-flex; align-items:center; height:32px; border-radius:var(--lv-r-pill); background:var(--lv-soft-pink); }
+.qty button { width:32px; height:32px; border-radius:var(--lv-r-pill); color:var(--lv-pink-dark); font-size:18px; font-weight:700; transition:background .2s; }
 .qty button:hover { background:color-mix(in srgb, var(--lv-white) 60%, transparent); }
-.qty .n { width:24px; text-align:center; font-size:14px; font-weight:700; color:var(--lv-pink-dark); }
+.qty .n { width:22px; text-align:center; font-size:13px; font-weight:700; color:var(--lv-pink-dark); }
 
 /* ---------- Плитка строки: крупный размер (модификатор к .row-icon) ---------- */
 .row-icon--lg { width:42px; height:42px; font-size:21px; }
