@@ -611,3 +611,18 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .card--flush { padding: 0; }
 .card--tap { transition: box-shadow .2s, transform .2s, border-color .2s; }
 .card--tap:hover { box-shadow: var(--lv-shadow-lift); border-color: var(--lv-pink); transform: translateY(-2px); }
+
+/* ---------- Поле ввода (компонент ДС, перенос из витрины SZ-062) ---------- */
+.acc-field { display:grid; gap:4px; color:var(--lv-dim); font-size:11px; font-weight:600; }
+.acc-field input { height:44px; border:1px solid var(--lv-line-strong); border-radius:var(--lv-r-sm); background:var(--lv-card); color:var(--lv-ink); font:inherit; font-size:14px; padding:0 12px; box-sizing:border-box; }
+.acc-field input:focus { outline:none; border-color:var(--lv-pink); }
+.acc-fields { display:grid; grid-template-columns:1fr; gap:10px; }
+
+/* ---------- Счётчик количества (компонент ДС, перенос из витрины SZ-062) ---------- */
+.qty { display:inline-flex; align-items:center; height:36px; border-radius:var(--lv-r-pill); background:var(--lv-soft-pink); }
+.qty button { width:36px; height:36px; border-radius:var(--lv-r-pill); color:var(--lv-pink-dark); font-size:18px; font-weight:700; transition:background .2s; }
+.qty button:hover { background:color-mix(in srgb, var(--lv-white) 60%, transparent); }
+.qty .n { width:24px; text-align:center; font-size:14px; font-weight:700; color:var(--lv-pink-dark); }
+
+/* ---------- Плитка строки: крупный размер (модификатор к .row-icon) ---------- */
+.row-icon--lg { width:42px; height:42px; font-size:21px; }
