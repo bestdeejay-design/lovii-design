@@ -641,3 +641,15 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 
 /* ---------- Фото внутри плитки (анатомия плитки) ---------- */
 .thumb-img { width:100%; height:100%; object-fit:cover; display:block; border-radius:inherit; }
+
+/* ---------- Ряд: вариант с медиа-колонкой ----------
+   Фото занимает левую колонку в высоту строки, вплотную к трём сторонам блока;
+   текст и контролы центрируются по вертикали. Один вариант — на все экраны,
+   где строка начинается с фотографии (товар, заведение). */
+.row-item--media { padding: 0 12px 0 0; gap: 0; align-items: center; }
+.row-item--media > .ri-emoji,
+.row-item--media > .sr-ico { flex: 0 0 92px; width: 92px; height: 92px; border-radius: 0; overflow: hidden; }
+.row-item--media > .ri-mid { padding: 12px 0 12px 12px; }
+.row-item--media > :last-child { margin-right: 0; }
+.row-item--media.row-item--sm > .ri-emoji,
+.row-item--media.row-item--sm > .sr-ico { flex-basis: 76px; width: 76px; height: 76px; }
