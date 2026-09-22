@@ -1054,19 +1054,11 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .pill-btn svg{ width: var(--lv-icon-16); height: var(--lv-icon-16); color: var(--lv-pink); flex-shrink: 0; }
 .pill-btn .chev{ width: 16px; height: 16px; color: var(--lv-dim); }
 .pill-btn .lbl{ max-width: 76px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.pill-btn .chev{ display: none; }
-.pill-btn .lbl{ max-width: 64px; }
 .icon-btn svg, .back-btn svg{ width: var(--lv-icon-20); height: var(--lv-icon-20); }
 .back-btn{ display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--lv-r-pill); transition: background .2s; flex-shrink: 0; }
 .search-trigger{ display: flex; align-items: center; gap: 10px; width: 100%; height: 44px; padding: 0 var(--lv-gutter); margin-top: 16px; border-radius: var(--lv-r-pill); background: var(--lv-surface); color: var(--lv-dim); font-size: 14px; text-align: left; transition: background .2s; }
 .chev{ width: 16px; height: 16px; color: var(--lv-dim); transition: transform .2s, color .2s; }
 .app-nav{ position: sticky; bottom: 0; z-index: 40; background: var(--lv-glass); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--lv-line); padding-bottom: env(safe-area-inset-bottom); }
-.app-nav{ position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); border: 1px solid var(--lv-line); border-radius: var(--lv-r-pill); box-shadow: 0 12px 32px -12px rgba(26, 26, 26, .28); padding-bottom: 0; }
-.search-trigger{ grid-area: 1 / 2; max-width: none; margin-top: 0; }
-.paycard.skin-pay .pay-cvv .lbl{ color: rgba(26, 26, 26, .5); }
-.paycard.skin-pass .pay-bot .lbl{ color: rgba(255, 255, 255, .78); }
-.paycard.skin-vip .pay-bot .lbl{ color: rgba(243, 217, 164, .62); }
-.paycard.skin-biz .pay-bot .lbl{ color: rgba(230, 255, 252, .62); }
 .switch-row .chev{ flex-shrink: 0; width: 20px; height: 20px; color: var(--lv-dim); }
 .switch-row .chev svg{ width: var(--lv-icon-20); height: var(--lv-icon-20); }
 .ctx-bar .pill-btn{ width: 100%; height: 40px; justify-content: flex-start; }
@@ -1091,8 +1083,5 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .product__counter > button{ width: 100%; height: 100%; border: 0; background: none; display: flex; align-items: center; justify-content: center; color: var(--lv-pink-dark); cursor: pointer; transition: opacity .15s; }
 .order-preview__footer .chev{ flex: 0 0 auto; }
 .app-header .logo-img{ width: 118px; }
-.pill-btn .lbl{ max-width: 84px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.app-header .logo-img{ width: 92px; }
-.pill-btn .lbl{ display: none; }
 .app-header .pill-btn .chev{ display: inline-flex; }
 }
