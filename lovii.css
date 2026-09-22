@@ -1043,4 +1043,7 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 .row-item a { color: inherit; text-decoration: none; }
 .row-item .row-title, .row-item .nm { color: var(--lv-ink); }
 .row-item .row-sub, .row-item .sb { color: var(--lv-dim); }
+/* Подпись ряда: перенос только перед единицей измерения, разделитель не отрывается */
+.row-item .row-sub > span:not(.row-amount){ white-space: nowrap; }
+.row-item .sb > span:not(.row-amount){ white-space: nowrap; }
 }
