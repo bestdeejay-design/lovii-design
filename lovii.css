@@ -1046,4 +1046,6 @@ html[data-theme="dark"] .theme-btn .tb-moon { display:none; }
 /* Подпись ряда: при нехватке места единица измерения уходит на вторую строку
    вместе с разделителем, а не рвётся посередине */
 .row-item .row-sub, .row-item .sb { align-items: baseline; }
+/* Пара «· единица измерения» переносится целиком, внутри неё разрыва нет */
+.row-item .row-sub > span:not(.row-amount), .row-item .sb > span:not(.row-amount) { white-space: nowrap; }
 }
