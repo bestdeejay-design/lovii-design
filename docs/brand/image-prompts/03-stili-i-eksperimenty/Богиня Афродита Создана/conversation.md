@@ -1,0 +1,30 @@
+# Богиня Афродита Создана
+
+ID: 766335e1-6dc6-4b29-aab8-5d664b0d5ab8
+Created: 1766269921
+Updated: 1766270007
+
+## USER (1766269921)
+
+Создай в таком же стиле богиню Афродиту 
+
+---
+
+## ASSISTANT (1766269921)
+
+https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/c6446d61-555d-4354-8ce5-f02f41f2e8e0/1766269938.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzY2MjY5OTM4IiwicmVzb3VyY2VfY2hhdF9pZCI6Ijc2NjMzNWUxLTZkYzYtNGIyOS1hYWI4LTVkNjY0YjBkNWFiOCJ9.qDjtr6Lwe0NbHE6Au3TrQfDo6hmyVRj2CoeNyiI8zkg
+
+---
+
+## USER (1766270006)
+
+В этом стиле нарисуй Афродиту , сделай более пафосно 
+
+---
+
+## ASSISTANT (1766270006)
+
+https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/7a52ee47-276d-45ca-86fa-3198d5c2e205/1766270018.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzY2MjcwMDE4IiwicmVzb3VyY2VfY2hhdF9pZCI6Ijc2NjMzNWUxLTZkYzYtNGIyOS1hYWI4LTVkNjY0YjBkNWFiOCJ9.D5fsECKN5j9B7GUqbSo4ALM8yO7MGHRK9kDCDx95ze8
+
+---
+

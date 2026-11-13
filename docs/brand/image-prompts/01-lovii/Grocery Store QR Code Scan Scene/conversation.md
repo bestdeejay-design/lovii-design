@@ -1,0 +1,30 @@
+# Grocery Store QR Code Scan Scene
+
+ID: 0e310874-eac8-4223-b515-65a945cfa544
+Created: 1767873847
+Updated: 1767873922
+
+## USER (1767873847)
+
+A small grocery store owner scans a QR code with a tablet near his counter. Shelves behind him are filled with local jam, eggs, and vegetables. A subtle LOVII partner badge is visible. Soft daylight from a street-facing window. Modern Russian digital economy aesthetic, clean UI/UX-inspired visuals, soft natural lighting, warm color palette (ochre, sage green, white, terracotta), realistic yet slightly stylized, 16:9 composition, human-centered, no text on image, photorealistic illustration suitable for B2B SaaS presentation.
+
+---
+
+## ASSISTANT (1767873888)
+
+https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/fa8781e7-91ee-49a0-8d09-a86b9856aa10/1767873908.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzY3ODczOTA4IiwicmVzb3VyY2VfY2hhdF9pZCI6IjBlMzEwODc0LWVhYzgtNDIyMy1iNTE1LTY1YTk0NWNmYTU0NCJ9.tQTGorOH2X-EjXySK-WgmkW-LzMvlcU6twoXU_oW1J0
+
+---
+
+## USER (1767873921)
+
+A home-based baker in a clean apron checks her phone in a sunlit kitchen. The LOVII app shows a notification: “Новый заказ! — 12 багетов на 14:00”. Steam rises from a pot on the stove, flour dusts the counter, fresh herbs in a jar. Modern Russian digital economy aesthetic, clean UI/UX-inspired visuals, soft natural lighting, warm color palette (ochre, sage green, white, terracotta), realistic yet slightly stylized, 16:9 composition, human-centered, no text on image, photorealistic illustration suitable for B2B SaaS presentation.
+
+---
+
+## ASSISTANT (1767873921)
+
+https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/946a6f89-bceb-4253-ac4e-db1789b1bdbc/1767873937.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzY3ODczOTM3IiwicmVzb3VyY2VfY2hhdF9pZCI6IjBlMzEwODc0LWVhYzgtNDIyMy1iNTE1LTY1YTk0NWNmYTU0NCJ9.yy0mRILJyhKxSL3iyMF8oB-u4Bv973t0D4lcG_pA--4
+
+---
+

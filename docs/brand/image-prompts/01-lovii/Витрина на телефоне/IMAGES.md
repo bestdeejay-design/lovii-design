@@ -1,0 +1,10 @@
+# Изображения из этого чата
+
+Скачано из ссылок в `conversation.md`. Нумерация — порядок появления в диалоге.
+
+| Файл | Промт (начало) | Статус | Ссылка |
+|---|---|---|---|
+| [01.png](images/01.png) | сделай --- | ✅ | [cdn](https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/4584ba5c-f42e-4d70-af34-bf1e3cefa904/1763368746.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzYzMzY4NzQ2IiwicmVzb3VyY2VfY2hhdF9pZCI6IjM4ZjZmN2JjLTgwZGMtNDE5ZS1hNTFkLTdhYmMyZTIxYWIxMCJ9.nK9BWhVV_DeMx7ZoLdkcaSWMzHpmReCtimKdkjok4wY) |
+| [02.png](images/02.png) | убери надписи , оставь только цены --- | ✅ | [cdn](https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/269af80f-a6a9-47ca-a020-ec83133d2531/1763368790.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzYzMzY4NzkwIiwicmVzb3VyY2VfY2hhdF9pZCI6IjM4ZjZmN2JjLTgwZGMtNDE5ZS1hNTFkLTdhYmMyZTIxYWIxMCJ9.q7gsg-Q2vGFDbU6LJFdVUTTpU06yBWqB2TZzSwOelD8) |
+| [03.png](images/03.png) | оставь только карточки с фотографиями продуктов и убери все тексты и цифры с экр | ✅ | [cdn](https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/8a71151a-8a94-4f02-b7d3-9d922dc06a2c/1763368864.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzYzMzY4ODY0IiwicmVzb3VyY2VfY2hhdF9pZCI6IjM4ZjZmN2JjLTgwZGMtNDE5ZS1hNTFkLTdhYmMyZTIxYWIxMCJ9.B6L4jrT33rqqDZ3m1g4HR5Vl1iBDzfH_wgF4-M4AIhw) |
+| [04.png](images/04.png) | мне надо убрать некорректное написание русского языка и сделать экран витрины он | ✅ | [cdn](https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/b92d5daf-15d2-412d-b11b-e55fb04d1525/1763368987.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzYzMzY4OTg3IiwicmVzb3VyY2VfY2hhdF9pZCI6IjM4ZjZmN2JjLTgwZGMtNDE5ZS1hNTFkLTdhYmMyZTIxYWIxMCJ9.aLBlboUOGc9AukXKv3b_47DSAiAaxU15mzijHmLD5CE) |

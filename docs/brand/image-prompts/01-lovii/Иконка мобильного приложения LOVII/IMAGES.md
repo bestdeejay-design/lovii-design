@@ -1,0 +1,10 @@
+# Изображения из этого чата
+
+Скачано из ссылок в `conversation.md`. Нумерация — порядок появления в диалоге.
+
+| Файл | Промт (начало) | Статус | Ссылка |
+|---|---|---|---|
+| [01.png](images/01.png) | Иконка мобильного приложения LOVII , современная программа лояльности --- | ✅ | [cdn](https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/2945409d-3ac2-4d9e-90ce-3cc8a6684807/1768860366.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzY4ODYwMzY2IiwicmVzb3VyY2VfY2hhdF9pZCI6IjhmN2Y2YmViLTMxMjctNGM4NS1hZTRkLTFjMmE0OGY2OGE5NSJ9.p64W_0TWi4BFAjSWKTCUXEzAfplFSMMVaSkIrceTQ54) |
+| [02.png](images/02.png) | Сделай еще вариант --- | ✅ | [cdn](https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/1b657cdd-ee39-4a11-b242-6548e8953c97/1768860393.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzY4ODYwMzkzIiwicmVzb3VyY2VfY2hhdF9pZCI6IjhmN2Y2YmViLTMxMjctNGM4NS1hZTRkLTFjMmE0OGY2OGE5NSJ9.JFIaCzfBpZJQN8dpKt-5_sLA3ZSy6D3b0LuNvQzoUDo) |
+| [03.png](images/03.png) | Нужны варианты для иконки мобильного приложения LOVII --- | ✅ | [cdn](https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/6d240da8-016d-4fff-8eb6-5f29249d565c/1768860459.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzY4ODYwNDU5IiwicmVzb3VyY2VfY2hhdF9pZCI6IjhmN2Y2YmViLTMxMjctNGM4NS1hZTRkLTFjMmE0OGY2OGE5NSJ9.OOZEJJuHy4oUaj2dMcYwdaHoQzBxcOIRkFhPrJLCh2o) |
+| [04.png](images/04.png) | Дай еще варианты --- | ✅ | [cdn](https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/00fd9391-7234-45f2-8ae4-f6d40e4bac0f/1768860507.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzY4ODYwNTA3IiwicmVzb3VyY2VfY2hhdF9pZCI6IjhmN2Y2YmViLTMxMjctNGM4NS1hZTRkLTFjMmE0OGY2OGE5NSJ9.y4JDtJXNipS5b2OAcU1aGcIRb5HVmYfTSgDf7Jc3hmc) |

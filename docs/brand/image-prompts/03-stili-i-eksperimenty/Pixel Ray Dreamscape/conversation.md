@@ -1,0 +1,49 @@
+# Pixel Ray Dreamscape
+
+ID: 10d7ac6d-8ada-40ca-9dd0-6225f5a9cbe1
+Created: 1762724535
+Updated: 1762724715
+
+## USER (1762724535)
+
+Pixel art, 80x160 pixels, of a majestic manta ray swimming through a deep, dark blue underwater night sky. The entire scene is composed of small, square pixels, mimicking a mosaic tile artwork for a hammam. The background is a rich, dark navy blue, dotted with shimmering white and light blue star-like pixels (bioluminescent plankton). The manta ray is formed by a gradient of lighter blue and cyan pixels, creating a glowing, ethereal, starry appearance. Style: serene, dreamy, luxurious. High detail, sharp pixel edges, no anti-aliasing.
+
+---
+
+## ASSISTANT (1762724535)
+
+https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/55278467-d44b-4da5-a721-995675c4f068/1762724545.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzYyNzI0NTQ1IiwicmVzb3VyY2VfY2hhdF9pZCI6IjEwZDdhYzZkLThhZGEtNDBjYS05ZGQwLTYyMjVmNWE5Y2JlMSJ9.ksIzOO3lkBIe-g7slmsMmjNwzvf57qjScwtBa_KRc8Y
+
+---
+
+## USER (1762724602)
+
+Убери лишние элементы сверху и снизу 
+Нужен темно синий фон , манта рей и звезды 
+
+---
+
+## ASSISTANT (1762724602)
+
+https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/4d85d60f-52f8-422d-80b0-e3b152d56e66/1762724610.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzYyNzI0NjEwIiwicmVzb3VyY2VfY2hhdF9pZCI6IjEwZDdhYzZkLThhZGEtNDBjYS05ZGQwLTYyMjVmNWE5Y2JlMSJ9.PhljRN4f0QD9kORUKf7ECw9oorJvpTN6Be0Rz0r5NQc
+
+---
+
+## USER (1762724683)
+
+Нарисуй другого манта рей 
+
+---
+
+## USER (1762724714)
+
+Другой 
+
+---
+
+## ASSISTANT (1762724714)
+
+https://cdn.qwenlm.ai/output/2b73d960-a2b6-4d41-827a-eab02c61dc46/t2i/77aa006a-7efb-4f4b-a5fd-21cb77304320/1762724723.png?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXNvdXJjZV91c2VyX2lkIjoiMmI3M2Q5NjAtYTJiNi00ZDQxLTgyN2EtZWFiMDJjNjFkYzQ2IiwicmVzb3VyY2VfaWQiOiIxNzYyNzI0NzIzIiwicmVzb3VyY2VfY2hhdF9pZCI6IjEwZDdhYzZkLThhZGEtNDBjYS05ZGQwLTYyMjVmNWE5Y2JlMSJ9.70JTdN1tRRSytWyReRFf8jGC39VlJZZ8YrtUndXK4rM
+
+---
+
